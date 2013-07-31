@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.rapgenius"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="4"
+        android:targetSdkVersion="18" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.example.rapgenius.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.rapgenius.LyricsActivity"
+            android:label="@string/title_activity_lyrics"
+            android:parentActivityName="com.example.rapgenius.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.rapgenius.MainActivity" />
+            <!-- Links starting with explanation_clicked start a new intent -->
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <data android:scheme="explanation_clicked" />
+            </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <data android:scheme="news_clicked" />
+            </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <data android:scheme="fav_clicked" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.rapgenius.SearchActivity"
+            android:label="@string/title_activity_search"
+            android:parentActivityName="com.example.rapgenius.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.rapgenius.MainActivity" />
+        </activity>
+    </application>
+
+</manifest>
