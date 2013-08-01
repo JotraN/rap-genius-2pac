@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Lyrics implements URLObject {
@@ -17,9 +18,10 @@ public class Lyrics implements URLObject {
 
 	Lyrics(String x) {
 		// Rap Genius ignores punctuation in names, remove extra spaces,
-		// cleaning name
+		// cleaning inputed data
+		// TODO replace song_clicked in function?
 		song = x.trim().replaceAll("[\\.\\(\\),']", "").replace("-", " ")
-				.replace("$", "s");
+				.replace("$", "s").replace("song_clicked:", "");
 		url = "http://rapgenius.com/" + song.replace(' ', '-') + "-lyrics";
 	}
 
@@ -29,7 +31,8 @@ public class Lyrics implements URLObject {
 			return true;
 		} catch (IOException e) {
 			name += song + " not found.";
-			page += "Lyrics not found. If you believe this is an error try re-entering.";
+			page += "Lyrics not found.<br>Did you lose internet connection?";
+			searchIt();
 			return false;
 		}
 	}
@@ -51,6 +54,7 @@ public class Lyrics implements URLObject {
 			// Identify needs_exegesis editorials i.e. artist explanations
 			page = page.replace("needs_exegesis\" href=\"explanation_clicked:",
 					"needs_exegesis\" href=\"explanation_clicked:*");
+			// Add a star to URLs associated with artist explanations
 			Pattern pattern = Pattern
 					.compile("href=\"(.+?)\" data-editorial-state=\"needs_exegesis\"");
 			Matcher matcher = pattern.matcher(page);
@@ -64,6 +68,21 @@ public class Lyrics implements URLObject {
 				if (!matcher.find(matcher.end(1)))
 					found = false;
 			}
+		}
+	}
+
+	public void searchIt() {
+		String searchUrl = "http://rapgenius.com/search?q=" + song;
+		Document searchPage;
+		try {
+			searchPage = Jsoup.connect(searchUrl).get();
+			Elements content = searchPage.getElementsByClass("search_result");
+			page += "<br>Did you mean any of the following?<br><br>"
+					+ content.toString()
+							.replace("href=\"", "href=\"song_clicked:")
+							.replace("</a>", "</a><br><br>")
+							.replaceAll("<p>(.+?)</p>", "");
+		} catch (IOException e) {
 		}
 	}
 

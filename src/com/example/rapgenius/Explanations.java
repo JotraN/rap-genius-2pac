@@ -25,7 +25,7 @@ public class Explanations implements URLObject {
 		if (matcher.find())
 			name = data.substring(matcher.start(1), matcher.end(1));
 		else
-			name = "Not found";
+			name = "Not found.\nDid you lose internet connection?";
 	}
 
 	public void retrieveUrl() {

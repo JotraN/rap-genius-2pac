@@ -54,7 +54,7 @@ public class LyricsActivity extends Activity {
 			// Hide favorites icon
 			hideFavs = true;
 			new RetrieveExplanationsTask().execute();
-		} else if (getIntent().getDataString().contains("news_clicked")) {
+		} else if (getIntent().getDataString().contains("song_clicked")) {
 			message = getIntent().getDataString();
 			// remove the -lyrics at the end of the URL
 			message = message.substring(message.indexOf("/") + 1,
@@ -222,6 +222,8 @@ public class LyricsActivity extends Activity {
 
 	private void addFavorite() {
 		String currFavs = getFavorites();
+		// TODO better dash removal for favorites list
+		String message = this.message.replace("-", " ");
 		// Removes song if already in file
 		if (currFavs.contains(message)) {
 			FileOutputStream outputStream;

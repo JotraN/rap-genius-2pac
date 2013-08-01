@@ -26,7 +26,7 @@ public class NewsFeed implements URLObject {
 	public void retrievePage() {
 		Elements content = homePage.getElementsByClass("newsfeed");
 		page = content.toString().replace("</span>", "</span><br>")
-				.replace("href=\"", "href=\"news_clicked:")
+				.replace("href=\"", "href=\"song_clicked:")
 				// Formatting
 				.replace("<p class=\"label\">", "").replace("</p>", "<br>")
 				// remove header

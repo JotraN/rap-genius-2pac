@@ -44,7 +44,7 @@
 
                 <action android:name="android.intent.action.VIEW" />
 
-                <data android:scheme="news_clicked" />
+                <data android:scheme="song_clicked" />
             </intent-filter>
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
