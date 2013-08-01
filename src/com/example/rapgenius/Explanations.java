@@ -38,7 +38,7 @@ public class Explanations implements URLObject {
 				nums = (Integer.parseInt(nums) + 1) + "";
 			url = "http://rapgenius.com/" + nums;
 		} else
-			url = "Not found.";
+			url = "Not found.\nDid you lose internet connection?";
 	}
 
 	public boolean openURL() {

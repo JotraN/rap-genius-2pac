@@ -119,10 +119,9 @@ public class LyricsActivity extends Activity {
 	private void initialize() {
 		nameField = (TextView) findViewById(R.id.nameText);
 		lyricsField = (TextView) findViewById(R.id.lyricsText);
-		mLoadingView = findViewById(R.id.loading_spinner);
-		mContent = findViewById(R.id.scrollView1);
+		mLoadingView = findViewById(R.id.loadingView);
+		mContent = findViewById(R.id.infoView);
 		mContent.setVisibility(View.GONE);
-		nameField.setVisibility(View.GONE);
 
 		mShortAnimationDuration = getResources().getInteger(
 				android.R.integer.config_shortAnimTime);
@@ -285,13 +284,9 @@ public class LyricsActivity extends Activity {
 	@SuppressLint("NewApi")
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
 	private void crossfade() {
-		nameField.setAlpha(0f);
-		nameField.setVisibility(View.VISIBLE);
 		mContent.setAlpha(0f);
 		mContent.setVisibility(View.VISIBLE);
 
-		nameField.animate().alpha(1f).setDuration(mShortAnimationDuration)
-				.setListener(null);
 		mContent.animate().alpha(1f).setDuration(mShortAnimationDuration)
 				.setListener(null);
 

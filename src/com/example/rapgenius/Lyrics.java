@@ -48,7 +48,8 @@ public class Lyrics implements URLObject {
 						"href=\"explanation_clicked:[" + name
 								+ "]http://rapgenius.com");
 		page = page.replaceAll("<a.+?class=\"no_annotation.+?>", "");
-
+		// TODO Strange bug where rough explanations don't load.
+		page = page.replace("rough", "accepted");
 		if (page.contains("needs_exegesis")) {
 			// Identify needs_exegesis editorials i.e. artist explanations
 			page = page.replace("needs_exegesis\" href=\"explanation_clicked:",

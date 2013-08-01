@@ -75,7 +75,7 @@ public class MainActivity extends Activity {
 	private void initialize() {
 		nameField = (TextView) findViewById(R.id.nameText);
 		lyricsField = (TextView) findViewById(R.id.lyricsText);
-		mLoadingView = findViewById(R.id.loading_spinner);
+		mLoadingView = findViewById(R.id.loadingView);
 		mContent = findViewById(R.id.scrollView1);
 		mContent.setVisibility(View.GONE);
 		nameField.setVisibility(View.VISIBLE);

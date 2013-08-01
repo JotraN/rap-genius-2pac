@@ -31,12 +31,32 @@
             android:textSize="20sp" />
     </ScrollView>
 
-    <ProgressBar
-        android:id="@+id/loading_spinner"
-        style="?android:progressBarStyleLarge"
+    <RelativeLayout
+        android:id="@+id/loadingView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp" />
+        android:layout_marginTop="125dp" >
+
+        <ProgressBar
+            android:id="@+id/loadingSpinner"
+            style="?android:progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="45dp" />
+
+        <TextView
+            android:id="@+id/loadingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/loadingSpinner"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:text="@string/Loading"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp" />
+    </RelativeLayout>
 
 </RelativeLayout>

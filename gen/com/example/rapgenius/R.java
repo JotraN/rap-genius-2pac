@@ -25,15 +25,18 @@ public final class R {
         public static final int icon=0x7f020001;
     }
     public static final class id {
-        public static final int action_delete=0x7f080008;
-        public static final int action_favorite=0x7f080005;
-        public static final int action_search=0x7f080006;
-        public static final int action_settings=0x7f080007;
-        public static final int loading_spinner=0x7f080003;
-        public static final int lyricsText=0x7f080002;
-        public static final int nameText=0x7f080000;
-        public static final int scrollView1=0x7f080001;
-        public static final int songName=0x7f080004;
+        public static final int action_delete=0x7f08000b;
+        public static final int action_favorite=0x7f080008;
+        public static final int action_search=0x7f080009;
+        public static final int action_settings=0x7f08000a;
+        public static final int infoView=0x7f080000;
+        public static final int loadingSpinner=0x7f080005;
+        public static final int loadingText=0x7f080006;
+        public static final int loadingView=0x7f080004;
+        public static final int lyricsText=0x7f080003;
+        public static final int nameText=0x7f080001;
+        public static final int scrollView1=0x7f080002;
+        public static final int songName=0x7f080007;
     }
     public static final class layout {
         public static final int activity_lyrics=0x7f030000;
@@ -46,6 +49,7 @@ public final class R {
         public static final int search=0x7f070002;
     }
     public static final class string {
+        public static final int Loading=0x7f050009;
         public static final int action_delete_favs=0x7f050008;
         public static final int action_favorite=0x7f050006;
         public static final int action_search=0x7f050004;
