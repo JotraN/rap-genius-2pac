@@ -7,6 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -23,13 +26,15 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class LyricsActivity extends Activity {
 	private TextView nameField, lyricsField;
-	private ProgressBar loading;
+	private View mLoadingView;
+	private View mContent;
+	private int mShortAnimationDuration;
 	private URLObject urlObject;
 	private String message = "";
 	private boolean hideFavs = false;
@@ -65,6 +70,7 @@ public class LyricsActivity extends Activity {
 			message = message.substring(message.indexOf(":") + 1);
 			new RetrieveLyricsTask().execute(message);
 		}
+
 	}
 
 	/**
@@ -110,26 +116,30 @@ public class LyricsActivity extends Activity {
 		}
 	}
 
+	private void initialize() {
+		nameField = (TextView) findViewById(R.id.nameText);
+		lyricsField = (TextView) findViewById(R.id.lyricsText);
+		mLoadingView = findViewById(R.id.loading_spinner);
+		mContent = findViewById(R.id.scrollView1);
+		mContent.setVisibility(View.GONE);
+		nameField.setVisibility(View.GONE);
+
+		mShortAnimationDuration = getResources().getInteger(
+				android.R.integer.config_shortAnimTime);
+		// makes links operable
+		lyricsField.setMovementMethod(LinkMovementMethod.getInstance());
+	}
+
 	private void openSearch() {
 		Intent intent = new Intent(LyricsActivity.this, SearchActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 	}
 
-	private void initialize() {
-		nameField = (TextView) findViewById(R.id.nameText);
-		lyricsField = (TextView) findViewById(R.id.lyricsText);
-		loading = (ProgressBar) findViewById(R.id.progressBar1);
-
-		// makes links operable
-		lyricsField.setMovementMethod(LinkMovementMethod.getInstance());
-	}
-
 	private class RetrieveLyricsTask extends AsyncTask<String, Void, String> {
 
 		@Override
 		protected String doInBackground(String... names) {
-			loading.setIndeterminate(true);
 			urlObject = new Lyrics(names[0]);
 			if (urlObject.openURL()) {
 				((Lyrics) urlObject).retrieveName();
@@ -138,11 +148,12 @@ public class LyricsActivity extends Activity {
 			return urlObject.getPage();
 		}
 
+		@SuppressLint("NewApi")
 		protected void onPostExecute(String result) {
 			nameField.setText(((Lyrics) urlObject).getName());
 			lyricsField.setText(Html.fromHtml(result));
-			loading.setIndeterminate(false);
 			removeUnderline(lyricsField);
+			crossfade();
 		}
 	}
 
@@ -151,7 +162,6 @@ public class LyricsActivity extends Activity {
 
 		@Override
 		protected String doInBackground(Void... params) {
-			loading.setIndeterminate(true);
 			urlObject = new Explanations(getIntent().getDataString());
 			((Explanations) urlObject).retrieveName();
 			urlObject.retrievePage();
@@ -159,11 +169,10 @@ public class LyricsActivity extends Activity {
 		}
 
 		protected void onPostExecute(String result) {
-			loading.setIndeterminate(false);
 			nameField.setText(((Explanations) urlObject).getName());
 			lyricsField.setText(Html.fromHtml(result));
 			removeUnderline(lyricsField);
-
+			crossfade();
 		}
 
 	}
@@ -271,5 +280,27 @@ public class LyricsActivity extends Activity {
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
 		}
+	}
+
+	@SuppressLint("NewApi")
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
+	private void crossfade() {
+		nameField.setAlpha(0f);
+		nameField.setVisibility(View.VISIBLE);
+		mContent.setAlpha(0f);
+		mContent.setVisibility(View.VISIBLE);
+
+		nameField.animate().alpha(1f).setDuration(mShortAnimationDuration)
+				.setListener(null);
+		mContent.animate().alpha(1f).setDuration(mShortAnimationDuration)
+				.setListener(null);
+
+		mLoadingView.animate().alpha(0f).setDuration(mShortAnimationDuration)
+				.setListener(new AnimatorListenerAdapter() {
+					@Override
+					public void onAnimationEnd(Animator animation) {
+						mLoadingView.setVisibility(View.GONE);
+					}
+				});
 	}
 }

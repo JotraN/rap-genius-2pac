@@ -2,6 +2,8 @@ package com.example.rapgenius;
 
 import java.io.File;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -17,7 +19,7 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
+import android.view.View;
 import android.widget.TextView;
 
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
@@ -26,7 +28,9 @@ public class MainActivity extends Activity {
 	public final static String EXTRA_MESSAGE = "com.example.rapgenius.MESSAGE";
 
 	private TextView nameField, lyricsField;
-	private ProgressBar loading;
+	private View mLoadingView;
+	private View mContent;
+	private int mShortAnimationDuration;
 	private URLObject urlObject;
 
 	@Override
@@ -71,7 +75,15 @@ public class MainActivity extends Activity {
 	private void initialize() {
 		nameField = (TextView) findViewById(R.id.nameText);
 		lyricsField = (TextView) findViewById(R.id.lyricsText);
-		loading = (ProgressBar) findViewById(R.id.progressBar1);
+		mLoadingView = findViewById(R.id.loading_spinner);
+		mContent = findViewById(R.id.scrollView1);
+		mContent.setVisibility(View.GONE);
+		nameField.setVisibility(View.VISIBLE);
+
+		mShortAnimationDuration = getResources().getInteger(
+				android.R.integer.config_shortAnimTime);
+
+		nameField.setText("Home");
 
 		// makes links operable
 		lyricsField.setMovementMethod(LinkMovementMethod.getInstance());
@@ -81,7 +93,6 @@ public class MainActivity extends Activity {
 
 		@Override
 		protected String doInBackground(Void... names) {
-			loading.setIndeterminate(true);
 			urlObject = new NewsFeed();
 			if (urlObject.openURL())
 				urlObject.retrievePage();
@@ -89,10 +100,9 @@ public class MainActivity extends Activity {
 		}
 
 		protected void onPostExecute(String result) {
-			nameField.setText("Home");
 			lyricsField.setText(Html.fromHtml(result));
-			loading.setIndeterminate(false);
 			removeUnderline(lyricsField);
+			crossfade();
 		}
 	}
 
@@ -118,5 +128,23 @@ public class MainActivity extends Activity {
 						start, end, 0);
 		}
 		textView.setText(text);
+	}
+	
+	@SuppressLint("NewApi")
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
+	private void crossfade() {
+		mContent.setAlpha(0f);
+		mContent.setVisibility(View.VISIBLE);
+
+		mContent.animate().alpha(1f).setDuration(mShortAnimationDuration)
+				.setListener(null);
+
+		mLoadingView.animate().alpha(0f).setDuration(mShortAnimationDuration)
+				.setListener(new AnimatorListenerAdapter() {
+					@Override
+					public void onAnimationEnd(Animator animation) {
+						mLoadingView.setVisibility(View.GONE);
+					}
+				});
 	}
 }
