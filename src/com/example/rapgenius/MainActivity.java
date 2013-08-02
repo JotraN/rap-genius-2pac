@@ -160,6 +160,6 @@ public class MainActivity extends Activity implements
 
 	@Override
 	public void onDialogNegativeClick(DialogFragment dialog) {
-		onBackPressed();
+		dialog.dismiss();
 	}
 }
