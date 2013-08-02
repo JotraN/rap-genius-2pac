@@ -11,6 +11,7 @@
     <string name="title_favorites">Favorites</string>
     <string name="action_delete_favs">Remove all favorites</string>
     <string name="Loading">loading...</string>
-    
+    <string name="title_activity_remove_favorites_dialog_fragment">Remove Favorites Dialog Fragment</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

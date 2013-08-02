@@ -8,11 +8,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import com.example.rapgenius.RemoveFavoritesDialogFragment.RemoveFavoritesDialogListener;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -30,7 +33,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class LyricsActivity extends Activity {
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+public class LyricsActivity extends Activity implements RemoveFavoritesDialogListener{
 	private TextView nameField, lyricsField;
 	private View mLoadingView;
 	private View mContent;
@@ -108,8 +112,8 @@ public class LyricsActivity extends Activity {
 			addFavorite();
 			return true;
 		case R.id.action_delete:
-			File file = new File(this.getFilesDir(), "favorites");
-			file.delete();
+			DialogFragment dialog = new RemoveFavoritesDialogFragment();
+			dialog.show(getFragmentManager(), "RemoveFavoritesDialogFragment");
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -282,7 +286,6 @@ public class LyricsActivity extends Activity {
 	}
 
 	@SuppressLint("NewApi")
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
 	private void crossfade() {
 		mContent.setAlpha(0f);
 		mContent.setVisibility(View.VISIBLE);
@@ -297,5 +300,16 @@ public class LyricsActivity extends Activity {
 						mLoadingView.setVisibility(View.GONE);
 					}
 				});
+	}
+	
+	@Override
+	public void onDialogPositiveClick(DialogFragment dialog) {
+		File file = new File(this.getFilesDir(), "favorites");
+		file.delete();
+	}
+
+	@Override
+	public void onDialogNegativeClick(DialogFragment dialog) {
+		dialog.dismiss();
 	}
 }

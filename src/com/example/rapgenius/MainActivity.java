@@ -2,11 +2,14 @@ package com.example.rapgenius;
 
 import java.io.File;
 
+import com.example.rapgenius.RemoveFavoritesDialogFragment.RemoveFavoritesDialogListener;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -24,7 +27,8 @@ import android.widget.TextView;
 
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
 @SuppressLint("NewApi")
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements
+		RemoveFavoritesDialogListener {
 	public final static String EXTRA_MESSAGE = "com.example.rapgenius.MESSAGE";
 
 	private TextView nameField, lyricsField;
@@ -58,8 +62,8 @@ public class MainActivity extends Activity {
 			openSearch();
 			return true;
 		case R.id.action_delete:
-			File file = new File(this.getFilesDir(), "favorites");
-			file.delete();
+			DialogFragment dialog = new RemoveFavoritesDialogFragment();
+			dialog.show(getFragmentManager(), "RemoveFavoritesDialogFragment");
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -113,7 +117,7 @@ public class MainActivity extends Activity {
 			int start = text.getSpanStart(span);
 			int end = text.getSpanEnd(span);
 			text.removeSpan(span);
-			// Grabs URL part of span and override text-decoration
+			// Grabs URL part of span
 			span = new URLOverride(span.getURL());
 			text.setSpan(span, start, end, 0);
 			// Color links dark green if verified by artist
@@ -129,7 +133,7 @@ public class MainActivity extends Activity {
 		}
 		textView.setText(text);
 	}
-	
+
 	@SuppressLint("NewApi")
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
 	private void crossfade() {
@@ -146,5 +150,16 @@ public class MainActivity extends Activity {
 						mLoadingView.setVisibility(View.GONE);
 					}
 				});
+	}
+
+	@Override
+	public void onDialogPositiveClick(DialogFragment dialog) {
+		File file = new File(this.getFilesDir(), "favorites");
+		file.delete();
+	}
+
+	@Override
+	public void onDialogNegativeClick(DialogFragment dialog) {
+		onBackPressed();
 	}
 }

@@ -7,8 +7,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import com.example.rapgenius.RemoveFavoritesDialogFragment.RemoveFavoritesDialogListener;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -25,7 +28,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-public class SearchActivity extends Activity {
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+public class SearchActivity extends Activity implements
+		RemoveFavoritesDialogListener {
 	public final static String EXTRA_MESSAGE = "com.example.rapgenius.MESSAGE";
 	private EditText songField;
 	private TextView favorites;
@@ -55,6 +60,7 @@ public class SearchActivity extends Activity {
 
 		favorites.setText(Html.fromHtml(getFavorites()));
 		removeUnderline(favorites);
+		
 	}
 
 	/**
@@ -83,8 +89,8 @@ public class SearchActivity extends Activity {
 			onBackPressed();
 			return true;
 		case R.id.action_delete:
-			File file = new File(this.getFilesDir(), "favorites");
-			file.delete();
+			DialogFragment dialog = new RemoveFavoritesDialogFragment();
+			dialog.show(getFragmentManager(), "RemoveFavoritesDialogFragment");
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -101,9 +107,8 @@ public class SearchActivity extends Activity {
 			span = new URLOverride(span.getURL());
 			text.setSpan(span, start, end, 0);
 			// Color links red
-				text.setSpan(
-						new ForegroundColorSpan(Color.argb(255, 139, 0, 0)),
-						start, end, 0);
+			text.setSpan(new ForegroundColorSpan(Color.argb(255, 139, 0, 0)),
+					start, end, 0);
 		}
 		textView.setText(text);
 	}
@@ -134,5 +139,19 @@ public class SearchActivity extends Activity {
 		}
 
 		return favs;
+	}
+
+	@Override
+	public void onDialogPositiveClick(DialogFragment dialog) {
+		File file = new File(this.getFilesDir(), "favorites");
+		file.delete();
+		// Reload activity to clear list
+		finish();
+		startActivity(getIntent());
+	}
+
+	@Override
+	public void onDialogNegativeClick(DialogFragment dialog) {
+		dialog.dismiss();
 	}
 }
