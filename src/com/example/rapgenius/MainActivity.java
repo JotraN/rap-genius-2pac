@@ -58,6 +58,9 @@ public class MainActivity extends Activity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
+		case R.id.action_settings:
+			openSettings();
+			return true;
 		case R.id.action_search:
 			openSearch();
 			return true;
@@ -68,6 +71,11 @@ public class MainActivity extends Activity implements
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	private void openSettings(){
+		Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+		startActivity(intent);
 	}
 
 	private void openSearch() {
