@@ -1,17 +1,13 @@
 package com.example.rapgenius;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import com.example.rapgenius.RemoveFavoritesDialogFragment.RemoveFavoritesDialogListener;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -29,8 +25,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class SearchActivity extends Activity implements
-		RemoveFavoritesDialogListener {
+public class SearchActivity extends Activity {
 	public final static String EXTRA_MESSAGE = "com.example.rapgenius.MESSAGE";
 	private EditText songField;
 	private TextView favorites;
@@ -60,7 +55,6 @@ public class SearchActivity extends Activity implements
 
 		favorites.setText(Html.fromHtml(getFavorites()));
 		removeUnderline(favorites);
-		
 	}
 
 	/**
@@ -88,12 +82,17 @@ public class SearchActivity extends Activity implements
 		case android.R.id.home:
 			onBackPressed();
 			return true;
-		case R.id.action_delete:
-			DialogFragment dialog = new RemoveFavoritesDialogFragment();
-			dialog.show(getFragmentManager(), "RemoveFavoritesDialogFragment");
+		case R.id.action_settings:
+			openSettings();
 			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
+	}
+
+	private void openSettings() {
+		Intent intent = new Intent(SearchActivity.this, SettingsActivity.class);
+		startActivity(intent);
 	}
 
 	private void removeUnderline(TextView textView) {
@@ -139,19 +138,5 @@ public class SearchActivity extends Activity implements
 		}
 
 		return favs;
-	}
-
-	@Override
-	public void onDialogPositiveClick(DialogFragment dialog) {
-		File file = new File(this.getFilesDir(), "favorites");
-		file.delete();
-		// Reload activity to clear list
-		finish();
-		startActivity(getIntent());
-	}
-
-	@Override
-	public void onDialogNegativeClick(DialogFragment dialog) {
-		dialog.dismiss();
 	}
 }

@@ -1,21 +1,17 @@
 package com.example.rapgenius;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import com.example.rapgenius.RemoveFavoritesDialogFragment.RemoveFavoritesDialogListener;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -34,7 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class LyricsActivity extends Activity implements RemoveFavoritesDialogListener{
+public class LyricsActivity extends Activity {
 	private TextView nameField, lyricsField;
 	private View mLoadingView;
 	private View mContent;
@@ -105,15 +101,14 @@ public class LyricsActivity extends Activity implements RemoveFavoritesDialogLis
 		case android.R.id.home:
 			onBackPressed();
 			return true;
+		case R.id.action_settings:
+			openSettings();
+			return true;
 		case R.id.action_search:
 			openSearch();
 			return true;
 		case R.id.action_favorite:
 			addFavorite();
-			return true;
-		case R.id.action_delete:
-			DialogFragment dialog = new RemoveFavoritesDialogFragment();
-			dialog.show(getFragmentManager(), "RemoveFavoritesDialogFragment");
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -131,6 +126,11 @@ public class LyricsActivity extends Activity implements RemoveFavoritesDialogLis
 				android.R.integer.config_shortAnimTime);
 		// makes links operable
 		lyricsField.setMovementMethod(LinkMovementMethod.getInstance());
+	}
+
+	private void openSettings() {
+		Intent intent = new Intent(LyricsActivity.this, SettingsActivity.class);
+		startActivity(intent);
 	}
 
 	private void openSearch() {
@@ -301,15 +301,5 @@ public class LyricsActivity extends Activity implements RemoveFavoritesDialogLis
 					}
 				});
 	}
-	
-	@Override
-	public void onDialogPositiveClick(DialogFragment dialog) {
-		File file = new File(this.getFilesDir(), "favorites");
-		file.delete();
-	}
 
-	@Override
-	public void onDialogNegativeClick(DialogFragment dialog) {
-		dialog.dismiss();
-	}
 }

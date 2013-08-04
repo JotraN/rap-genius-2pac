@@ -9,17 +9,20 @@
     <string name="title_activity_search">Search</string>
     <string name="action_favorite">Add/Remove to favorites</string>
     <string name="title_favorites">Favorites</string>
-    <string name="action_delete_favs">Remove all favorites</string>
     <string name="Loading">loading&#8230;</string>
-    <string name="title_activity_remove_favorites_dialog_fragment">Remove Favorites Dialog Fragment</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_load_home">Load Home</string>
-    <string name="summary_load_home">Loads home on startup when enabled.</string>
+    <string name="summary_load_home">Loads Editors\' Picks and Popular Songs on startup.</string>
     <string name="title_cache_lyrics">Cache Lyrics</string>
     <string name="summary_cache_lyrics">Saves lyrics for faster loading and offline use. \nDoes not save explanations.</string>
-    <string name="title_remove_favs">Remove all Favorites</string>
+    <string name="title_remove_favorites">Remove All Favorites</string>
+    <string name="summary_remove_favorites">Remove all favorites. Re-open search to take effect.</string>
+    <string name="dialog_remove_favorites">Are you sure you want to remove all favorites?</string>
     <string name="title_donate">Donate</string>
     <string name="summary_donate">Donate money to those in need.</string>
+    <string name="title_clear_cache">Clear Cache</string>
+    <string name="summary_clear_cache">Clear all saved lyrics from storage.</string>
+    <string name="dialog_clear_cache">Are you sure you want to clear the cache?</string>
 
 </resources>

@@ -1,20 +1,17 @@
 package com.example.rapgenius;
 
-import java.io.File;
-
-import com.example.rapgenius.RemoveFavoritesDialogFragment.RemoveFavoritesDialogListener;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
@@ -27,8 +24,7 @@ import android.widget.TextView;
 
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
 @SuppressLint("NewApi")
-public class MainActivity extends Activity implements
-		RemoveFavoritesDialogListener {
+public class MainActivity extends Activity {
 	public final static String EXTRA_MESSAGE = "com.example.rapgenius.MESSAGE";
 
 	private TextView nameField, lyricsField;
@@ -44,8 +40,18 @@ public class MainActivity extends Activity implements
 		setContentView(R.layout.activity_main);
 
 		initialize();
-
-		new RetrieveNewsFeed().execute();
+		
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		boolean loadHome = sharedPref.getBoolean(SettingsFragment.KEY_PREF_LOAD_HOME,
+				false);
+		if (loadHome)
+			new RetrieveNewsFeed().execute();
+		else{
+			lyricsField.setText("Home disabled in settings.");
+			mContent.setVisibility(View.VISIBLE);
+			mLoadingView.setVisibility(View.GONE);
+		}
 	}
 
 	@Override
@@ -64,16 +70,12 @@ public class MainActivity extends Activity implements
 		case R.id.action_search:
 			openSearch();
 			return true;
-		case R.id.action_delete:
-			DialogFragment dialog = new RemoveFavoritesDialogFragment();
-			dialog.show(getFragmentManager(), "RemoveFavoritesDialogFragment");
-			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
-	private void openSettings(){
+
+	private void openSettings() {
 		Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
 		startActivity(intent);
 	}
@@ -158,16 +160,5 @@ public class MainActivity extends Activity implements
 						mLoadingView.setVisibility(View.GONE);
 					}
 				});
-	}
-
-	@Override
-	public void onDialogPositiveClick(DialogFragment dialog) {
-		File file = new File(this.getFilesDir(), "favorites");
-		file.delete();
-	}
-
-	@Override
-	public void onDialogNegativeClick(DialogFragment dialog) {
-		dialog.dismiss();
 	}
 }
