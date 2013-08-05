@@ -1,22 +1,16 @@
 package com.example.rapgenius;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
-import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.URLSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +24,6 @@ public class MainActivity extends Activity {
 	private TextView nameField, lyricsField;
 	private View mLoadingView;
 	private View mContent;
-	private int mShortAnimationDuration;
 	private URLObject urlObject;
 
 	@Override
@@ -40,18 +33,6 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		initialize();
-		
-		SharedPreferences sharedPref = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		boolean loadHome = sharedPref.getBoolean(SettingsFragment.KEY_PREF_LOAD_HOME,
-				false);
-		if (loadHome)
-			new RetrieveNewsFeed().execute();
-		else{
-			lyricsField.setText("Home disabled in settings.");
-			mContent.setVisibility(View.VISIBLE);
-			mLoadingView.setVisibility(View.GONE);
-		}
 	}
 
 	@Override
@@ -75,6 +56,33 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	private void initialize() {
+		nameField = (TextView) findViewById(R.id.nameText);
+		lyricsField = (TextView) findViewById(R.id.lyricsText);
+		mLoadingView = findViewById(R.id.loadingView);
+		mContent = findViewById(R.id.scrollView1);
+		mContent.setVisibility(View.GONE);
+		nameField.setVisibility(View.VISIBLE);
+
+		nameField.setText("Home");
+
+		// makes links operable
+		lyricsField.setMovementMethod(LinkMovementMethod.getInstance());
+
+		// Get load home setting
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		boolean loadHome = sharedPref.getBoolean(
+				SettingsFragment.KEY_PREF_LOAD_HOME, false);
+		if (loadHome)
+			new RetrieveNewsFeed().execute();
+		else {
+			lyricsField.setText("Home disabled in settings.");
+			mContent.setVisibility(View.VISIBLE);
+			mLoadingView.setVisibility(View.GONE);
+		}
+	}
+
 	private void openSettings() {
 		Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
 		startActivity(intent);
@@ -84,23 +92,6 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(MainActivity.this, SearchActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
-	}
-
-	private void initialize() {
-		nameField = (TextView) findViewById(R.id.nameText);
-		lyricsField = (TextView) findViewById(R.id.lyricsText);
-		mLoadingView = findViewById(R.id.loadingView);
-		mContent = findViewById(R.id.scrollView1);
-		mContent.setVisibility(View.GONE);
-		nameField.setVisibility(View.VISIBLE);
-
-		mShortAnimationDuration = getResources().getInteger(
-				android.R.integer.config_shortAnimTime);
-
-		nameField.setText("Home");
-
-		// makes links operable
-		lyricsField.setMovementMethod(LinkMovementMethod.getInstance());
 	}
 
 	private class RetrieveNewsFeed extends AsyncTask<Void, Void, String> {
@@ -115,50 +106,9 @@ public class MainActivity extends Activity {
 
 		protected void onPostExecute(String result) {
 			lyricsField.setText(Html.fromHtml(result));
-			removeUnderline(lyricsField);
-			crossfade();
+			RemoveUnderLine.removeUnderline(lyricsField);
+			CrossfadeAnimation.crossfade(getApplicationContext(), mContent,
+					mLoadingView);
 		}
-	}
-
-	private void removeUnderline(TextView textView) {
-		Spannable text = (Spannable) textView.getText();
-		URLSpan[] spans = text.getSpans(0, text.length(), URLSpan.class);
-		for (URLSpan span : spans) {
-			int start = text.getSpanStart(span);
-			int end = text.getSpanEnd(span);
-			text.removeSpan(span);
-			// Grabs URL part of span
-			span = new URLOverride(span.getURL());
-			text.setSpan(span, start, end, 0);
-			// Color links dark green if verified by artist
-			if (span.getURL().toString().contains("*"))
-				text.setSpan(
-						new ForegroundColorSpan(Color.argb(255, 38, 135, 31)),
-						start, end, 0);
-			// Else color dark orange
-			else
-				text.setSpan(
-						new ForegroundColorSpan(Color.argb(255, 186, 95, 34)),
-						start, end, 0);
-		}
-		textView.setText(text);
-	}
-
-	@SuppressLint("NewApi")
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
-	private void crossfade() {
-		mContent.setAlpha(0f);
-		mContent.setVisibility(View.VISIBLE);
-
-		mContent.animate().alpha(1f).setDuration(mShortAnimationDuration)
-				.setListener(null);
-
-		mLoadingView.animate().alpha(0f).setDuration(mShortAnimationDuration)
-				.setListener(new AnimatorListenerAdapter() {
-					@Override
-					public void onAnimationEnd(Animator animation) {
-						mLoadingView.setVisibility(View.GONE);
-					}
-				});
 	}
 }

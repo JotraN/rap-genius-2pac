@@ -15,7 +15,7 @@
     <string name="title_load_home">Load Home</string>
     <string name="summary_load_home">Loads Editors\' Picks and Popular Songs on startup.</string>
     <string name="title_cache_lyrics">Cache Lyrics</string>
-    <string name="summary_cache_lyrics">Saves lyrics for faster loading and offline use. \nDoes not save explanations.</string>
+    <string name="summary_cache_lyrics">Saves lyrics for faster loading and offline use.\nAndroid will automatically clear cached files if the system is running low on space.\n*Does not save explanations.</string>
     <string name="title_remove_favorites">Remove All Favorites</string>
     <string name="summary_remove_favorites">Remove all favorites. Re-open search to take effect.</string>
     <string name="dialog_remove_favorites">Are you sure you want to remove all favorites?</string>
