@@ -14,10 +14,12 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
@@ -38,6 +40,7 @@ public class LyricsActivity extends Activity {
 	private URLObject urlObject;
 	private String message = "";
 	private boolean hideFavs = false;
+	private boolean cacheLyrics = false;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -52,9 +55,18 @@ public class LyricsActivity extends Activity {
 
 		initialize();
 
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		cacheLyrics = sharedPref.getBoolean(
+				SettingsFragment.KEY_PREF_CACHE_LYRICS, false);
+
 		if (getIntent().getData() == null) {
 			message = getIntent().getStringExtra(MainActivity.EXTRA_MESSAGE);
-			new RetrieveLyricsTask().execute(message);
+			if (CacheManager.getCache(getApplicationContext(), message)
+					.length() <= 0)
+				new RetrieveLyricsTask().execute(message);
+			else
+				setCache();
 		} else if (getIntent().getDataString().contains("explanation_clicked")) {
 			// Hide favorites icon
 			hideFavs = true;
@@ -68,9 +80,12 @@ public class LyricsActivity extends Activity {
 		} else if (getIntent().getDataString().contains("fav_clicked")) {
 			message = getIntent().getDataString();
 			message = message.substring(message.indexOf(":") + 1);
-			new RetrieveLyricsTask().execute(message);
+			if (CacheManager.getCache(getApplicationContext(), message)
+					.length() <= 0)
+				new RetrieveLyricsTask().execute(message);
+			else
+				setCache();
 		}
-
 	}
 
 	/**
@@ -81,6 +96,18 @@ public class LyricsActivity extends Activity {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
+	}
+
+	private void setCache() {
+		mLoadingView.setVisibility(View.GONE);
+		mContent.setVisibility(View.VISIBLE);
+		String cachedData = CacheManager.getCache(getApplicationContext(),
+				message);
+		String nameData = cachedData.substring(0, cachedData.indexOf('<'));
+		String lyricsData = cachedData.substring(cachedData.indexOf('<'));
+		nameField.setText(nameData);
+		lyricsField.setText(Html.fromHtml(lyricsData));
+		removeUnderline(lyricsField);
 	}
 
 	@Override
@@ -157,6 +184,9 @@ public class LyricsActivity extends Activity {
 			lyricsField.setText(Html.fromHtml(result));
 			removeUnderline(lyricsField);
 			crossfade();
+			if (cacheLyrics)
+				CacheManager.saveData(getApplicationContext(), message,
+						nameField.getText().toString() + result);
 		}
 	}
 
