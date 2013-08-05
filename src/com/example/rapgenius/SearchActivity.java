@@ -1,6 +1,5 @@
 package com.example.rapgenius;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
@@ -14,7 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class SearchActivity extends Activity {
 	public final static String EXTRA_MESSAGE = "com.example.rapgenius.MESSAGE";
 	private EditText songField;

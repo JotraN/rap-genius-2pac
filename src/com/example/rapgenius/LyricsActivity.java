@@ -1,6 +1,5 @@
 package com.example.rapgenius;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
@@ -16,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class LyricsActivity extends Activity {
 	private TextView nameField, lyricsField;
 	private View mLoadingView;
@@ -32,10 +30,11 @@ public class LyricsActivity extends Activity {
 		setContentView(R.layout.activity_lyrics);
 
 		setupActionBar();
-		initialize();		
+		initialize();
 		startLyrics();
 	}
 
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void setupActionBar() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -43,6 +42,7 @@ public class LyricsActivity extends Activity {
 		}
 	}
 
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -84,7 +84,7 @@ public class LyricsActivity extends Activity {
 
 		// makes links operable
 		lyricsField.setMovementMethod(LinkMovementMethod.getInstance());
-		
+
 		// Get cache lyrics setting
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(this);
@@ -116,7 +116,7 @@ public class LyricsActivity extends Activity {
 	}
 
 	// Find what started lyrics activity and continue from there
-	private void startLyrics(){
+	private void startLyrics() {
 		if (getIntent().getData() == null) {
 			message = getIntent().getStringExtra(MainActivity.EXTRA_MESSAGE);
 			if (CacheManager.getCache(getApplicationContext(), message)
@@ -148,6 +148,7 @@ public class LyricsActivity extends Activity {
 				setCache();
 		}
 	}
+
 	private class RetrieveLyricsTask extends AsyncTask<String, Void, String> {
 
 		@Override
@@ -160,13 +161,17 @@ public class LyricsActivity extends Activity {
 			return urlObject.getPage();
 		}
 
-		@SuppressLint("NewApi")
 		protected void onPostExecute(String result) {
 			nameField.setText(((Lyrics) urlObject).getName());
 			lyricsField.setText(Html.fromHtml(result));
 			RemoveUnderLine.removeUnderline(lyricsField);
-			CrossfadeAnimation.crossfade(getApplicationContext(), mContent,
-					mLoadingView);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+				CrossfadeAnimation.crossfade(getApplicationContext(), mContent,
+						mLoadingView);
+			else {
+				mContent.setVisibility(View.VISIBLE);
+				mLoadingView.setVisibility(View.GONE);
+			}
 			if (cacheLyricsEnabled)
 				CacheManager.saveData(getApplicationContext(), message,
 						nameField.getText().toString() + result);
@@ -188,8 +193,13 @@ public class LyricsActivity extends Activity {
 			nameField.setText(((Explanations) urlObject).getName());
 			lyricsField.setText(Html.fromHtml(result));
 			RemoveUnderLine.removeUnderline(lyricsField);
-			CrossfadeAnimation.crossfade(getApplicationContext(), mContent,
-					mLoadingView);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+				CrossfadeAnimation.crossfade(getApplicationContext(), mContent,
+						mLoadingView);
+			else {
+				mContent.setVisibility(View.VISIBLE);
+				mLoadingView.setVisibility(View.GONE);
+			}
 		}
 
 	}
