@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -81,9 +80,6 @@ public class LyricsActivity extends Activity {
 		mLoadingView = findViewById(R.id.loadingView);
 		mContent = findViewById(R.id.infoView);
 		mContent.setVisibility(View.GONE);
-
-		// makes links operable
-		lyricsField.setMovementMethod(LinkMovementMethod.getInstance());
 
 		// Get cache lyrics setting
 		SharedPreferences sharedPref = PreferenceManager

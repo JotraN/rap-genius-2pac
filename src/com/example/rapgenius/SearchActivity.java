@@ -1,5 +1,6 @@
 package com.example.rapgenius;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
@@ -27,6 +28,7 @@ public class SearchActivity extends Activity {
 		initialize();
 	}
 
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void setupActionBar() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			// Show the Up button in the action bar.
@@ -76,7 +78,7 @@ public class SearchActivity extends Activity {
 
 		favorites.setText(Html.fromHtml(FavoritesManager
 				.getFavorites(getApplicationContext())));
-		RemoveUnderLine.removeUnderlineFavs(favorites);
+		RemoveUnderLine.removeUnderline(favorites);
 	}
 
 	private void openSettings() {
