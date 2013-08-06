@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
@@ -76,6 +77,8 @@ public class MainActivity extends Activity {
 			mContent.setVisibility(View.VISIBLE);
 			mLoadingView.setVisibility(View.GONE);
 		}
+		new RetrieveNewsFeed().execute();
+
 	}
 
 	private void openSettings() {
@@ -102,8 +105,13 @@ public class MainActivity extends Activity {
 		protected void onPostExecute(String result) {
 			lyricsField.setText(Html.fromHtml(result));
 			RemoveUnderLine.removeUnderline(lyricsField);
-			CrossfadeAnimation.crossfade(getApplicationContext(), mContent,
-					mLoadingView);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1)
+				CrossfadeAnimation.crossfade(getApplicationContext(), mContent,
+						mLoadingView);
+			else {
+				mContent.setVisibility(View.VISIBLE);
+				mLoadingView.setVisibility(View.GONE);
+			}
 		}
 	}
 }

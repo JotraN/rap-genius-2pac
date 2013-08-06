@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -80,6 +81,9 @@ public class LyricsActivity extends Activity {
 		mLoadingView = findViewById(R.id.loadingView);
 		mContent = findViewById(R.id.infoView);
 		mContent.setVisibility(View.GONE);
+
+		// necessary for 2.3 for some reason
+		lyricsField.setMovementMethod(LinkMovementMethod.getInstance());
 
 		// Get cache lyrics setting
 		SharedPreferences sharedPref = PreferenceManager
@@ -161,10 +165,11 @@ public class LyricsActivity extends Activity {
 			nameField.setText(((Lyrics) urlObject).getName());
 			lyricsField.setText(Html.fromHtml(result));
 			RemoveUnderLine.removeUnderline(lyricsField);
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1)
 				CrossfadeAnimation.crossfade(getApplicationContext(), mContent,
 						mLoadingView);
 			else {
+				// lyricsField.setMovementMethod(new LinkMovementMethod());
 				mContent.setVisibility(View.VISIBLE);
 				mLoadingView.setVisibility(View.GONE);
 			}
@@ -189,10 +194,11 @@ public class LyricsActivity extends Activity {
 			nameField.setText(((Explanations) urlObject).getName());
 			lyricsField.setText(Html.fromHtml(result));
 			RemoveUnderLine.removeUnderline(lyricsField);
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1)
 				CrossfadeAnimation.crossfade(getApplicationContext(), mContent,
 						mLoadingView);
 			else {
+				lyricsField.setMovementMethod(new LinkMovementMethod());
 				mContent.setVisibility(View.VISIBLE);
 				mLoadingView.setVisibility(View.GONE);
 			}
