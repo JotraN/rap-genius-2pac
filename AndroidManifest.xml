@@ -66,6 +66,10 @@
             android:name="com.example.rapgenius.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
+        <activity
+            android:name="com.example.rapgenius.SettingsPreferenceActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
     </application>
 
 </manifest>

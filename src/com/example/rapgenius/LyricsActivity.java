@@ -93,8 +93,15 @@ public class LyricsActivity extends Activity {
 	}
 
 	private void openSettings() {
-		Intent intent = new Intent(LyricsActivity.this, SettingsActivity.class);
-		startActivity(intent);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			Intent intent = new Intent(LyricsActivity.this,
+					SettingsActivity.class);
+			startActivity(intent);
+		} else {
+			Intent intent = new Intent(LyricsActivity.this,
+					SettingsPreferenceActivity.class);
+			startActivity(intent);
+		}
 	}
 
 	private void openSearch() {

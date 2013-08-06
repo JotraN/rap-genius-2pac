@@ -77,13 +77,18 @@ public class MainActivity extends Activity {
 			mContent.setVisibility(View.VISIBLE);
 			mLoadingView.setVisibility(View.GONE);
 		}
-		new RetrieveNewsFeed().execute();
-
 	}
 
 	private void openSettings() {
-		Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-		startActivity(intent);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			Intent intent = new Intent(MainActivity.this,
+					SettingsActivity.class);
+			startActivity(intent);
+		} else {
+			Intent intent = new Intent(MainActivity.this,
+					SettingsPreferenceActivity.class);
+			startActivity(intent);
+		}
 	}
 
 	private void openSearch() {

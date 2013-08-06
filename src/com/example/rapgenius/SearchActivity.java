@@ -82,7 +82,14 @@ public class SearchActivity extends Activity {
 	}
 
 	private void openSettings() {
-		Intent intent = new Intent(SearchActivity.this, SettingsActivity.class);
-		startActivity(intent);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			Intent intent = new Intent(SearchActivity.this,
+					SettingsActivity.class);
+			startActivity(intent);
+		} else {
+			Intent intent = new Intent(SearchActivity.this,
+					SettingsPreferenceActivity.class);
+			startActivity(intent);
+		}
 	}
 }
