@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.rapgenius"
+    package="com.trasselback.rapgenius"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.rapgenius.MainActivity"
+            android:name="com.trasselback.rapgenius.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,9 +25,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.rapgenius.LyricsActivity"
+            android:name="com.trasselback.rapgenius.LyricsActivity"
             android:label="@string/title_activity_lyrics"
-            android:parentActivityName="com.example.rapgenius.MainActivity" >
+            android:parentActivityName="com.trasselback.rapgenius.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.rapgenius.MainActivity" />
@@ -55,19 +55,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.rapgenius.SearchActivity"
+            android:name="com.trasselback.rapgenius.SearchActivity"
             android:label="@string/title_activity_search"
-            android:parentActivityName="com.example.rapgenius.MainActivity" >
+            android:parentActivityName="com.trasselback.rapgenius.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.rapgenius.MainActivity" />
         </activity>
         <activity
-            android:name="com.example.rapgenius.SettingsActivity"
+            android:name="com.trasselback.rapgenius.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
-            android:name="com.example.rapgenius.SettingsPreferenceActivity"
+            android:name="com.trasselback.rapgenius.SettingsPreferenceActivity"
             android:label="@string/title_activity_settings" >
         </activity>
     </application>

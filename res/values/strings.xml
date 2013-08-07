@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Rap Genius</string>
+    <string name="app_name">Unofficial Rap Genius</string>
     <string name="action_settings">Settings</string>
     <string name="default_search">Enter artist song e.g. 2pac ghetto gospel</string>
     <string name="title_activity_lyrics">MainActivity</string>
@@ -11,14 +11,14 @@
     <string name="title_favorites">Favorites</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_load_home">Load Home</string>
-    <string name="summary_load_home">Loads Editors\' Picks and Popular Songs on startup.</string>
+    <string name="summary_load_home">Loads Editors\' Picks and Popular Songs on startup.\nReload application to see effect.</string>
     <string name="title_cache_lyrics">Cache Lyrics</string>
     <string name="summary_cache_lyrics">Saves lyrics for faster loading and offline use.\nAndroid will automatically clear cached files if the system is running low on space.\n*Does not save explanations.</string>
     <string name="title_remove_favorites">Remove All Favorites</string>
-    <string name="summary_remove_favorites">Remove all favorites. Re-open search to take effect.</string>
+    <string name="summary_remove_favorites">Remove all favorites. Re-open search to see effect.</string>
     <string name="dialog_remove_favorites">Are you sure you want to remove all favorites?</string>
     <string name="title_donate">Donate</string>
-    <string name="summary_donate">Donate money</string>
+    <string name="summary_donate">Donate money.</string>
     <string name="title_clear_cache">Clear Cache</string>
     <string name="summary_clear_cache">Clear all saved lyrics from storage.</string>
     <string name="dialog_clear_cache">Are you sure you want to clear the cache?</string>
