@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="text_sizes_entries">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+    </string-array>
+    <string-array name="text_sizes_entry_values">
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+    </string-array>
+
+</resources>
