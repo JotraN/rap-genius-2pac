@@ -1,7 +1,10 @@
 package com.trasselback.rapgenius;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,13 +17,11 @@ import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class LyricsActivity extends Activity {
+public class LyricsActivity extends SherlockActivity {
 	private TextView nameField, lyricsField;
 	private View mLoadingView;
 	private View mContent;
@@ -39,19 +40,16 @@ public class LyricsActivity extends Activity {
 		startLyrics();
 	}
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void setupActionBar() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			getActionBar().setDisplayHomeAsUpEnabled(true);
-			getActionBar().setDisplayShowTitleEnabled(false);
-		}
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+			getSupportActionBar().setDisplayShowTitleEnabled(false);
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.lyrics, menu);
+		getSupportMenuInflater().inflate(R.menu.lyrics, menu);
 		if (hideFavs) {
 			MenuItem item = menu.findItem(R.id.action_favorite);
 			item.setVisible(false);
