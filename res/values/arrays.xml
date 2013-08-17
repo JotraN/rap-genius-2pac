@@ -11,5 +11,17 @@
         <item>20</item>
         <item>30</item>
     </string-array>
+    <string-array name="app_colors_entries">
+        <item>Default</item>
+        <item>Red</item>
+        <item>Orange</item>
+        <item>Yellow</item>
+        <item>Green</item>
+        <item>Blue</item>
+        <item>Purple</item>
+        <item>Gray</item>
+        <item>White</item>
+        <item>Black</item>
+    </string-array>
 
 </resources>

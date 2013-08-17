@@ -20,6 +20,12 @@ public class SettingsFragment extends PreferenceFragment implements
 	public static final String KEY_PREF_CACHE_LYRICS = "pref_key_cache_lyrics";
 	public static final String KEY_PREF_CLEAR_CACHE = "pref_key_clear_cache";
 	public static final String KEY_PREF_TEXT_SIZE = "pref_key_text_size";
+	public static final String KEY_PREF_DEFAULT_TEXT_COLOR = "pref_key_default_text_color";
+	public static final String KEY_PREF_TITLE_COLOR = "pref_key_title_color";
+	public static final String KEY_PREF_HOME_PAGE_COLOR = "pref_key_home_page_color";
+	public static final String KEY_PREF_EXPLAINED_LYRICS_COLOR = "pref_key_explained_lyrics_color";
+	public static final String KEY_PREF_FAVORITES_COLOR = "pref_key_favorites_color";
+	public static final String KEY_PREF_BACKGROUND_COLOR = "pref_key_background_color";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

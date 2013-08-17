@@ -15,10 +15,10 @@ public class NewsFeed implements URLObject {
 
 	public boolean openURL() {
 		try {
-			homePage = Jsoup.connect("http://rapgenius.com").get();
+			homePage = Jsoup.connect("http://rapgenius.com").timeout(10000).get();
 			return true;
 		} catch (IOException e) {
-			page = "Home page not loaded.";
+			page = "There was a problem with connecting to Rap Genius.<br>Rap Genius may be down.";
 			return false;
 		}
 	}

@@ -58,11 +58,39 @@ public class MainActivity extends Activity {
 				mLoadingView.setVisibility(View.GONE);
 			}
 		}
-		// text size
+		// Update text size
 		int size = Integer.parseInt(sharedPref.getString(
 				SettingsFragment.KEY_PREF_TEXT_SIZE, "22"));
 		lyricsField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
 		nameField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size + 10);
+
+		// Update colors
+		String color = sharedPref.getString(
+				SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR, "Default");
+		if (!color.contains("Default")) {
+			ColorManager.setColor(getApplicationContext(), lyricsField, color);
+		} else
+			lyricsField.setTextColor(getResources().getColor(R.color.Gray));
+		color = sharedPref.getString(SettingsFragment.KEY_PREF_TITLE_COLOR,
+				"Default");
+		if (!color.contains("Default")) {
+			ColorManager.setColor(getApplicationContext(), nameField, color);
+		} else
+			nameField.setTextColor(getResources().getColor(R.color.LightGray));
+		color = sharedPref.getString(SettingsFragment.KEY_PREF_HOME_PAGE_COLOR,
+				"Default");
+		if (!color.contains("Default")) {
+			ColorManager.setLinkColor(getApplicationContext(), lyricsField,
+					color);
+		} else
+			lyricsField.setLinkTextColor(getResources().getColor(
+					R.color.LightBlue));
+		color = sharedPref.getString(
+				SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "Default");
+		if (!color.contains("Default")) {
+			ColorManager.setBackgroundColor(this, color);
+		} else
+			getWindow().setBackgroundDrawableResource(R.color.LightBlack);
 	}
 
 	@Override
@@ -89,12 +117,14 @@ public class MainActivity extends Activity {
 	private void initialize() {
 		nameField = (TextView) findViewById(R.id.nameText);
 		lyricsField = (TextView) findViewById(R.id.lyricsText);
-		mLoadingView = (ProgressBar) findViewById(R.id.loadingView);
+		mLoadingView = findViewById(R.id.loadingView);
 		mContent = findViewById(R.id.scrollView1);
 		mContent.setVisibility(View.GONE);
 		nameField.setVisibility(View.VISIBLE);
 
 		nameField.setText("Home");
+		((ProgressBar) mLoadingView).setIndeterminateDrawable(getResources()
+				.getDrawable(R.xml.progress_animation));
 
 		// makes links operable
 		lyricsField.setMovementMethod(LinkMovementMethod.getInstance());

@@ -44,10 +44,10 @@ public class Explanations implements URLObject {
 	public boolean openURL() {
 		retrieveUrl();
 		try {
-			explainPage = Jsoup.connect(url).get();
+			explainPage = Jsoup.connect(url).timeout(10000).get();
 			return true;
 		} catch (IOException e) {
-			page += "Explanation failed to load.";
+			page += "Explanation failed to load.<br>Rap Genius may be down.";
 			return false;
 		}
 	}

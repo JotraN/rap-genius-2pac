@@ -22,5 +22,6 @@
     <string name="title_clear_cache">Clear Cache</string>
     <string name="summary_clear_cache">Clear all saved lyrics from storage.</string>
     <string name="dialog_clear_cache">Are you sure you want to clear the cache?</string>
+    <string name="loading">loading&#8230;</string>
 
 </resources>

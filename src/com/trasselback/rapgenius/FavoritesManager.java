@@ -9,7 +9,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 public class FavoritesManager {
@@ -29,9 +28,7 @@ public class FavoritesManager {
 			fileReader.close();
 			favs = stringBuilder.toString();
 		} catch (FileNotFoundException e) {
-			Log.v("FAV", "Favorites not found.");
 		} catch (IOException e) {
-			Log.v("FAV", "Favorites IO error.");
 		}
 		return favs;
 	}
@@ -50,7 +47,7 @@ public class FavoritesManager {
 
 		if (currFavs.contains(song)) {
 			removeFavorites(context, song, currFavs);
-		} else if (currFavs.length() <= 650) {
+		} else if (currFavs.length() <= 1650) {
 			String favorites = currFavs + "<a href=\"fav_clicked:" + song
 					+ "\">&#8226; " + song + "</a><br>";
 			try {
@@ -61,9 +58,7 @@ public class FavoritesManager {
 				bufferedWriter.close();
 				fileWriter.close();
 			} catch (FileNotFoundException e) {
-				Log.v("FAV", "Favorites not found.");
 			} catch (IOException e) {
-				Log.v("FAV", "Favorites IO error.");
 			}
 			CharSequence text = "Song added to favorites list.";
 			int duration = Toast.LENGTH_SHORT;
@@ -92,9 +87,7 @@ public class FavoritesManager {
 			bufferedWriter.close();
 			fileWriter.close();
 		} catch (FileNotFoundException e) {
-			Log.v("FAV", "Favorites not found.");
 		} catch (IOException e) {
-			Log.v("FAV", "Favorites IO error.");
 		}
 		CharSequence text = "Song removed from favorites list.";
 		int duration = Toast.LENGTH_SHORT;
@@ -115,9 +108,7 @@ public class FavoritesManager {
 			bufferedWriter.close();
 			fileWriter.close();
 		} catch (FileNotFoundException e) {
-			Log.v("FAV", "Favorites not found.");
 		} catch (IOException e) {
-			Log.v("FAV", "Favorites IO error.");
 		}
 	}
 }

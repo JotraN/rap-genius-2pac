@@ -28,11 +28,11 @@ public class Lyrics implements URLObject {
 
 	public boolean openURL() {
 		try {
-			lyricsPage = Jsoup.connect(url).get();
+			lyricsPage = Jsoup.connect(url).timeout(10000).get();
 			return true;
 		} catch (IOException e) {
 			name += song + " not found.";
-			page += "Lyrics not found.<br>Did you mistyped?";
+			page = "There was a problem with finding the lyrics.";
 			searchIt();
 			return false;
 		}

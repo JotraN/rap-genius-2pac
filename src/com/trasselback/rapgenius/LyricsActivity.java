@@ -17,6 +17,7 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class LyricsActivity extends Activity {
@@ -54,12 +55,14 @@ public class LyricsActivity extends Activity {
 		if (hideFavs) {
 			MenuItem item = menu.findItem(R.id.action_favorite);
 			item.setVisible(false);
-			this.invalidateOptionsMenu();
 		}
-
+		if (FavoritesManager.checkFavorites(getApplicationContext(), message)) {
+			MenuItem item = menu.findItem(R.id.action_favorite);
+			item.setIcon(R.drawable.ic_star_pressed);
+		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -74,6 +77,13 @@ public class LyricsActivity extends Activity {
 			return true;
 		case R.id.action_favorite:
 			FavoritesManager.addFavorites(getApplicationContext(), message);
+			if (FavoritesManager.checkFavorites(getApplicationContext(),
+					message)) {
+				item.setIcon(R.drawable.ic_star_pressed);
+			} else {
+				item.setIcon(R.drawable.ic_star_not_pressed);
+			}
+
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -86,6 +96,9 @@ public class LyricsActivity extends Activity {
 		mLoadingView = findViewById(R.id.loadingView);
 		mContent = findViewById(R.id.infoView);
 		mContent.setVisibility(View.GONE);
+
+		((ProgressBar) mLoadingView).setIndeterminateDrawable(getResources()
+				.getDrawable(R.xml.progress_animation));
 
 		// necessary for 2.3 for some reason
 		lyricsField.setMovementMethod(LinkMovementMethod.getInstance());
@@ -101,13 +114,42 @@ public class LyricsActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		// Text size
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(this);
+		
+		// Update text size
 		int size = Integer.parseInt(sharedPref.getString(
 				SettingsFragment.KEY_PREF_TEXT_SIZE, "22"));
 		lyricsField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
 		nameField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size + 10);
+
+		// Update colors
+		String color = sharedPref.getString(
+				SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR, "Default");
+		if (!color.contains("Default")) {
+			ColorManager.setColor(getApplicationContext(), lyricsField, color);
+		} else
+			lyricsField.setTextColor(getResources().getColor(R.color.Gray));
+		color = sharedPref.getString(SettingsFragment.KEY_PREF_TITLE_COLOR,
+				"Default");
+		if (!color.contains("Default")) {
+			ColorManager.setColor(getApplicationContext(), nameField, color);
+		} else
+			nameField.setTextColor(getResources().getColor(R.color.LightGray));
+		color = sharedPref.getString(SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR,
+				"Default");
+		if (!color.contains("Default")) {
+			ColorManager.setLinkColor(getApplicationContext(), lyricsField,
+					color);
+		} else
+			lyricsField.setLinkTextColor(getResources().getColor(
+					R.color.Orange));
+		color = sharedPref.getString(
+				SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "Default");
+		if (!color.contains("Default")) {
+			ColorManager.setBackgroundColor(this, color);
+		} else
+			getWindow().setBackgroundDrawableResource(R.color.LightBlack);
 	}
 
 	private void openSettings() {
