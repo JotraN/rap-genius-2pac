@@ -24,4 +24,13 @@
     <string name="dialog_clear_cache">Are you sure you want to clear the cache?</string>
     <string name="loading">loading&#8230;</string>
 
+    <string-array name="navigation_array">
+        <item>Home</item>
+        <item>Search</item>
+        <item>Settings</item>
+    </string-array>
+
+    <string name="title_activity_test">TestActivity</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>
