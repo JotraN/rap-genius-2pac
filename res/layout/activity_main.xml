@@ -65,7 +65,7 @@
 
         <ListView
             android:id="@+id/left_drawer"
-            android:layout_width="225dp"
+            android:layout_width="240dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="@color/LighterBlack"
@@ -73,7 +73,7 @@
             android:divider="@android:color/transparent"
             android:dividerHeight="20dp"
             android:drawSelectorOnTop="true"
-            android:listSelector="@color/TransGray"
+            android:listSelector="@drawable/list_selector"
             android:paddingTop="100dp" />
     </android.support.v4.widget.DrawerLayout>
 

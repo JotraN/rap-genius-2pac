@@ -13,13 +13,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -29,6 +33,7 @@ public class MainActivity extends SherlockActivity {
 	public final static String EXTRA_MESSAGE = "com.trasselback.rapgenius.MESSAGE";
 
 	private TextView nameField, lyricsField;
+	private EditText search_text;
 	private View mLoadingView;
 	private View mContent;
 	private URLObject urlObject;
@@ -36,6 +41,7 @@ public class MainActivity extends SherlockActivity {
 	private String[] mDrawerTitles;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
 
 	private static boolean contentLoaded = false;
 
@@ -120,6 +126,31 @@ public class MainActivity extends SherlockActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.main, menu);
+
+		// MenuItem to close search
+		final MenuItem searchItem = menu.findItem(R.id.action_search);
+		// Get search from search action view
+		View v = (View) menu.findItem(R.id.action_search).getActionView();
+		search_text = (EditText) v.findViewById(R.id.search_text);
+		search_text.setOnEditorActionListener(new OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId,
+					KeyEvent event) {
+				InputMethodManager keyboard = (InputMethodManager) getApplicationContext()
+						.getSystemService(Context.INPUT_METHOD_SERVICE);
+				keyboard.hideSoftInputFromWindow(search_text.getWindowToken(), 0);
+				Intent intent = new Intent(MainActivity.this,
+						LyricsActivity.class);
+				intent.putExtra(EXTRA_MESSAGE, search_text.getText().toString());
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				
+				search_text.setText("");
+				searchItem.collapseActionView();
+				
+				startActivity(intent);
+				return false;
+			}
+		});
 		return true;
 	}
 
@@ -131,7 +162,7 @@ public class MainActivity extends SherlockActivity {
 			openSettings();
 			return true;
 		case R.id.action_search:
-			openSearch();
+			search_text.requestFocus();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -165,13 +196,7 @@ public class MainActivity extends SherlockActivity {
 			startActivity(intent);
 		}
 	}
-
-	private void openSearch() {
-		Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
-	}
-
+	
 	private class RetrieveNewsFeed extends AsyncTask<Void, Void, String> {
 
 		@Override
@@ -221,7 +246,10 @@ public class MainActivity extends SherlockActivity {
 			intent = new Intent(this, SearchActivity.class);
 			break;
 		case 2:
-			intent = new Intent(this, SettingsActivity.class);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+				intent = new Intent(this, SettingsActivity.class);
+			else
+				intent = new Intent(this, SettingsPreferenceActivity.class);
 			break;
 		default:
 			break;

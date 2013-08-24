@@ -1,9 +1,5 @@
 package com.trasselback.rapgenius;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +13,7 @@ import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -24,10 +21,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
 public class SearchActivity extends SherlockActivity {
 	public final static String EXTRA_MESSAGE = "com.trasselback.rapgenius.MESSAGE";
-	private EditText songField;
 	private TextView favorites, nameField;
+	private EditText search_text;
 
 	private String[] mDrawerTitles;
 	private DrawerLayout mDrawerLayout;
@@ -61,8 +62,32 @@ public class SearchActivity extends SherlockActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getSupportMenuInflater().inflate(R.menu.search, menu);
+		
+		// MenuItem to close search
+		final MenuItem searchItem = menu.findItem(R.id.action_search);
+		// Get search from search action view
+		View v = (View) menu.findItem(R.id.action_search).getActionView();
+		search_text = (EditText) v.findViewById(R.id.search_text);
+		search_text.setOnEditorActionListener(new OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId,
+					KeyEvent event) {
+				InputMethodManager keyboard = (InputMethodManager) getApplicationContext()
+						.getSystemService(Context.INPUT_METHOD_SERVICE);
+				keyboard.hideSoftInputFromWindow(search_text.getWindowToken(), 0);
+				Intent intent = new Intent(SearchActivity.this,
+						LyricsActivity.class);
+				intent.putExtra(EXTRA_MESSAGE, search_text.getText().toString());
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				
+				search_text.setText("");
+				searchItem.collapseActionView();
+				
+				startActivity(intent);
+				return false;
+			}
+		});
 		return true;
 	}
 
@@ -72,28 +97,12 @@ public class SearchActivity extends SherlockActivity {
 		case android.R.id.home:
 			onBackPressed();
 			return true;
-		case R.id.action_settings:
-			openSettings();
-			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
 	private void initialize() {
-		songField = (EditText) findViewById(R.id.songName);
-		songField.setOnEditorActionListener(new OnEditorActionListener() {
-
-			@Override
-			public boolean onEditorAction(TextView v, int actionId,
-					KeyEvent event) {
-				Intent intent = new Intent(SearchActivity.this,
-						LyricsActivity.class);
-				intent.putExtra(EXTRA_MESSAGE, songField.getText().toString());
-				startActivity(intent);
-				return false;
-			}
-		});
 		nameField = (TextView) findViewById(R.id.nameText);
 		favorites = (TextView) findViewById(R.id.lyricsText);
 		favorites.setMovementMethod(LinkMovementMethod.getInstance());
@@ -121,10 +130,6 @@ public class SearchActivity extends SherlockActivity {
 		// Update colors
 		String color = sharedPref.getString(
 				SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR, "Default");
-		if (!color.contains("Default")) {
-			ColorManager.setColor(getApplicationContext(), favorites, color);
-		} else
-			songField.setTextColor(getResources().getColor(R.color.Gray));
 		color = sharedPref.getString(SettingsFragment.KEY_PREF_TITLE_COLOR,
 				"Default");
 		if (!color.contains("Default")) {
@@ -144,18 +149,6 @@ public class SearchActivity extends SherlockActivity {
 			ColorManager.setBackgroundColor(this, color);
 		} else
 			getWindow().setBackgroundDrawableResource(R.color.LightBlack);
-	}
-
-	private void openSettings() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			Intent intent = new Intent(SearchActivity.this,
-					SettingsActivity.class);
-			startActivity(intent);
-		} else {
-			Intent intent = new Intent(SearchActivity.this,
-					SettingsPreferenceActivity.class);
-			startActivity(intent);
-		}
 	}
 
 	private class DrawerItemClickListener implements
@@ -178,7 +171,10 @@ public class SearchActivity extends SherlockActivity {
 			intent = new Intent(this, SearchActivity.class);
 			break;
 		case 2:
-			intent = new Intent(this, SettingsActivity.class);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+				intent = new Intent(this, SettingsActivity.class);
+			else
+				intent = new Intent(this, SettingsPreferenceActivity.class);
 			break;
 		default:
 			break;

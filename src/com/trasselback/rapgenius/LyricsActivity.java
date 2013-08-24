@@ -1,6 +1,6 @@
 package com.trasselback.rapgenius;
 
-import android.annotation.TargetApi;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,13 +14,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -32,6 +36,8 @@ public class LyricsActivity extends SherlockActivity {
 	private View mContent;
 	private URLObject urlObject;
 	private String message = "";
+
+	private EditText search_text;
 
 	private String[] mDrawerTitles;
 	private DrawerLayout mDrawerLayout;
@@ -47,19 +53,6 @@ public class LyricsActivity extends SherlockActivity {
 		setupActionBar();
 		initialize();
 		startLyrics();
-
-		mDrawerTitles = getResources().getStringArray(R.array.navigation_array);
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
-		// Set the adapter for the list view
-		ListAdapter adapter = new ListAdapter(this, R.layout.drawer_list_item);
-		for (String x : mDrawerTitles) {
-			adapter.add(x);
-		}
-		mDrawerList.setAdapter(adapter);
-		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
 	}
 
 	private void setupActionBar() {
@@ -67,19 +60,52 @@ public class LyricsActivity extends SherlockActivity {
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
 	}
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getSupportMenuInflater().inflate(R.menu.lyrics, menu);
+
+		// Hide favorites icon and search bar for explanations
 		if (hideFavs) {
-			MenuItem item = menu.findItem(R.id.action_favorite);
-			item.setVisible(false);
+			MenuItem favItem = menu.findItem(R.id.action_favorite);
+			MenuItem searchItem = menu.findItem(R.id.action_search);
+			favItem.setVisible(false);
+			searchItem.setVisible(false);
 		}
 		if (FavoritesManager.checkFavorites(this, message)) {
 			MenuItem item = menu.findItem(R.id.action_favorite);
 			item.setIcon(R.drawable.ic_star_pressed);
 		}
+
+		// MenuItem to close search
+		final MenuItem searchItem = menu.findItem(R.id.action_search);
+		// Get search from search action view
+		View v = (View) menu.findItem(R.id.action_search).getActionView();
+		search_text = (EditText) v.findViewById(R.id.search_text);
+		search_text.setOnEditorActionListener(new OnEditorActionListener() {
+			@SuppressLint("NewApi")
+			@Override
+			public boolean onEditorAction(TextView v, int actionId,
+					KeyEvent event) {
+				InputMethodManager keyboard = (InputMethodManager) getApplicationContext()
+						.getSystemService(Context.INPUT_METHOD_SERVICE);
+				keyboard.hideSoftInputFromWindow(search_text.getWindowToken(),
+						0);				
+				// Reset loading animation states
+				mContent.setVisibility(View.GONE);
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1)
+					mLoadingView.setAlpha(100);
+				mLoadingView.setVisibility(View.VISIBLE);
+				message = search_text.getText().toString();
+				if (CacheManager.getCache(LyricsActivity.this, message)
+						.length() <= 0) {
+					new RetrieveLyricsTask().execute(message);
+				} else
+					setCache();
+				search_text.setText("");
+				searchItem.collapseActionView();
+				return false;
+			}
+		});
 		return true;
 	}
 
@@ -89,11 +115,8 @@ public class LyricsActivity extends SherlockActivity {
 		case android.R.id.home:
 			onBackPressed();
 			return true;
-		case R.id.action_settings:
-			openSettings();
-			return true;
 		case R.id.action_search:
-			openSearch();
+			search_text.requestFocus();
 			return true;
 		case R.id.action_favorite:
 			FavoritesManager.addFavorites(this, message);
@@ -128,6 +151,19 @@ public class LyricsActivity extends SherlockActivity {
 		cacheLyricsEnabled = sharedPref.getBoolean(
 				SettingsFragment.KEY_PREF_CACHE_LYRICS, false);
 
+		// Navigation Drawer
+		mDrawerTitles = getResources().getStringArray(R.array.navigation_array);
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+		// Set the adapter for the list view
+		ListAdapter adapter = new ListAdapter(this, R.layout.drawer_list_item);
+		for (String x : mDrawerTitles) {
+			adapter.add(x);
+		}
+		adapter.add("More Songs");
+		mDrawerList.setAdapter(adapter);
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 	}
 
 	@Override
@@ -168,24 +204,6 @@ public class LyricsActivity extends SherlockActivity {
 			ColorManager.setBackgroundColor(this, color);
 		} else
 			getWindow().setBackgroundDrawableResource(R.color.LightBlack);
-	}
-
-	private void openSettings() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			Intent intent = new Intent(LyricsActivity.this,
-					SettingsActivity.class);
-			startActivity(intent);
-		} else {
-			Intent intent = new Intent(LyricsActivity.this,
-					SettingsPreferenceActivity.class);
-			startActivity(intent);
-		}
-	}
-
-	private void openSearch() {
-		Intent intent = new Intent(LyricsActivity.this, SearchActivity.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
 	}
 
 	private void setCache() {
@@ -256,7 +274,6 @@ public class LyricsActivity extends SherlockActivity {
 				CrossfadeAnimation.crossfade(getApplicationContext(), mContent,
 						mLoadingView);
 			else {
-				// lyricsField.setMovementMethod(new LinkMovementMethod());
 				mContent.setVisibility(View.VISIBLE);
 				mLoadingView.setVisibility(View.GONE);
 			}
@@ -318,7 +335,14 @@ public class LyricsActivity extends SherlockActivity {
 			intent = new Intent(this, SearchActivity.class);
 			break;
 		case 2:
-			intent = new Intent(this, SettingsActivity.class);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+				intent = new Intent(this, SettingsActivity.class);
+			else
+				intent = new Intent(this, SettingsPreferenceActivity.class);
+			break;
+		case 3:
+			intent = new Intent(this, MoreSongsActivity.class);
+			intent.putExtra(SearchActivity.EXTRA_MESSAGE, message);
 			break;
 		default:
 			break;
