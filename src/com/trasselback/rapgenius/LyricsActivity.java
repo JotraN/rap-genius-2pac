@@ -85,6 +85,10 @@ public class LyricsActivity extends SherlockActivity {
 
 		// MenuItem to close search
 		final MenuItem searchItem = menu.findItem(R.id.action_search);
+		
+		// Favorites icon
+		final MenuItem favsItem = menu.findItem(R.id.action_favorite);
+
 		// Get search from search action view
 		View v = (View) menu.findItem(R.id.action_search).getActionView();
 		search_text = (EditText) v.findViewById(R.id.search_text);
@@ -108,8 +112,15 @@ public class LyricsActivity extends SherlockActivity {
 					new RetrieveLyricsTask().execute(message);
 				} else
 					setCache();
+				// Clean up search bar
 				search_text.setText("");
 				searchItem.collapseActionView();
+				// Reload favorites icon
+				if (FavoritesManager.checkFavorites(getApplicationContext(), message)) {
+					favsItem.setIcon(R.drawable.ic_star_pressed);
+				} else{
+					favsItem.setIcon(R.drawable.ic_star_not_pressed);
+				}
 				return false;
 			}
 		});

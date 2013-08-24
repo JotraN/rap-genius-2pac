@@ -987,7 +987,6 @@ containing a value of this type.
         public static final int abs__up=0x7f05000b;
         public static final int action_favorite=0x7f05003c;
         public static final int action_search=0x7f05003b;
-        public static final int action_settings=0x7f05003d;
         public static final int content_frame=0x7f050039;
         public static final int disableHome=0x7f050009;
         public static final int drawer_layout=0x7f050033;
@@ -1046,9 +1045,7 @@ containing a value of this type.
     public static final class menu {
         public static final int lyrics=0x7f0d0000;
         public static final int main=0x7f0d0001;
-        public static final int more_songs=0x7f0d0002;
-        public static final int search=0x7f0d0003;
-        public static final int test=0x7f0d0004;
+        public static final int search=0x7f0d0002;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1094,21 +1091,18 @@ containing a value of this type.
         public static final int action_search=0x7f0a0010;
         public static final int action_settings=0x7f0a000e;
         public static final int app_name=0x7f0a000d;
-        public static final int close_drawer=0x7f0a0024;
+        public static final int close_drawer=0x7f0a0021;
         public static final int default_search=0x7f0a000f;
         public static final int dialog_clear_cache=0x7f0a001f;
         public static final int dialog_remove_favorites=0x7f0a001a;
-        public static final int hello_world=0x7f0a0022;
-        public static final int loading=0x7f0a0020;
-        public static final int open_drawer=0x7f0a0025;
+        public static final int open_drawer=0x7f0a0022;
         public static final int summary_cache_lyrics=0x7f0a0017;
         public static final int summary_clear_cache=0x7f0a001e;
         public static final int summary_donate=0x7f0a001c;
         public static final int summary_load_home=0x7f0a0015;
         public static final int summary_remove_favorites=0x7f0a0019;
-        public static final int title_activity_more_songs=0x7f0a0023;
+        public static final int title_activity_more_songs=0x7f0a0020;
         public static final int title_activity_settings=0x7f0a0013;
-        public static final int title_activity_test=0x7f0a0021;
         public static final int title_cache_lyrics=0x7f0a0016;
         public static final int title_clear_cache=0x7f0a001d;
         public static final int title_donate=0x7f0a001b;
