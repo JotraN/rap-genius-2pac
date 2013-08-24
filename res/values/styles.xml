@@ -7,7 +7,7 @@
     <style name="MyActionBar" parent="Widget.Sherlock.ActionBar.Solid">
         <item name="background">@color/LightBlack</item>
     </style>
-    
+
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
 

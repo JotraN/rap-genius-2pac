@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -41,9 +42,9 @@ public class MainActivity extends SherlockActivity {
 	private String[] mDrawerTitles;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
-    private ActionBarDrawerToggle mDrawerToggle;
+	private ActionBarDrawerToggle mDrawerToggle;
 
-	private static boolean contentLoaded = false;
+	private boolean contentLoaded = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,27 @@ public class MainActivity extends SherlockActivity {
 		}
 		mDrawerList.setAdapter(adapter);
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+				R.drawable.ic_blank, R.string.open_drawer,
+				R.string.close_drawer);
+
+		// Set the drawer toggle as the DrawerListener
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+		getSupportActionBar().setDisplayShowTitleEnabled(true);
+		getSupportActionBar().setLogo(R.drawable.ic_drawer);
+		getSupportActionBar().setDisplayUseLogoEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
+	}
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		mDrawerToggle.syncState();
 	}
 
 	@Override
@@ -84,9 +106,6 @@ public class MainActivity extends SherlockActivity {
 				mContent.setVisibility(View.VISIBLE);
 				mLoadingView.setVisibility(View.GONE);
 			}
-		} else {
-			mContent.setVisibility(View.VISIBLE);
-			mLoadingView.setVisibility(View.GONE);
 		}
 		// Update text size
 		int size = Integer.parseInt(sharedPref.getString(
@@ -138,15 +157,16 @@ public class MainActivity extends SherlockActivity {
 					KeyEvent event) {
 				InputMethodManager keyboard = (InputMethodManager) getApplicationContext()
 						.getSystemService(Context.INPUT_METHOD_SERVICE);
-				keyboard.hideSoftInputFromWindow(search_text.getWindowToken(), 0);
+				keyboard.hideSoftInputFromWindow(search_text.getWindowToken(),
+						0);
 				Intent intent = new Intent(MainActivity.this,
 						LyricsActivity.class);
 				intent.putExtra(EXTRA_MESSAGE, search_text.getText().toString());
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				
+
 				search_text.setText("");
 				searchItem.collapseActionView();
-				
+
 				startActivity(intent);
 				return false;
 			}
@@ -156,11 +176,15 @@ public class MainActivity extends SherlockActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		// Add drawer toggle, temporary fix for SherlockActionBar
+		if (item.getItemId() == android.R.id.home)
+			if (mDrawerLayout.isDrawerOpen(mDrawerList))
+				mDrawerLayout.closeDrawer(mDrawerList);
+			else
+				mDrawerLayout.openDrawer(mDrawerList);
+
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
-		case R.id.action_settings:
-			openSettings();
-			return true;
 		case R.id.action_search:
 			search_text.requestFocus();
 			return true;
@@ -185,18 +209,6 @@ public class MainActivity extends SherlockActivity {
 		lyricsField.setMovementMethod(LinkMovementMethod.getInstance());
 	}
 
-	private void openSettings() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			Intent intent = new Intent(MainActivity.this,
-					SettingsActivity.class);
-			startActivity(intent);
-		} else {
-			Intent intent = new Intent(MainActivity.this,
-					SettingsPreferenceActivity.class);
-			startActivity(intent);
-		}
-	}
-	
 	private class RetrieveNewsFeed extends AsyncTask<Void, Void, String> {
 
 		@Override

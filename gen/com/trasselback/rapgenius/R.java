@@ -930,17 +930,20 @@ containing a value of this type.
         public static final int abs__textfield_searchview_right_holo_dark=0x7f02006d;
         public static final int abs__textfield_searchview_right_holo_light=0x7f02006e;
         public static final int abs__toast_frame=0x7f02006f;
-        public static final int ic_launcher=0x7f020070;
-        public static final int ic_progress0=0x7f020071;
-        public static final int ic_progress1=0x7f020072;
-        public static final int ic_progress2=0x7f020073;
-        public static final int ic_progress3=0x7f020074;
-        public static final int ic_progress4=0x7f020075;
-        public static final int ic_search=0x7f020076;
-        public static final int ic_settings=0x7f020077;
-        public static final int ic_star_not_pressed=0x7f020078;
-        public static final int ic_star_pressed=0x7f020079;
-        public static final int list_selector=0x7f02007a;
+        public static final int ic_back=0x7f020070;
+        public static final int ic_blank=0x7f020071;
+        public static final int ic_drawer=0x7f020072;
+        public static final int ic_launcher=0x7f020073;
+        public static final int ic_progress0=0x7f020074;
+        public static final int ic_progress1=0x7f020075;
+        public static final int ic_progress2=0x7f020076;
+        public static final int ic_progress3=0x7f020077;
+        public static final int ic_progress4=0x7f020078;
+        public static final int ic_search=0x7f020079;
+        public static final int ic_settings=0x7f02007a;
+        public static final int ic_star_not_pressed=0x7f02007b;
+        public static final int ic_star_pressed=0x7f02007c;
+        public static final int list_selector=0x7f02007d;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f050020;
@@ -1091,11 +1094,13 @@ containing a value of this type.
         public static final int action_search=0x7f0a0010;
         public static final int action_settings=0x7f0a000e;
         public static final int app_name=0x7f0a000d;
+        public static final int close_drawer=0x7f0a0024;
         public static final int default_search=0x7f0a000f;
         public static final int dialog_clear_cache=0x7f0a001f;
         public static final int dialog_remove_favorites=0x7f0a001a;
         public static final int hello_world=0x7f0a0022;
         public static final int loading=0x7f0a0020;
+        public static final int open_drawer=0x7f0a0025;
         public static final int summary_cache_lyrics=0x7f0a0017;
         public static final int summary_clear_cache=0x7f0a001e;
         public static final int summary_donate=0x7f0a001c;

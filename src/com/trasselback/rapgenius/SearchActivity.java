@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -33,13 +34,13 @@ public class SearchActivity extends SherlockActivity {
 	private String[] mDrawerTitles;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
+	private ActionBarDrawerToggle mDrawerToggle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search);
 		// Show the Up button in the action bar.
-		setupActionBar();
 		initialize();
 
 		mDrawerTitles = getResources().getStringArray(R.array.navigation_array);
@@ -53,17 +54,35 @@ public class SearchActivity extends SherlockActivity {
 		}
 		mDrawerList.setAdapter(adapter);
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+		// Set back arrow to blank
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+				R.drawable.ic_blank, R.string.open_drawer,
+				R.string.close_drawer);
+
+		// Set the drawer toggle as the DrawerListener
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		setupActionBar();
+	}
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		mDrawerToggle.syncState();
 	}
 
 	private void setupActionBar() {
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
+		getSupportActionBar().setDisplayShowTitleEnabled(true);
+		getSupportActionBar().setLogo(R.drawable.ic_drawer);
+		getSupportActionBar().setDisplayUseLogoEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.search, menu);
-		
+
 		// MenuItem to close search
 		final MenuItem searchItem = menu.findItem(R.id.action_search);
 		// Get search from search action view
@@ -75,15 +94,16 @@ public class SearchActivity extends SherlockActivity {
 					KeyEvent event) {
 				InputMethodManager keyboard = (InputMethodManager) getApplicationContext()
 						.getSystemService(Context.INPUT_METHOD_SERVICE);
-				keyboard.hideSoftInputFromWindow(search_text.getWindowToken(), 0);
+				keyboard.hideSoftInputFromWindow(search_text.getWindowToken(),
+						0);
 				Intent intent = new Intent(SearchActivity.this,
 						LyricsActivity.class);
 				intent.putExtra(EXTRA_MESSAGE, search_text.getText().toString());
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				
+
 				search_text.setText("");
 				searchItem.collapseActionView();
-				
+
 				startActivity(intent);
 				return false;
 			}
@@ -93,9 +113,17 @@ public class SearchActivity extends SherlockActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		// Add drawer toggle, temporary fix for SherlockActionBar
+		if (item.getItemId() == android.R.id.home)
+			if (mDrawerLayout.isDrawerOpen(mDrawerList))
+				mDrawerLayout.closeDrawer(mDrawerList);
+			else
+				mDrawerLayout.openDrawer(mDrawerList);
+
+		// Handle presses on the action bar items
 		switch (item.getItemId()) {
-		case android.R.id.home:
-			onBackPressed();
+		case R.id.action_search:
+			search_text.requestFocus();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

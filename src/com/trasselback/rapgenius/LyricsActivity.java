@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -42,6 +43,7 @@ public class LyricsActivity extends SherlockActivity {
 	private String[] mDrawerTitles;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
+	private ActionBarDrawerToggle mDrawerToggle;
 
 	private boolean hideFavs = false;
 	private boolean cacheLyricsEnabled = false;
@@ -50,14 +52,16 @@ public class LyricsActivity extends SherlockActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lyrics);
-		setupActionBar();
 		initialize();
+		setupActionBar();
 		startLyrics();
 	}
 
 	private void setupActionBar() {
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
+		getSupportActionBar().setLogo(R.drawable.ic_drawer);
+		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayShowTitleEnabled(true);
+		getSupportActionBar().setDisplayUseLogoEnabled(true);
 	}
 
 	@Override
@@ -70,6 +74,9 @@ public class LyricsActivity extends SherlockActivity {
 			MenuItem searchItem = menu.findItem(R.id.action_search);
 			favItem.setVisible(false);
 			searchItem.setVisible(false);
+			
+			getSupportActionBar().setLogo(R.drawable.ic_back);
+			getSupportActionBar().setDisplayShowTitleEnabled(false);
 		}
 		if (FavoritesManager.checkFavorites(this, message)) {
 			MenuItem item = menu.findItem(R.id.action_favorite);
@@ -89,7 +96,7 @@ public class LyricsActivity extends SherlockActivity {
 				InputMethodManager keyboard = (InputMethodManager) getApplicationContext()
 						.getSystemService(Context.INPUT_METHOD_SERVICE);
 				keyboard.hideSoftInputFromWindow(search_text.getWindowToken(),
-						0);				
+						0);
 				// Reset loading animation states
 				mContent.setVisibility(View.GONE);
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1)
@@ -111,9 +118,17 @@ public class LyricsActivity extends SherlockActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		// Add drawer toggle, temporary fix for SherlockActionBar
+		if (item.getItemId() == android.R.id.home && !hideFavs)
+			if (mDrawerLayout.isDrawerOpen(mDrawerList))
+				mDrawerLayout.closeDrawer(mDrawerList);
+			else
+				mDrawerLayout.openDrawer(mDrawerList);
+
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			onBackPressed();
+			if (hideFavs)
+				onBackPressed();
 			return true;
 		case R.id.action_search:
 			search_text.requestFocus();
@@ -164,6 +179,21 @@ public class LyricsActivity extends SherlockActivity {
 		adapter.add("More Songs");
 		mDrawerList.setAdapter(adapter);
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+		// Set back arrow to blank
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+				R.drawable.ic_blank, R.string.open_drawer,
+				R.string.close_drawer);
+
+		// Set the drawer toggle as the DrawerListener
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+	}
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		mDrawerToggle.syncState();
 	}
 
 	@Override

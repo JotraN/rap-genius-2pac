@@ -25,12 +25,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.trasselback.rapgenius.LyricsActivity"
-            android:parentActivityName="com.trasselback.rapgenius.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.trasselback.rapgenius.MainActivity" />
+        <activity android:name="com.trasselback.rapgenius.LyricsActivity" >
+
             <!-- Links starting with explanation_clicked start a new intent -->
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -54,12 +50,7 @@
                 <data android:scheme="fav_clicked" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.trasselback.rapgenius.SearchActivity"
-            android:parentActivityName="com.trasselback.rapgenius.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.trasselback.rapgenius.MainActivity" />
+        <activity android:name="com.trasselback.rapgenius.SearchActivity" >
         </activity>
         <activity
             android:name="com.trasselback.rapgenius.SettingsActivity"

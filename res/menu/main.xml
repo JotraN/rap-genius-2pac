@@ -2,15 +2,9 @@
 
     <item
         android:id="@+id/action_search"
+        android:actionLayout="@layout/action_search_layout"
         android:icon="@drawable/ic_search"
         android:showAsAction="ifRoom|collapseActionView"
-        android:title="@string/action_search"
-        android:actionLayout="@layout/action_search_layout"/>
-    <item
-        android:id="@+id/action_settings"
-        android:icon="@drawable/ic_settings"
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom"
-        android:title="@string/action_settings"/>
+        android:title="@string/action_search"/>
 
 </menu>
