@@ -27,9 +27,14 @@ public class MoreSongs {
 			lyricsPage = Jsoup.connect(url).timeout(10000).get();
 			return true;
 		} catch (IOException e) {
-			name = "More songs not found.";
-			page = "There was a problem accessing Rap Genius.<br>Try reloading.";
-			return false;
+			try {
+				lyricsPage = Jsoup.connect(url).timeout(10000).get();
+				return true;
+			} catch (IOException e1) {
+				name = "More songs not found.";
+				page = "There was a problem accessing Rap Genius.<br>Try reloading.";
+				return false;
+			}
 		}
 	}
 

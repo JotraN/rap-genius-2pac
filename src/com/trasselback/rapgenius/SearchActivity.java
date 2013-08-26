@@ -73,6 +73,7 @@ public class SearchActivity extends SherlockActivity {
 	}
 
 	private void setupActionBar() {
+		getSupportActionBar().setTitle("Favorites");
 		getSupportActionBar().setDisplayShowTitleEnabled(true);
 		getSupportActionBar().setLogo(R.drawable.ic_drawer);
 		getSupportActionBar().setDisplayUseLogoEnabled(true);

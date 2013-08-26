@@ -47,8 +47,13 @@ public class Explanations implements URLObject {
 			explainPage = Jsoup.connect(url).timeout(10000).get();
 			return true;
 		} catch (IOException e) {
-			page += "Explanation failed to load.<br>Rap Genius may be down.";
-			return false;
+			try {
+				explainPage = Jsoup.connect(url).timeout(10000).get();
+				return true;
+			} catch (IOException e1) {
+				page += "Explanation failed to load.<br>Rap Genius may be down.";
+				return false;
+			}
 		}
 	}
 
@@ -57,6 +62,10 @@ public class Explanations implements URLObject {
 			Element content = explainPage.getElementById("main");
 			// TODO load images
 			page = content.toString().replaceAll("<img (?:alt.+ )?src.+>", "");
+			// Fix local Rap Genius links
+			page = page.replace("href=\"/", "href=\"http://rapgenius.com/");
+			// page = page.replace("href=\"/", "href=\"song_clicked:");
+
 		}
 	}
 

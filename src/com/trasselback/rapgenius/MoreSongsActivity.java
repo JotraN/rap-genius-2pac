@@ -54,12 +54,14 @@ public class MoreSongsActivity extends SherlockActivity {
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
 				R.drawable.ic_blank, R.string.open_drawer,
 				R.string.close_drawer);
+		mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 	}
 
 	private void setupActionBar() {
+		getSupportActionBar().setTitle("More Songs");
 		getSupportActionBar().setLogo(R.drawable.ic_back);
 		getSupportActionBar().setHomeButtonEnabled(true);
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
+		getSupportActionBar().setDisplayShowTitleEnabled(true);
 		getSupportActionBar().setDisplayUseLogoEnabled(true);
 	}
 

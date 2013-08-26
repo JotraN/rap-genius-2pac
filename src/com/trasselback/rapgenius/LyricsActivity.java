@@ -58,6 +58,7 @@ public class LyricsActivity extends SherlockActivity {
 	}
 
 	private void setupActionBar() {
+		getSupportActionBar().setTitle("Lyrics");
 		getSupportActionBar().setLogo(R.drawable.ic_drawer);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -75,8 +76,10 @@ public class LyricsActivity extends SherlockActivity {
 			favItem.setVisible(false);
 			searchItem.setVisible(false);
 			
+			mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+			getSupportActionBar().setTitle("Explanation");
 			getSupportActionBar().setLogo(R.drawable.ic_back);
-			getSupportActionBar().setDisplayShowTitleEnabled(false);
+			getSupportActionBar().setDisplayShowTitleEnabled(true);
 		}
 		if (FavoritesManager.checkFavorites(this, message)) {
 			MenuItem item = menu.findItem(R.id.action_favorite);
@@ -400,7 +403,6 @@ public class LyricsActivity extends SherlockActivity {
 		public ListAdapter(Context context, int resource) {
 			super(context, resource);
 		}
-
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View v = super.getView(position, convertView, parent);

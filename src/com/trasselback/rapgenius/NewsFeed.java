@@ -18,8 +18,13 @@ public class NewsFeed implements URLObject {
 			homePage = Jsoup.connect("http://rapgenius.com").timeout(10000).get();
 			return true;
 		} catch (IOException e) {
-			page = "There was a problem with connecting to Rap Genius.<br>Rap Genius may be down.";
-			return false;
+			try {
+				homePage = Jsoup.connect("http://rapgenius.com").timeout(10000).get();
+				return true;
+			} catch (IOException e1) {
+				page = "There was a problem with connecting to Rap Genius.<br>Rap Genius may be down.";
+				return false;
+			}
 		}
 	}
 
