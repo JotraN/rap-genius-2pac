@@ -312,9 +312,8 @@ int id abs__submit_area 0x7f05002f
 int id abs__textButton 0x7f050013
 int id abs__title 0x7f05001b
 int id abs__up 0x7f05000b
-int id action_favorite 0x7f05003d
-int id action_search 0x7f05003c
-int id action_settings 0x7f05003b
+int id action_favorite 0x7f05003c
+int id action_search 0x7f05003b
 int id content_frame 0x7f050039
 int id disableHome 0x7f050009
 int id drawer_layout 0x7f050033
@@ -365,10 +364,9 @@ int layout activity_search 0x7f030019
 int layout drawer_list_item 0x7f03001a
 int layout sherlock_spinner_dropdown_item 0x7f03001b
 int layout sherlock_spinner_item 0x7f03001c
-int menu connection_test 0x7f0d0000
-int menu lyrics 0x7f0d0001
-int menu main 0x7f0d0002
-int menu search 0x7f0d0003
+int menu lyrics 0x7f0d0000
+int menu main 0x7f0d0001
+int menu search 0x7f0d0002
 int string abs__action_bar_home_description 0x7f0a0000
 int string abs__action_bar_up_description 0x7f0a0001
 int string abs__action_menu_overflow_description 0x7f0a0002
