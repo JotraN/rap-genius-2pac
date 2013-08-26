@@ -985,8 +985,9 @@ containing a value of this type.
         public static final int abs__textButton=0x7f050013;
         public static final int abs__title=0x7f05001b;
         public static final int abs__up=0x7f05000b;
-        public static final int action_favorite=0x7f05003c;
-        public static final int action_search=0x7f05003b;
+        public static final int action_favorite=0x7f05003d;
+        public static final int action_search=0x7f05003c;
+        public static final int action_settings=0x7f05003b;
         public static final int content_frame=0x7f050039;
         public static final int disableHome=0x7f050009;
         public static final int drawer_layout=0x7f050033;
@@ -1043,9 +1044,10 @@ containing a value of this type.
         public static final int sherlock_spinner_item=0x7f03001c;
     }
     public static final class menu {
-        public static final int lyrics=0x7f0d0000;
-        public static final int main=0x7f0d0001;
-        public static final int search=0x7f0d0002;
+        public static final int connection_test=0x7f0d0000;
+        public static final int lyrics=0x7f0d0001;
+        public static final int main=0x7f0d0002;
+        public static final int search=0x7f0d0003;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 

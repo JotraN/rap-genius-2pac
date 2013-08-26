@@ -74,28 +74,36 @@ public class Lyrics implements URLObject {
 	}
 
 	public void searchIt() {
-		String searchUrl = "http://rapgenius.com/search?q="
-				+ message.replace(" ", "+");
-		Document searchPage;
+		String searchUrl = "http://google.com/search?q="
+				+ message.replace(" ", "+") + "+rapgenius"
+				+ "&as_qdr=all&num=20";
 		try {
-			searchPage = Jsoup.connect(searchUrl).get();
-			Elements content = searchPage.getAllElements();
-			if (content.hasClass("search_result")) {
-				content = searchPage.getElementsByClass("search_result");
-				page += "<br>Did you mean any of the following?<br><br>"
-						+ content.toString()
-								.replace("href=\"", "href=\"song_clicked:")
-								.replace("</a>", "</a><br><br>")
-								.replaceAll("<p>(.+?)</p>", "");
-			} else if (content.hasClass("search_results song_list")) {
-				content = searchPage
-						.getElementsByClass("search_results song_list");
-				page += "<br>Did you mean any of the following?<br><br>"
-						+ content.toString()
-								.replace("href=\"", "href=\"song_clicked:")
-								.replace("</a>", "</a><br><br>")
-								.replaceAll("<p>(.+?)</p>", "");
+			Document searchPage = Jsoup
+					.connect(searchUrl)
+					.userAgent(
+							"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.2 Safari/537.36")
+					.referrer("http://www.google.com").get();
+			Elements content = searchPage.getElementsByClass("r");
+			String searchPageString = content.toString();
+			Pattern pattern = Pattern
+					.compile("<a href=\".+rapgenius\\.com.+lyrics\".+>.+</a>");
+			Matcher matcher = pattern.matcher(searchPageString);
+			boolean found = false;
+			String searchResult = "";
+			if (matcher.find()) {
+				found = true;
 			}
+			while (found) {
+				searchResult += searchPageString.substring(matcher.start(),
+						matcher.end());
+				if (!matcher.find(matcher.end()))
+					found = false;
+			}
+			page += "<br>Did you mean any of the following?<br>"
+					+ searchResult.replace("href=\"", "href=\"song_clicked:")
+							.replace("</a>", "</a><br>")
+							.replace("http://rapgenius.com", "")
+							.replace(" Lyrics | <em>Rap Genius</em>", "");
 		} catch (IOException e) {
 		}
 	}
