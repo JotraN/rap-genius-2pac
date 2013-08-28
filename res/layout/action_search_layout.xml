@@ -16,8 +16,9 @@
         android:inputType="text"
         android:textColor="@color/Gray"
         android:textCursorDrawable="@null"
-        android:textSize="20sp" >
-        <requestFocus />
+        android:textSize="20sp" 
+        android:focusable="true"
+        android:focusableInTouchMode="true">
     </EditText>
 
 </RelativeLayout>

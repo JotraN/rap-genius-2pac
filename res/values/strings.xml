@@ -3,7 +3,7 @@
 
     <string name="app_name">Unofficial Rap Genius</string>
     <string name="action_settings">Settings</string>
-    <string name="default_search">Enter artist song</string>
+    <string name="default_search">Enter artist song here</string>
     <string name="action_search">Search</string>
     <string name="action_favorite">Add/Remove to favorites</string>
     <string name="title_favorites">Favorites</string>

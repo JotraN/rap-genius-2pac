@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -25,6 +26,7 @@ import android.widget.TextView.OnEditorActionListener;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.MenuItem.OnActionExpandListener;
 
 public class SearchActivity extends SherlockActivity {
 	public final static String EXTRA_MESSAGE = "com.trasselback.rapgenius.MESSAGE";
@@ -35,6 +37,8 @@ public class SearchActivity extends SherlockActivity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
+
+	private Handler mHandler;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -86,9 +90,47 @@ public class SearchActivity extends SherlockActivity {
 
 		// MenuItem to close search
 		final MenuItem searchItem = menu.findItem(R.id.action_search);
+		mHandler = new Handler();
+		searchItem.setOnActionExpandListener(new OnActionExpandListener() {
+			InputMethodManager keyboard = (InputMethodManager) getApplicationContext()
+					.getSystemService(Context.INPUT_METHOD_SERVICE);
+
+			@Override
+			public boolean onMenuItemActionExpand(MenuItem item) {
+				// Wait for edit text to load before calling focus
+				mHandler.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						search_text.clearFocus();
+						if (android.os.Build.VERSION.SDK_INT < 11) {
+							keyboard.toggleSoftInput(
+									InputMethodManager.SHOW_FORCED,
+									InputMethodManager.HIDE_IMPLICIT_ONLY);
+						} else {
+							keyboard.showSoftInput(search_text,
+									InputMethodManager.SHOW_IMPLICIT);
+						}
+						search_text.requestFocus();
+					}
+				}, 1);
+				return true;
+			}
+
+			@Override
+			public boolean onMenuItemActionCollapse(MenuItem item) {
+				 if (android.os.Build.VERSION.SDK_INT < 11) {
+						keyboard.hideSoftInputFromWindow(search_text.getWindowToken(), 0);
+					 } else {
+					    keyboard.hideSoftInputFromWindow(search_text.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+					 }  
+				return true;
+			}
+		});
+
 		// Get search from search action view
 		View v = (View) menu.findItem(R.id.action_search).getActionView();
 		search_text = (EditText) v.findViewById(R.id.search_text);
+		search_text.clearFocus();
 		search_text.setOnEditorActionListener(new OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId,
@@ -124,7 +166,7 @@ public class SearchActivity extends SherlockActivity {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
 		case R.id.action_search:
-			search_text.requestFocus();
+			search_text.clearFocus();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
