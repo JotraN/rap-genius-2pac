@@ -4,6 +4,10 @@
         <item name="actionBarStyle">@style/MyActionBar</item>
     </style>
 
+    <style name="AnimationDisabledAppBaseTheme" parent="AppBaseTheme">
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
     <style name="MyActionBar" parent="Widget.Sherlock.ActionBar.Solid">
         <item name="background">@color/LightBlack</item>
     </style>

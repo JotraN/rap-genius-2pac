@@ -985,8 +985,10 @@ containing a value of this type.
         public static final int abs__textButton=0x7f050013;
         public static final int abs__title=0x7f05001b;
         public static final int abs__up=0x7f05000b;
-        public static final int action_favorite=0x7f05003c;
-        public static final int action_search=0x7f05003b;
+        public static final int action_favorite=0x7f05003d;
+        public static final int action_search=0x7f05003c;
+        public static final int action_settings=0x7f05003b;
+        public static final int action_websearch=0x7f05003e;
         public static final int content_frame=0x7f050039;
         public static final int disableHome=0x7f050009;
         public static final int drawer_layout=0x7f050033;
@@ -1034,18 +1036,23 @@ containing a value of this type.
         public static final int abs__search_view=0x7f030013;
         public static final int abs__simple_dropdown_hint=0x7f030014;
         public static final int action_search_layout=0x7f030015;
-        public static final int activity_lyrics=0x7f030016;
-        public static final int activity_main=0x7f030017;
-        public static final int activity_more_songs=0x7f030018;
-        public static final int activity_search=0x7f030019;
+        public static final int activity_explanation=0x7f030016;
+        public static final int activity_lyrics=0x7f030017;
+        public static final int activity_main=0x7f030018;
+        public static final int activity_more_songs=0x7f030019;
         public static final int drawer_list_item=0x7f03001a;
-        public static final int sherlock_spinner_dropdown_item=0x7f03001b;
-        public static final int sherlock_spinner_item=0x7f03001c;
+        public static final int fragment_home_page_layout=0x7f03001b;
+        public static final int fragment_lyrics_layout=0x7f03001c;
+        public static final int fragment_search_layout=0x7f03001d;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001e;
+        public static final int sherlock_spinner_item=0x7f03001f;
     }
     public static final class menu {
-        public static final int lyrics=0x7f0d0000;
-        public static final int main=0x7f0d0001;
-        public static final int search=0x7f0d0002;
+        public static final int explanation=0x7f0d0000;
+        public static final int lyrics=0x7f0d0001;
+        public static final int main=0x7f0d0002;
+        public static final int search=0x7f0d0003;
+        public static final int test=0x7f0d0004;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1095,14 +1102,17 @@ containing a value of this type.
         public static final int default_search=0x7f0a000f;
         public static final int dialog_clear_cache=0x7f0a001f;
         public static final int dialog_remove_favorites=0x7f0a001a;
+        public static final int hello_world=0x7f0a0024;
         public static final int open_drawer=0x7f0a0022;
         public static final int summary_cache_lyrics=0x7f0a0017;
         public static final int summary_clear_cache=0x7f0a001e;
         public static final int summary_donate=0x7f0a001c;
         public static final int summary_load_home=0x7f0a0015;
         public static final int summary_remove_favorites=0x7f0a0019;
+        public static final int title_activity_explanation=0x7f0a0025;
         public static final int title_activity_more_songs=0x7f0a0020;
         public static final int title_activity_settings=0x7f0a0013;
+        public static final int title_activity_test=0x7f0a0023;
         public static final int title_cache_lyrics=0x7f0a0016;
         public static final int title_clear_cache=0x7f0a001d;
         public static final int title_donate=0x7f0a001b;
@@ -1111,6 +1121,7 @@ containing a value of this type.
         public static final int title_remove_favorites=0x7f0a0018;
     }
     public static final class style {
+        public static final int AnimationDisabledAppBaseTheme=0x7f0b005a;
         /** 
         Base application theme for API 11+. This theme completely replaces
         AppBaseTheme from res/values/styles.xml on API 11+ devices.
@@ -1119,8 +1130,8 @@ containing a value of this type.
         public static final int AppBaseTheme=0x7f0b0059;
         /**  Application theme. 
          */
-        public static final int AppTheme=0x7f0b005b;
-        public static final int MyActionBar=0x7f0b005a;
+        public static final int AppTheme=0x7f0b005c;
+        public static final int MyActionBar=0x7f0b005b;
         public static final int Sherlock___TextAppearance_Small=0x7f0b0046;
         public static final int Sherlock___Theme=0x7f0b0051;
         public static final int Sherlock___Theme_DarkActionBar=0x7f0b0053;

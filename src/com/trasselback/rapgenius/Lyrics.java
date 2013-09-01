@@ -8,6 +8,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import android.util.Log;
+
 public class Lyrics implements URLObject {
 	private String name = "";
 	private String page = "";
@@ -39,7 +41,7 @@ public class Lyrics implements URLObject {
 	}
 
 	public void retrieveName() {
-		name = lyricsPage.title().replace("Lyrics | Rap Genius", "");
+		name = lyricsPage.title().replaceAll("Lyrics \\| \\w+ Genius", "");
 	}
 
 	public void retrievePage() {
@@ -103,7 +105,14 @@ public class Lyrics implements URLObject {
 					+ searchResult.replace("href=\"", "href=\"song_clicked:")
 							.replace("</a>", "</a><br>")
 							.replace("http://rapgenius.com", "")
-							.replace(" Lyrics | <em>Rap Genius</em>", "");
+							// Replace rock.rapgenius poetry.rapgenius
+							// news.rapgenius
+							.replaceAll("http://\\w+.rapgenius.com", "")
+							// Formatting
+							.replaceAll(" Lyrics.+?<em>Rap Genius</em>", "")
+							.replaceAll("- Poetry.+?<em>Rap Genius</em>", "");
+
+			Log.v("YOO", page);
 		} catch (IOException e) {
 		}
 	}

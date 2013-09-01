@@ -6,5 +6,10 @@
         android:icon="@drawable/ic_search"
         android:showAsAction="ifRoom|collapseActionView"
         android:title="@string/action_search"/>
+    <item
+        android:id="@+id/action_favorite"
+        android:icon="@drawable/ic_star_not_pressed"
+        android:showAsAction="always"
+        android:title="@string/action_favorite"/>
 
 </menu>

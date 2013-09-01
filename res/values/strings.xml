@@ -30,5 +30,8 @@
     <string name="title_activity_more_songs">More Songs</string>
     <string name="close_drawer">Close drawer.</string>
     <string name="open_drawer">Open drawer.</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_explanation">Explanation</string>
 
 </resources>
