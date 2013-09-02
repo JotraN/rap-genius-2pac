@@ -28,7 +28,8 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.MenuItem.OnActionExpandListener;
 
 public class MainActivity extends SherlockFragmentActivity implements
-		FavoritesFragment.OnHeadlineSelectedListener {
+		FavoritesFragment.OnFavoriteSelectedListener,
+		MoreSongsFragment.OnMoreSongsSelectedListener {
 	public final static String EXTRA_MESSAGE = "com.trasselback.rapgenius.MESSAGE";
 	private static boolean lyricsLoaded = false;
 	private boolean hideFavs = true;
@@ -92,6 +93,8 @@ public class MainActivity extends SherlockFragmentActivity implements
 			setTitle("LYRICS");
 			if (adapter.getPosition("MORE SONGS") == -1)
 				adapter.add("MORE SONGS");
+			if (adapter.getPosition("BACK TO LYRICS") != -1)
+				adapter.remove("BACK TO LYRICS");
 			hideFavs = false;
 		}
 	}
@@ -181,6 +184,9 @@ public class MainActivity extends SherlockFragmentActivity implements
 						.replace(R.id.content_frame, fragment).commit();
 				if (adapter.getPosition("MORE SONGS") == -1)
 					adapter.add("MORE SONGS");
+				if (adapter.getPosition("BACK TO LYRICS") != -1)
+					adapter.remove("BACK TO LYRICS");
+
 				setTitle("Lyrics");
 				// Reload favorites icon
 				if (FavoritesManager.checkFavorites(getApplicationContext(),
@@ -191,7 +197,6 @@ public class MainActivity extends SherlockFragmentActivity implements
 				}
 				search_text.setText("");
 				searchItem.collapseActionView();
-
 				favsItem.setVisible(true);
 				hideFavs = false;
 				return false;
@@ -238,32 +243,35 @@ public class MainActivity extends SherlockFragmentActivity implements
 	private void selectItem(int position) {
 		// update the main content by replacing fragments
 		Fragment fragment = null;
+		FragmentManager fragmentManager = getSupportFragmentManager();
+
 		switch (position) {
 		case 0:
 			fragment = new HomePageFragment();
-			FragmentManager fragmentManager = getSupportFragmentManager();
 			fragmentManager.beginTransaction()
 					.replace(R.id.content_frame, fragment).commit();
 			mDrawerList.setItemChecked(position, true);
 			setTitle(mDrawerTitles[position]);
-			adapter.remove("MORE SONGS");
 			if (!hideFavs) {
 				favItem.setVisible(false);
 				hideFavs = true;
 			}
+			adapter.remove("MORE SONGS");
+			adapter.remove("BACK TO LYRICS");
 			break;
 		case 1:
 			fragment = new FavoritesFragment();
-			FragmentManager fragmentManager1 = getSupportFragmentManager();
-			fragmentManager1.beginTransaction()
+			fragmentManager = getSupportFragmentManager();
+			fragmentManager.beginTransaction()
 					.replace(R.id.content_frame, fragment).commit();
 			mDrawerList.setItemChecked(position, true);
 			setTitle(mDrawerTitles[position]);
-			adapter.remove("MORE SONGS");
 			if (!hideFavs) {
 				favItem.setVisible(false);
 				hideFavs = true;
 			}
+			adapter.remove("MORE SONGS");
+			adapter.remove("BACK TO LYRICS");
 			break;
 
 		case 2:
@@ -276,12 +284,39 @@ public class MainActivity extends SherlockFragmentActivity implements
 			break;
 
 		case 3:
-			Intent intent1;
-			intent1 = new Intent(this, MoreSongsActivity.class);
-			intent1.putExtra(MainActivity.EXTRA_MESSAGE, LyricsFragment.message);
-			startActivity(intent1);
+			if (adapter.getItem(3).contains("MORE SONGS")) {
+				fragment = new MoreSongsFragment();
+				Bundle song = new Bundle();
+				song.putString(EXTRA_MESSAGE, LyricsFragment.message);
+				fragment.setArguments(song);
+				fragmentManager = getSupportFragmentManager();
+				fragmentManager.beginTransaction()
+						.replace(R.id.content_frame, fragment).commit();
+				mDrawerList.setItemChecked(position, true);
+				setTitle("MORE SONGS");
+				adapter.add("BACK TO LYRICS");
+				if (!hideFavs) {
+					favItem.setVisible(false);
+					hideFavs = true;
+				}
+				adapter.remove("MORE SONGS");
+			} else if (adapter.getItem(3).contains("BACK TO LYRICS")) {
+				fragment = new LyricsFragment();
+				Bundle song = new Bundle();
+				song.putString(EXTRA_MESSAGE, LyricsFragment.message);
+				fragment.setArguments(song);
+				fragmentManager.beginTransaction()
+						.replace(R.id.content_frame, fragment).commit();
+				setTitle("LYRICS");
+				if (adapter.getPosition("MORE SONGS") == -1)
+					adapter.add("MORE SONGS");
+				favItem.setVisible(true);
+				hideFavs = false;
+				adapter.remove("BACK TO LYRICS");
+			}
 			break;
 		}
+
 		mDrawerLayout.closeDrawer(mDrawerList);
 	}
 
@@ -344,5 +379,29 @@ public class MainActivity extends SherlockFragmentActivity implements
 			favItem.setIcon(R.drawable.ic_star_not_pressed);
 		}
 		hideFavs = false;
+	}
+
+	@Override
+	public void onMoreSongsSelected(String songName) {
+		Fragment fragment = new LyricsFragment();
+		Bundle song = new Bundle();
+		song.putString(EXTRA_MESSAGE, songName);
+		fragment.setArguments(song);
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.content_frame, fragment).commit();
+		setTitle("LYRICS");
+		if (adapter.getPosition("MORE SONGS") == -1)
+			adapter.add("MORE SONGS");
+		favItem.setVisible(true);
+		// Reload favorites icon
+		if (FavoritesManager.checkFavorites(getApplicationContext(),
+				songName.toString())) {
+			favItem.setIcon(R.drawable.ic_star_pressed);
+		} else {
+			favItem.setIcon(R.drawable.ic_star_not_pressed);
+		}
+		hideFavs = false;
+		adapter.remove("BACK TO LYRICS");
 	}
 }

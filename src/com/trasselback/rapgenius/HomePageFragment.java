@@ -28,6 +28,8 @@ public class HomePageFragment extends Fragment {
 	private AsyncTask<Void, Void, String> retrieveTask;
 
 	private static boolean contentLoaded = false;
+	// holds home page data
+	private static String homeData = "";
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,16 +57,26 @@ public class HomePageFragment extends Fragment {
 		super.onResume();
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
+		boolean loadHome = sharedPref.getBoolean(
+				SettingsFragment.KEY_PREF_LOAD_HOME, true);
+
 		// If not already loaded
 		if (!contentLoaded) {
-			// Get load home setting
-			boolean loadHome = sharedPref.getBoolean(
-					SettingsFragment.KEY_PREF_LOAD_HOME, false);
-
 			if (loadHome) {
 				mLoadingView.setVisibility(View.VISIBLE);
 				mContent.setVisibility(View.GONE);
 				retrieveTask.execute();
+			} else {
+				lyricsField.setText("Home disabled in settings.");
+				mContent.setVisibility(View.VISIBLE);
+				mLoadingView.setVisibility(View.GONE);
+			}
+		} else {
+			if (loadHome) {
+				mLoadingView.setVisibility(View.GONE);
+				mContent.setVisibility(View.VISIBLE);
+				lyricsField.setText(Html.fromHtml(homeData));
+				RemoveUnderLine.removeUnderline(lyricsField);
 			} else {
 				lyricsField.setText("Home disabled in settings.");
 				mContent.setVisibility(View.VISIBLE);
@@ -138,6 +150,7 @@ public class HomePageFragment extends Fragment {
 
 		@Override
 		protected void onPostExecute(String result) {
+			homeData = result;
 			lyricsField.setText(Html.fromHtml(result));
 			RemoveUnderLine.removeUnderline(lyricsField);
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1)

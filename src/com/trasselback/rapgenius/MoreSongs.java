@@ -6,6 +6,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import android.util.Log;
+
 public class MoreSongs {
 	private String name = "More Songs by ";
 	private String page = "";
@@ -44,10 +46,10 @@ public class MoreSongs {
 
 	public void retrievePage() {
 		Elements content = lyricsPage.getElementsByClass("song_list");
-		page = content.toString()
-				.replace(
-						"href=\"",
-						"href=\"song_clicked:").replace("</a>", "</a><br>");
+		page = content.toString().replaceAll("<span class=\"track_number\">.+?</span>", "")
+				.replaceAll("\\s*?<.+?\">\\s*", "").replace("</a>", "<br>");
+		page = page.replaceAll("\\s*</.+?>\\s*", "").replace("\n", "");
+		Log.v("PAGE", page);
 	}
 
 	public String getName() {

@@ -54,13 +54,6 @@
                 android:value="com.trasselback.rapgenius.MainActivity" />
         </activity>
         <activity
-            android:name="com.trasselback.rapgenius.MoreSongsActivity"
-            android:label="@string/title_activity_more_songs" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.trasselback.rapgenius.MainActivity" />
-        </activity>
-        <activity
             android:name="com.trasselback.rapgenius.ExplanationActivity"
             android:label="@string/title_activity_explanation" >
 

@@ -988,10 +988,9 @@ containing a value of this type.
         public static final int abs__textButton=0x7f050013;
         public static final int abs__title=0x7f05001b;
         public static final int abs__up=0x7f05000b;
-        public static final int action_favorite=0x7f05003e;
-        public static final int action_search=0x7f05003d;
-        public static final int action_settings=0x7f05003c;
-        public static final int action_websearch=0x7f05003f;
+        public static final int action_favorite=0x7f05003f;
+        public static final int action_search=0x7f05003e;
+        public static final int action_settings=0x7f05003d;
         public static final int content_frame=0x7f050039;
         public static final int disableHome=0x7f050009;
         public static final int drawer_layout=0x7f050038;
@@ -1010,6 +1009,7 @@ containing a value of this type.
         public static final int showCustom=0x7f050008;
         public static final int showHome=0x7f050005;
         public static final int showTitle=0x7f050007;
+        public static final int songsList=0x7f05003c;
         public static final int tabMode=0x7f050003;
         public static final int useLogo=0x7f050004;
         public static final int wrap_content=0x7f050000;
@@ -1043,13 +1043,13 @@ containing a value of this type.
         public static final int activity_explanation=0x7f030016;
         public static final int activity_lyrics=0x7f030017;
         public static final int activity_main=0x7f030018;
-        public static final int activity_more_songs=0x7f030019;
-        public static final int drawer_list_item=0x7f03001a;
-        public static final int favs_list_item=0x7f03001b;
-        public static final int fragment_favorites_layout=0x7f03001c;
-        public static final int fragment_favorites_layout_bak=0x7f03001d;
-        public static final int fragment_home_page_layout=0x7f03001e;
-        public static final int fragment_lyrics_layout=0x7f03001f;
+        public static final int drawer_list_item=0x7f030019;
+        public static final int favs_list_item=0x7f03001a;
+        public static final int fragment_favorites_layout=0x7f03001b;
+        public static final int fragment_home_page_layout=0x7f03001c;
+        public static final int fragment_lyrics_layout=0x7f03001d;
+        public static final int fragment_more_songs_layout=0x7f03001e;
+        public static final int more_songs_list_item=0x7f03001f;
         public static final int sherlock_spinner_dropdown_item=0x7f030020;
         public static final int sherlock_spinner_item=0x7f030021;
     }
@@ -1058,7 +1058,6 @@ containing a value of this type.
         public static final int lyrics=0x7f0d0001;
         public static final int main=0x7f0d0002;
         public static final int search=0x7f0d0003;
-        public static final int test=0x7f0d0004;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 

@@ -2,11 +2,11 @@
     android:id="@android:id/text1"
     android:layout_width="fill_parent"
     android:layout_height="55dp"
-    android:gravity="center_vertical"
     android:maxLines="1"
+    android:gravity="center_vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
-    android:textColor="@color/Red"
+    android:textColor="@color/Orange"
     android:textSize="22sp" />

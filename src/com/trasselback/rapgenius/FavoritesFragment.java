@@ -5,9 +5,11 @@ import java.util.Locale;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +17,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class FavoritesFragment extends Fragment {
 	private ListView listView;
+	private TextView nameField;
+	private OnFavoriteSelectedListener mCallback;
 
 	public FavoritesFragment() {
 	}
@@ -33,23 +38,25 @@ public class FavoritesFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		nameField = (TextView) getView().findViewById(R.id.nameText);
+		Typeface tf = Typeface.createFromAsset(getActivity().getAssets(),
+				"fonts/roboto_thin.ttf");
+		nameField.setTypeface(tf);
+		nameField.setText("Favorited Songs");
 	}
 
-	OnHeadlineSelectedListener mCallback;
-
 	// Container Activity must implement this interface
-	public interface OnHeadlineSelectedListener {
+	public interface OnFavoriteSelectedListener {
 		public void onFavoriteSelected(int position);
 	}
 
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-
 		// This makes sure that the container activity has implemented
 		// the callback interface. If not, it throws an exception
 		try {
-			mCallback = (OnHeadlineSelectedListener) activity;
+			mCallback = (OnFavoriteSelectedListener) activity;
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString()
 					+ " must implement OnHeadlineSelectedListener");
@@ -70,21 +77,33 @@ public class FavoritesFragment extends Fragment {
 			getActivity().getWindow().setBackgroundDrawableResource(
 					R.color.LightBlack);
 
+		color = sharedPref.getString(SettingsFragment.KEY_PREF_TITLE_COLOR,
+				"Default");
+		if (!color.contains("Default")) {
+			ColorManager.setColor(getActivity(), nameField, color);
+		} else
+			nameField.setTextColor(getResources().getColor(R.color.LightGray));
+		int size = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_TEXT_SIZE, "22"));
+
+		nameField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size + 10);
 		listView = (ListView) getView().findViewById(R.id.favsList);
 		String favsString = FavoritesManager.getFavorites(getActivity())
 				.toUpperCase(Locale.ENGLISH);
-		String[] favsArray = favsString.split("<BR>");
-		ListAdapter favs = new ListAdapter(getActivity(),
-				R.layout.favs_list_item);
-		for (String fav : favsArray)
-			favs.add(fav);
-		listView.setAdapter(favs);
-		listView.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View v,
-					int position, long id) {
-				mCallback.onFavoriteSelected(position);
-			}
-		});
+		if (favsString != "") {
+			String[] favsArray = favsString.split("<BR>");
+			ListAdapter favs = new ListAdapter(getActivity(),
+					R.layout.favs_list_item);
+			for (String fav : favsArray)
+				favs.add(fav);
+			listView.setAdapter(favs);
+			listView.setOnItemClickListener(new OnItemClickListener() {
+				public void onItemClick(AdapterView<?> parent, View v,
+						int position, long id) {
+					mCallback.onFavoriteSelected(position);
+				}
+			});
+		}
 	}
 
 	private class ListAdapter extends ArrayAdapter<String> {
@@ -95,37 +114,19 @@ public class FavoritesFragment extends Fragment {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View v = super.getView(position, convertView, parent);
+			TextView x = (TextView) v;
 			SharedPreferences sharedPref = PreferenceManager
 					.getDefaultSharedPreferences(getActivity());
 			String color = sharedPref.getString(
-					SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR, "Default");
-			color = sharedPref.getString(
 					SettingsFragment.KEY_PREF_FAVORITES_COLOR, "Default");
-			if (!color.contains("Default")) {
-				if (color.equals("Orange"))
-					v.setBackgroundColor(getResources()
-							.getColor(R.color.Orange));
-				else if (color.equals("Yellow"))
-					v.setBackgroundColor(getResources()
-							.getColor(R.color.Yellow));
-				else if (color.equals("Green"))
-					v.setBackgroundColor(getResources().getColor(R.color.Green));
-				else if (color.equals("Blue"))
-					v.setBackgroundColor(getResources().getColor(R.color.Blue));
-				else if (color.equals("Purple"))
-					v.setBackgroundColor(getResources()
-							.getColor(R.color.Purple));
-				else if (color.equals("Gray"))
-					v.setBackgroundColor(getResources().getColor(R.color.Gray));
-				else if (color.equals("White"))
-					v.setBackgroundColor(getResources().getColor(R.color.White));
-				else if (color.equals("Black"))
-					v.setBackgroundColor(getResources().getColor(R.color.Black));
-				else
-					v.setBackgroundColor(getResources().getColor(R.color.Red));
-			} else
-				v.setBackgroundColor(getResources().getColor(R.color.Red));
-			return v;
+			if (!color.contains("Default"))
+				ColorManager.setColor(getActivity(), x, color);
+			else
+				x.setTextColor(getResources().getColor(R.color.Red));
+			int size = Integer.parseInt(sharedPref.getString(
+					SettingsFragment.KEY_PREF_TEXT_SIZE, "22"));
+			x.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+			return x;
 		}
 	}
 }

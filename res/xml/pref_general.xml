@@ -2,7 +2,7 @@
 
     <PreferenceCategory android:title="Performance" >
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="pref_key_load_home"
             android:summary="@string/summary_load_home"
             android:title="@string/title_load_home" />

@@ -16,7 +16,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class LyricsFragment extends Fragment {
@@ -62,9 +61,6 @@ public class LyricsFragment extends Fragment {
 		mContent = getView().findViewById(R.id.infoView);
 		mContent.setVisibility(View.GONE);
 
-		((ProgressBar) mLoadingView).setIndeterminateDrawable(getResources()
-				.getDrawable(R.xml.progress_animation));
-
 		// necessary for 2.3 for some reason
 		lyricsField.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -80,6 +76,11 @@ public class LyricsFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		// Restart retrieve task if it was cancelled
+		if(retrieveTask.isCancelled()){
+			retrieveTask = new RetrieveLyricsTask();
+			startLyrics();
+		}
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
 
