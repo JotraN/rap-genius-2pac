@@ -26,9 +26,12 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.MenuItem.OnActionExpandListener;
 
-public class MainActivity extends SherlockFragmentActivity {
+public class MainActivity extends SherlockFragmentActivity implements
+		FavoritesFragment.OnHeadlineSelectedListener {
 	public final static String EXTRA_MESSAGE = "com.trasselback.rapgenius.MESSAGE";
 	private static boolean lyricsLoaded = false;
+	private boolean hideFavs = true;
+	private MenuItem favItem;
 
 	private EditText search_text;
 
@@ -38,13 +41,15 @@ public class MainActivity extends SherlockFragmentActivity {
 	private ActionBarDrawerToggle mDrawerToggle;
 	private CharSequence mTitle;
 	private ListAdapter adapter;
-
 	private Handler mHandler;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		// TODO Delete later
+		FavoritesManager.updateFavorites(getApplicationContext());
 
 		mDrawerTitles = getResources().getStringArray(R.array.navigation_array);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -83,9 +88,10 @@ public class MainActivity extends SherlockFragmentActivity {
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			fragmentManager.beginTransaction()
 					.replace(R.id.content_frame, fragment).commit();
-			setTitle("Lyrics");
-			if (adapter.getPosition("More songs") == -1)
-				adapter.add("More songs");
+			setTitle("LYRICS");
+			if (adapter.getPosition("MORE SONGS") == -1)
+				adapter.add("MORE SONGS");
+			hideFavs = false;
 		}
 	}
 
@@ -106,9 +112,11 @@ public class MainActivity extends SherlockFragmentActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.main, menu);
-
-		// Hide favorites icon by default
-		menu.findItem(R.id.action_favorite).setVisible(false);
+		favItem = menu.findItem(R.id.action_favorite);
+		if (hideFavs)
+			favItem.setVisible(false);
+		else if (FavoritesManager.checkFavorites(this, LyricsFragment.message))
+			favItem.setIcon(R.drawable.ic_star_pressed);
 
 		// MenuItem to close search
 		final MenuItem searchItem = menu.findItem(R.id.action_search);
@@ -156,7 +164,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		View v = (View) menu.findItem(R.id.action_search).getActionView();
 		search_text = (EditText) v.findViewById(R.id.search_text);
 
-		// search_text.clearFocus();
+		final MenuItem favsItem = menu.findItem(R.id.action_favorite);
 
 		search_text.setOnEditorActionListener(new OnEditorActionListener() {
 			@Override
@@ -170,11 +178,21 @@ public class MainActivity extends SherlockFragmentActivity {
 				FragmentManager fragmentManager = getSupportFragmentManager();
 				fragmentManager.beginTransaction()
 						.replace(R.id.content_frame, fragment).commit();
-				adapter.add("More songs");
+				if (adapter.getPosition("MORE SONGS") == -1)
+					adapter.add("MORE SONGS");
+				setTitle("Lyrics");
+				// Reload favorites icon
+				if (FavoritesManager.checkFavorites(getApplicationContext(),
+						search_text.getText().toString())) {
+					favsItem.setIcon(R.drawable.ic_star_pressed);
+				} else {
+					favsItem.setIcon(R.drawable.ic_star_not_pressed);
+				}
 				search_text.setText("");
 				searchItem.collapseActionView();
 
-				// startActivity(intent);
+				favsItem.setVisible(true);
+				hideFavs = false;
 				return false;
 			}
 		});
@@ -192,6 +210,14 @@ public class MainActivity extends SherlockFragmentActivity {
 
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
+		case R.id.action_favorite:
+			FavoritesManager.addFavorites(this, LyricsFragment.message);
+			if (FavoritesManager.checkFavorites(this, LyricsFragment.message)) {
+				item.setIcon(R.drawable.ic_star_pressed);
+			} else {
+				item.setIcon(R.drawable.ic_star_not_pressed);
+			}
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -218,7 +244,11 @@ public class MainActivity extends SherlockFragmentActivity {
 					.replace(R.id.content_frame, fragment).commit();
 			mDrawerList.setItemChecked(position, true);
 			setTitle(mDrawerTitles[position]);
-			adapter.remove("More songs");
+			adapter.remove("MORE SONGS");
+			if (!hideFavs) {
+				favItem.setVisible(false);
+				hideFavs = true;
+			}
 			break;
 		case 1:
 			fragment = new FavoritesFragment();
@@ -227,7 +257,11 @@ public class MainActivity extends SherlockFragmentActivity {
 					.replace(R.id.content_frame, fragment).commit();
 			mDrawerList.setItemChecked(position, true);
 			setTitle(mDrawerTitles[position]);
-			adapter.remove("More songs");
+			adapter.remove("MORE SONGS");
+			if (!hideFavs) {
+				favItem.setVisible(false);
+				hideFavs = true;
+			}
 			break;
 
 		case 2:
@@ -237,7 +271,6 @@ public class MainActivity extends SherlockFragmentActivity {
 			else
 				intent = new Intent(this, SettingsPreferenceActivity.class);
 			startActivity(intent);
-			adapter.remove("More songs");
 			break;
 
 		case 3:
@@ -280,5 +313,30 @@ public class MainActivity extends SherlockFragmentActivity {
 			}
 			return v;
 		}
+	}
+
+	@Override
+	public void onFavoriteSelected(int position) {
+		String favsString = FavoritesManager.getFavorites(this);
+		String[] favsArray = favsString.split("<BR>");
+		Fragment fragment = new LyricsFragment();
+		Bundle song = new Bundle();
+		song.putString(EXTRA_MESSAGE, favsArray[position]);
+		fragment.setArguments(song);
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.content_frame, fragment).commit();
+		setTitle("LYRICS");
+		if (adapter.getPosition("MORE SONGS") == -1)
+			adapter.add("MORE SONGS");
+		favItem.setVisible(true);
+		// Reload favorites icon
+		if (FavoritesManager.checkFavorites(getApplicationContext(),
+				search_text.getText().toString())) {
+			favItem.setIcon(R.drawable.ic_star_pressed);
+		} else {
+			favItem.setIcon(R.drawable.ic_star_not_pressed);
+		}
+		hideFavs = false;
 	}
 }

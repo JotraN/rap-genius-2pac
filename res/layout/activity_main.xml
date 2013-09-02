@@ -21,6 +21,6 @@
         android:dividerHeight="20dp"
         android:drawSelectorOnTop="true"
         android:listSelector="@drawable/list_selector"
-        android:paddingTop="100dp" />
+        android:paddingTop="50dp" />
 
 </android.support.v4.widget.DrawerLayout>

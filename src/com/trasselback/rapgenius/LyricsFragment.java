@@ -24,6 +24,7 @@ public class LyricsFragment extends Fragment {
 	private View mContent;
 	private URLObject urlObject;
 	public static String message = "";
+	private AsyncTask<String, Void, String> retrieveTask;
 
 	private boolean cacheLyricsEnabled = false;
 
@@ -45,6 +46,12 @@ public class LyricsFragment extends Fragment {
 		startLyrics();
 	}
 
+	@Override
+	public void onPause() {
+		super.onPause();
+		retrieveTask.cancel(true);
+	}
+
 	private void initialize() {
 		nameField = (TextView) getView().findViewById(R.id.nameText);
 		lyricsField = (TextView) getView().findViewById(R.id.lyricsText);
@@ -63,6 +70,8 @@ public class LyricsFragment extends Fragment {
 				.getDefaultSharedPreferences(getActivity());
 		cacheLyricsEnabled = sharedPref.getBoolean(
 				SettingsFragment.KEY_PREF_CACHE_LYRICS, false);
+
+		retrieveTask = new RetrieveLyricsTask();
 	}
 
 	@Override
@@ -126,7 +135,7 @@ public class LyricsFragment extends Fragment {
 			message = message.substring(message.indexOf("/") + 1,
 					message.length() - 7);
 			if (CacheManager.getCache(getActivity(), message).length() <= 0)
-				new RetrieveLyricsTask().execute(message);
+				retrieveTask.execute(message);
 			else
 				setCache();
 		} else if (getArguments().getString(MainActivity.EXTRA_MESSAGE)
@@ -134,7 +143,7 @@ public class LyricsFragment extends Fragment {
 			message = getArguments().getString(MainActivity.EXTRA_MESSAGE);
 			message = message.substring(message.indexOf(":") + 1);
 			if (CacheManager.getCache(getActivity(), message).length() <= 0)
-				new RetrieveLyricsTask().execute(message);
+				retrieveTask.execute(message);
 			else
 				setCache();
 		}
@@ -142,12 +151,10 @@ public class LyricsFragment extends Fragment {
 		else {
 			message = getArguments().getString(MainActivity.EXTRA_MESSAGE);
 			if (CacheManager.getCache(getActivity(), message).length() <= 0)
-				new RetrieveLyricsTask().execute(message);
+				retrieveTask.execute(message);
 			else
 				setCache();
 		}
-		
-		getActivity().getIntent().removeExtra(MainActivity.EXTRA_MESSAGE);
 	}
 
 	private class RetrieveLyricsTask extends AsyncTask<String, Void, String> {
@@ -169,6 +176,13 @@ public class LyricsFragment extends Fragment {
 				return "No internet connection found.";
 		}
 
+		@Override
+		protected void onPreExecute() {
+			if (retrieveTask.isCancelled())
+				return;
+		}
+
+		@Override
 		protected void onPostExecute(String result) {
 			nameField.setText(((Lyrics) urlObject).getName());
 			lyricsField.setText(Html.fromHtml(result));

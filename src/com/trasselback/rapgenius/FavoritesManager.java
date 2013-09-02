@@ -7,8 +7,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Locale;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 public class FavoritesManager {
@@ -36,20 +38,20 @@ public class FavoritesManager {
 	public static boolean checkFavorites(Context context, String favoritedSong) {
 		String currFavs = getFavorites(context);
 		String song = favoritedSong.replace("-", " ");
-		return currFavs.contains(song);
+		return currFavs.contains(song.toUpperCase(Locale.ENGLISH));
 	}
 
 	public static void addFavorites(Context context, String favoritedSong) {
 		// Get current favorites if available.
 		String currFavs = getFavorites(context);
 		// Cleans up name
-		String song = favoritedSong.replace("-", " ");
+		String song = favoritedSong.replace("-", " ").toUpperCase(
+				Locale.ENGLISH);
 
 		if (currFavs.contains(song)) {
 			removeFavorites(context, song, currFavs);
 		} else if (currFavs.length() <= 1650) {
-			String favorites = currFavs + "<a href=\"fav_clicked:" + song
-					+ "\">&#8226; " + song + "</a><br>";
+			String favorites = currFavs + song + "<BR>";
 			try {
 				File file = new File(context.getFilesDir(), "favorites");
 				FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
@@ -80,9 +82,11 @@ public class FavoritesManager {
 			File file = new File(context.getFilesDir(), "favorites");
 			FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-			currFavs = currFavs.replace("<a href=\"fav_clicked:"
-					+ favoritedSong + "\">&#8226; " + favoritedSong
-					+ "</a><br>", "");
+			Log.v("Remo", favoritedSong.toUpperCase(Locale.ENGLISH) + "<BR>");
+			Log.v("Remov", currFavs);
+			currFavs = currFavs.replace(
+					favoritedSong.toUpperCase(Locale.ENGLISH) + "<BR>", "");
+			Log.v("Remove", currFavs);
 			bufferedWriter.write(currFavs);
 			bufferedWriter.close();
 			fileWriter.close();
@@ -94,5 +98,22 @@ public class FavoritesManager {
 
 		Toast toast = Toast.makeText(context, text, duration);
 		toast.show();
+	}
+
+	public static void updateFavorites(Context context) {
+		String currFavs = getFavorites(context);
+		try {
+			File file = new File(context.getFilesDir(), "favorites");
+			FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			currFavs = currFavs.replaceAll("<a.+?; ", "").replace("</a>", "");
+			Log.v("Favs", currFavs);
+			currFavs = currFavs.toUpperCase(Locale.ENGLISH);
+			bufferedWriter.write(currFavs);
+			bufferedWriter.close();
+			fileWriter.close();
+		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
+		}
 	}
 }

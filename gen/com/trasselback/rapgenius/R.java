@@ -688,16 +688,18 @@ containing a value of this type.
     public static final class color {
         public static final int Black=0x7f07000e;
         public static final int Blue=0x7f07000a;
+        public static final int DrawerIconGray=0x7f070010;
         public static final int Gray=0x7f07000c;
         public static final int Green=0x7f070009;
         public static final int LightBlack=0x7f07000f;
-        public static final int LightBlue=0x7f070011;
-        public static final int LightGray=0x7f070010;
-        public static final int LighterBlack=0x7f070013;
+        public static final int LightBlue=0x7f070012;
+        public static final int LightGray=0x7f070011;
+        public static final int LighterBlack=0x7f070015;
         public static final int Orange=0x7f070007;
         public static final int Purple=0x7f07000b;
         public static final int Red=0x7f070006;
-        public static final int TransGray=0x7f070012;
+        public static final int TransBlack=0x7f070014;
+        public static final int TransGray=0x7f070013;
         public static final int White=0x7f07000d;
         public static final int Yellow=0x7f070008;
         public static final int abs__background_holo_dark=0x7f070000;
@@ -706,10 +708,10 @@ containing a value of this type.
         public static final int abs__bright_foreground_disabled_holo_light=0x7f070005;
         public static final int abs__bright_foreground_holo_dark=0x7f070002;
         public static final int abs__bright_foreground_holo_light=0x7f070003;
-        public static final int abs__primary_text_disable_only_holo_dark=0x7f070014;
-        public static final int abs__primary_text_disable_only_holo_light=0x7f070015;
-        public static final int abs__primary_text_holo_dark=0x7f070016;
-        public static final int abs__primary_text_holo_light=0x7f070017;
+        public static final int abs__primary_text_disable_only_holo_dark=0x7f070016;
+        public static final int abs__primary_text_disable_only_holo_light=0x7f070017;
+        public static final int abs__primary_text_holo_dark=0x7f070018;
+        public static final int abs__primary_text_holo_light=0x7f070019;
     }
     public static final class dimen {
         /**  Default height of an action bar. 
@@ -930,20 +932,21 @@ containing a value of this type.
         public static final int abs__textfield_searchview_right_holo_dark=0x7f02006d;
         public static final int abs__textfield_searchview_right_holo_light=0x7f02006e;
         public static final int abs__toast_frame=0x7f02006f;
-        public static final int ic_back=0x7f020070;
-        public static final int ic_blank=0x7f020071;
-        public static final int ic_drawer=0x7f020072;
-        public static final int ic_launcher=0x7f020073;
-        public static final int ic_progress0=0x7f020074;
-        public static final int ic_progress1=0x7f020075;
-        public static final int ic_progress2=0x7f020076;
-        public static final int ic_progress3=0x7f020077;
-        public static final int ic_progress4=0x7f020078;
-        public static final int ic_search=0x7f020079;
-        public static final int ic_settings=0x7f02007a;
-        public static final int ic_star_not_pressed=0x7f02007b;
-        public static final int ic_star_pressed=0x7f02007c;
-        public static final int list_selector=0x7f02007d;
+        public static final int action_bar_background=0x7f020070;
+        public static final int ic_back=0x7f020071;
+        public static final int ic_blank=0x7f020072;
+        public static final int ic_drawer=0x7f020073;
+        public static final int ic_launcher=0x7f020074;
+        public static final int ic_progress0=0x7f020075;
+        public static final int ic_progress1=0x7f020076;
+        public static final int ic_progress2=0x7f020077;
+        public static final int ic_progress3=0x7f020078;
+        public static final int ic_progress4=0x7f020079;
+        public static final int ic_search=0x7f02007a;
+        public static final int ic_settings=0x7f02007b;
+        public static final int ic_star_not_pressed=0x7f02007c;
+        public static final int ic_star_pressed=0x7f02007d;
+        public static final int list_selector=0x7f02007e;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f050020;
@@ -985,14 +988,15 @@ containing a value of this type.
         public static final int abs__textButton=0x7f050013;
         public static final int abs__title=0x7f05001b;
         public static final int abs__up=0x7f05000b;
-        public static final int action_favorite=0x7f05003d;
-        public static final int action_search=0x7f05003c;
-        public static final int action_settings=0x7f05003b;
-        public static final int action_websearch=0x7f05003e;
+        public static final int action_favorite=0x7f05003e;
+        public static final int action_search=0x7f05003d;
+        public static final int action_settings=0x7f05003c;
+        public static final int action_websearch=0x7f05003f;
         public static final int content_frame=0x7f050039;
         public static final int disableHome=0x7f050009;
         public static final int drawer_layout=0x7f050033;
         public static final int edit_query=0x7f050026;
+        public static final int favsList=0x7f05003b;
         public static final int homeAsUp=0x7f050006;
         public static final int infoView=0x7f050034;
         public static final int left_drawer=0x7f05003a;
@@ -1041,11 +1045,13 @@ containing a value of this type.
         public static final int activity_main=0x7f030018;
         public static final int activity_more_songs=0x7f030019;
         public static final int drawer_list_item=0x7f03001a;
-        public static final int fragment_home_page_layout=0x7f03001b;
-        public static final int fragment_lyrics_layout=0x7f03001c;
-        public static final int fragment_search_layout=0x7f03001d;
-        public static final int sherlock_spinner_dropdown_item=0x7f03001e;
-        public static final int sherlock_spinner_item=0x7f03001f;
+        public static final int favs_list_item=0x7f03001b;
+        public static final int fragment_favorites_layout=0x7f03001c;
+        public static final int fragment_favorites_layout_bak=0x7f03001d;
+        public static final int fragment_home_page_layout=0x7f03001e;
+        public static final int fragment_lyrics_layout=0x7f03001f;
+        public static final int sherlock_spinner_dropdown_item=0x7f030020;
+        public static final int sherlock_spinner_item=0x7f030021;
     }
     public static final class menu {
         public static final int explanation=0x7f0d0000;
@@ -1102,17 +1108,15 @@ containing a value of this type.
         public static final int default_search=0x7f0a000f;
         public static final int dialog_clear_cache=0x7f0a001f;
         public static final int dialog_remove_favorites=0x7f0a001a;
-        public static final int hello_world=0x7f0a0024;
         public static final int open_drawer=0x7f0a0022;
         public static final int summary_cache_lyrics=0x7f0a0017;
         public static final int summary_clear_cache=0x7f0a001e;
         public static final int summary_donate=0x7f0a001c;
         public static final int summary_load_home=0x7f0a0015;
         public static final int summary_remove_favorites=0x7f0a0019;
-        public static final int title_activity_explanation=0x7f0a0025;
+        public static final int title_activity_explanation=0x7f0a0023;
         public static final int title_activity_more_songs=0x7f0a0020;
         public static final int title_activity_settings=0x7f0a0013;
-        public static final int title_activity_test=0x7f0a0023;
         public static final int title_cache_lyrics=0x7f0a0016;
         public static final int title_clear_cache=0x7f0a001d;
         public static final int title_donate=0x7f0a001b;
