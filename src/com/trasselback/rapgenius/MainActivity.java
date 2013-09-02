@@ -3,6 +3,7 @@ package com.trasselback.rapgenius;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -229,7 +230,8 @@ public class MainActivity extends SherlockFragmentActivity implements
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
 			selectItem(arg2);
-
+			// Clear choice
+			mDrawerList.setItemChecked(-1, true);
 		}
 	}
 
@@ -311,6 +313,10 @@ public class MainActivity extends SherlockFragmentActivity implements
 				v.setBackgroundColor(getResources().getColor(R.color.Orange));
 				break;
 			}
+			TextView x = (TextView) v;
+			Typeface tf = Typeface.createFromAsset(getAssets(),
+					"fonts/roboto_condensed_light.ttf");
+			x.setTypeface(tf);
 			return v;
 		}
 	}

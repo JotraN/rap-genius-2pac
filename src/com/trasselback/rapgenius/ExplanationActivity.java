@@ -2,6 +2,7 @@ package com.trasselback.rapgenius;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -34,7 +35,7 @@ public class ExplanationActivity extends SherlockActivity {
 	}
 
 	private void setupActionBar() {
-		getSupportActionBar().setTitle("Explanation");
+		getSupportActionBar().setTitle("EXPLANATION");
 		getSupportActionBar().setDisplayShowHomeEnabled(false);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -53,6 +54,9 @@ public class ExplanationActivity extends SherlockActivity {
 
 	private void initialize() {
 		nameField = (TextView) findViewById(R.id.nameText);
+		Typeface tf = Typeface.createFromAsset(getAssets(),
+				"fonts/roboto_thin.ttf");
+		nameField.setTypeface(tf);
 		lyricsField = (TextView) findViewById(R.id.lyricsText);
 		mLoadingView = findViewById(R.id.loadingView);
 		mContent = findViewById(R.id.infoView);

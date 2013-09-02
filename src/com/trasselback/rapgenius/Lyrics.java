@@ -102,7 +102,8 @@ public class Lyrics implements URLObject {
 					found = false;
 			}
 			page += "<br>Did you mean any of the following?<br>"
-					+ searchResult.replace("href=\"", "href=\"song_clicked:")
+					+ searchResult
+							.replace("href=\"", "href=\"song_clicked:")
 							.replace("</a>", "</a><br>")
 							.replace("http://rapgenius.com", "")
 							// Replace rock.rapgenius poetry.rapgenius
@@ -110,6 +111,8 @@ public class Lyrics implements URLObject {
 							.replaceAll("http://\\w+.rapgenius.com", "")
 							// Formatting
 							.replaceAll(" Lyrics.+?<em>Rap Genius</em>", "")
+							.replaceAll("-\\s+<em>Rap Genius</em>", "")
+							.replace(" | Poetry Genius", "")
 							.replaceAll("- Poetry.+?<em>Rap Genius</em>", "");
 
 			Log.v("YOO", page);

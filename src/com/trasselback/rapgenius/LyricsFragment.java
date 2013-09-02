@@ -2,6 +2,7 @@ package com.trasselback.rapgenius;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -54,6 +55,8 @@ public class LyricsFragment extends Fragment {
 
 	private void initialize() {
 		nameField = (TextView) getView().findViewById(R.id.nameText);
+		Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/roboto_thin.ttf");
+		nameField.setTypeface(tf);
 		lyricsField = (TextView) getView().findViewById(R.id.lyricsText);
 		mLoadingView = getView().findViewById(R.id.loadingView);
 		mContent = getView().findViewById(R.id.infoView);

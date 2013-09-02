@@ -27,7 +27,7 @@ public class HomePageFragment extends Fragment {
 	private URLObject urlObject;
 	private AsyncTask<Void, Void, String> retrieveTask;
 
-	private boolean contentLoaded = false;
+	private static boolean contentLoaded = false;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
