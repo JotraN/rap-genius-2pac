@@ -187,7 +187,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 				if (adapter.getPosition("BACK TO LYRICS") != -1)
 					adapter.remove("BACK TO LYRICS");
 
-				setTitle("Lyrics");
+				setTitle("LYRICS");
 				// Reload favorites icon
 				if (FavoritesManager.checkFavorites(getApplicationContext(),
 						search_text.getText().toString())) {

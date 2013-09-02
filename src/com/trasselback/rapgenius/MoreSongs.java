@@ -41,7 +41,7 @@ public class MoreSongs {
 	}
 
 	public void retrieveName() {
-		name += lyricsPage.title().replaceAll(" –.+Lyrics \\| Rap Genius", "");
+		name += lyricsPage.title().replaceAll(" –.+?\\|.+?Genius", "");
 	}
 
 	public void retrievePage() {
