@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.Locale;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 public class FavoritesManager {
@@ -82,11 +81,8 @@ public class FavoritesManager {
 			File file = new File(context.getFilesDir(), "favorites");
 			FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-			Log.v("Remo", favoritedSong.toUpperCase(Locale.ENGLISH) + "<BR>");
-			Log.v("Remov", currFavs);
 			currFavs = currFavs.replace(
 					favoritedSong.toUpperCase(Locale.ENGLISH) + "<BR>", "");
-			Log.v("Remove", currFavs);
 			bufferedWriter.write(currFavs);
 			bufferedWriter.close();
 			fileWriter.close();
@@ -107,7 +103,6 @@ public class FavoritesManager {
 			FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 			currFavs = currFavs.replaceAll("<a.+?; ", "").replace("</a>", "");
-			Log.v("Favs", currFavs);
 			currFavs = currFavs.toUpperCase(Locale.ENGLISH);
 			bufferedWriter.write(currFavs);
 			bufferedWriter.close();

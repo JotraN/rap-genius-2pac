@@ -22,6 +22,7 @@ public class SettingsActivity extends Activity {
 	private void setupActionBar() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			getActionBar().setTitle("Settings");
+			getActionBar().setDisplayShowHomeEnabled(false);
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 			getActionBar().setDisplayShowTitleEnabled(true);
 		}
