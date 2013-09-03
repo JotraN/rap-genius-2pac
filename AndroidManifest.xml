@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.trasselback.rapgenius"
-    android:versionCode="13"
-    android:versionName="2.4" >
+    android:versionCode="14"
+    android:versionName="2.5" >
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -64,6 +64,17 @@
                 <action android:name="android.intent.action.VIEW" />
 
                 <data android:scheme="explanation_clicked" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.trasselback.rapgenius.ForumThreadActivity"
+            android:label="@string/title_activity_forum_thread" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <data android:scheme="forum_thread_clicked" />
             </intent-filter>
         </activity>
     </application>

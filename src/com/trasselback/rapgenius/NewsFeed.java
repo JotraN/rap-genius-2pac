@@ -15,11 +15,13 @@ public class NewsFeed implements URLObject {
 
 	public boolean openURL() {
 		try {
-			homePage = Jsoup.connect("http://rapgenius.com").timeout(10000).get();
+			homePage = Jsoup.connect("http://rapgenius.com").timeout(10000)
+					.get();
 			return true;
 		} catch (IOException e) {
 			try {
-				homePage = Jsoup.connect("http://rapgenius.com").timeout(10000).get();
+				homePage = Jsoup.connect("http://rapgenius.com").timeout(10000)
+						.get();
 				return true;
 			} catch (IOException e1) {
 				page = "There was a problem with connecting to Rap Genius.<br>Rap Genius may be down.";
@@ -36,8 +38,8 @@ public class NewsFeed implements URLObject {
 				.replace("<p class=\"label\">", "").replace("</p>", "<br>")
 				// remove header
 				.replaceAll("<h1.+?</h1>", "");
-		// Remove trailing links
-		page = page.substring(0, page.length() - 260);
+		if (page.length() != 0 && page.contains("<a"))
+			page = page.substring(0, page.lastIndexOf("<a"));
 	}
 
 	public String getPage() {
