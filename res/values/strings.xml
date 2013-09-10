@@ -25,7 +25,7 @@
         <item>HOME</item>
         <item>FAVORITES</item>
         <item>SETTINGS</item>
-        <item>FORUMS</item>
+<!--         <item>FORUMS</item> -->
     </string-array>
 
     <string name="title_activity_more_songs">More Songs</string>

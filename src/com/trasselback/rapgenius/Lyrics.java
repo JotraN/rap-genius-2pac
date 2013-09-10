@@ -15,7 +15,7 @@ public class Lyrics implements URLObject {
 	private String song = "";
 	private String message = "";
 	private Document lyricsPage;
-
+	
 	Lyrics(String x) {
 		// Rap Genius ignores punctuation in names, remove extra spaces,
 		// cleaning inputed data

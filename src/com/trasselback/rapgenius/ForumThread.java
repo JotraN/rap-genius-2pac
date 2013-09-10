@@ -1,8 +1,7 @@
 package com.trasselback.rapgenius;
 
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,6 +14,7 @@ public class ForumThread implements URLObject {
 	private String page = "";
 	private String url = "";
 	private String name = "";
+	private ArrayList<String> posts = new ArrayList<String>();
 
 	public ForumThread(String url) {
 		this.url = url;
@@ -27,9 +27,7 @@ public class ForumThread implements URLObject {
 			return true;
 		} catch (IOException e) {
 			try {
-				forumsPage = Jsoup
-						.connect(url)
-						.timeout(10000).get();
+				forumsPage = Jsoup.connect(url).timeout(10000).get();
 				return true;
 			} catch (IOException e1) {
 				page = "There was a problem with connecting to Rap Genius.<br>Rap Genius may be down.";
@@ -39,32 +37,41 @@ public class ForumThread implements URLObject {
 	}
 
 	public void retrieveName() {
-		Pattern pattern = Pattern.compile("\\[(.+?)\\]");
-		Matcher matcher = pattern.matcher(forumsPage.toString());
-		if (matcher.find())
-			name = forumsPage.toString().substring(matcher.start(1), matcher.end(1));
-		else
-			name = "Not found.\nDid you lose internet connection?";
+		name = forumsPage.title().replace(" | Rap Genius", "");
 	}
 
 	@Override
 	public void retrievePage() {
-		Log.v("sss", "asass");
-		Elements content = forumsPage.getElementsByClass("embedly_pro");
-		page = content.toString()
-				.replace("href=\"", "href=\"http://rapgenius.com")
-				.replaceAll("\\s*?<h.+?>", "").replaceAll("\\s*?</h.+?>", "")
-				.replaceAll("\\s*?<div.+?>", "")
-				.replaceAll("\\s*?<a tool.+?>\\s*?</a>", "")
-				.replaceAll("\\s*?<p.+?>", "<br>")
-				.replaceAll("</p>\\s*?", "<br><br>").replace("</div>", "");
-		Log.v("sss", "asddddddddddddddass");
+	}
 
+	public void retrievePosts() {
+		Elements content = forumsPage.getElementsByClass("embedly_pro");
+		Elements content1 = forumsPage.getElementsByClass("user_details");
+		for (int i = 0; i < content.toArray().length; i++) {
+			posts.add(content.toArray()[i].toString()
+					.replace("href=\"/", "href=\"http://rapgenius.com/")
+					.replaceAll("<h\\d+?>", "<h6>")
+					.replaceAll("</h\\d+?>", "</h6>")
+					// TODO Remove link
+					.replace("><img", "><a href=\"http://google.com\"><img")
+					+ "<br>Posted by:"
+					+ content1.toArray()[i]
+							.toString()
+							.replaceAll("<p.+?>", ", ")
+							.replaceAll("<div.+?>", "")
+							.replace("Editor", "")
+							.replace("href=\"/", "href=\"http://rapgenius.com/")
+							.replaceAll("</?h\\d+?>", ""));
+		}
 	}
 
 	@Override
 	public String getPage() {
 		return page;
+	}
+
+	public ArrayList<String> getPosts() {
+		return posts;
 	}
 
 	public String getName() {

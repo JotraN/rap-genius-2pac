@@ -31,6 +31,9 @@ public class HomePageFragment extends Fragment {
 	// holds home page data
 	private static String homeData = "";
 
+	public HomePageFragment() {
+	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -60,6 +63,12 @@ public class HomePageFragment extends Fragment {
 		boolean loadHome = sharedPref.getBoolean(
 				SettingsFragment.KEY_PREF_LOAD_HOME, true);
 
+		// Restart task if it was cancelled and never completed
+		if (contentLoaded) {
+			if (lyricsField.getText().length() < 5)
+				retrieveTask.execute();
+		}
+		
 		// If not already loaded
 		if (!contentLoaded) {
 			if (loadHome) {
@@ -130,22 +139,27 @@ public class HomePageFragment extends Fragment {
 		@Override
 		protected String doInBackground(Void... names) {
 			urlObject = new NewsFeed();
-			ConnectivityManager connMgr = (ConnectivityManager) getActivity()
-					.getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-			if (networkInfo != null && networkInfo.isConnected()) {
-				if (urlObject.openURL())
-					urlObject.retrievePage();
-				contentLoaded = true;
-				return urlObject.getPage();
-			} else
-				return "No internet connection found.";
+			try {
+				ConnectivityManager connMgr = (ConnectivityManager) getActivity()
+						.getSystemService(Context.CONNECTIVITY_SERVICE);
+				NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+				if (networkInfo != null && networkInfo.isConnected()) {
+					if (urlObject.openURL())
+						urlObject.retrievePage();
+					contentLoaded = true;
+					return urlObject.getPage();
+				} else
+					return "No internet connection found.";
+			} catch (Exception ex) {
+				return "There was a problem getting information about your network status.";
+			}
 		}
 
 		@Override
 		protected void onPreExecute() {
-			if (retrieveTask.isCancelled())
-				return;
+			if (retrieveTask != null)
+				if (retrieveTask.isCancelled())
+					return;
 		}
 
 		@Override

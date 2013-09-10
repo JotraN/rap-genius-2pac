@@ -54,7 +54,8 @@ public class LyricsFragment extends Fragment {
 
 	private void initialize() {
 		nameField = (TextView) getView().findViewById(R.id.nameText);
-		Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/roboto_thin.ttf");
+		Typeface tf = Typeface.createFromAsset(getActivity().getAssets(),
+				"fonts/roboto_thin.ttf");
 		nameField.setTypeface(tf);
 		lyricsField = (TextView) getView().findViewById(R.id.lyricsText);
 		mLoadingView = getView().findViewById(R.id.loadingView);
@@ -77,7 +78,7 @@ public class LyricsFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		// Restart retrieve task if it was cancelled
-		if(retrieveTask.isCancelled()){
+		if (retrieveTask.isCancelled()) {
 			retrieveTask = new RetrieveLyricsTask();
 			startLyrics();
 		}
@@ -166,24 +167,28 @@ public class LyricsFragment extends Fragment {
 		@Override
 		protected String doInBackground(String... names) {
 			urlObject = new Lyrics(names[0]);
-			ConnectivityManager connMgr = (ConnectivityManager) getActivity()
-					.getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-			if (networkInfo != null && networkInfo.isConnected()) {
-				if (urlObject.openURL()) {
-					((Lyrics) urlObject).retrieveName();
-					urlObject.retrievePage();
-				}
-				return urlObject.getPage();
-
-			} else
-				return "No internet connection found.";
+			try {
+				ConnectivityManager connMgr = (ConnectivityManager) getActivity()
+						.getSystemService(Context.CONNECTIVITY_SERVICE);
+				NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+				if (networkInfo != null && networkInfo.isConnected()) {
+					if (urlObject.openURL()) {
+						((Lyrics) urlObject).retrieveName();
+						urlObject.retrievePage();
+					}
+					return urlObject.getPage();
+				} else
+					return "No internet connection found.";
+			} catch (Exception ex) {
+				return "There was a problem getting information about your network status.";
+			}
 		}
 
 		@Override
 		protected void onPreExecute() {
-			if (retrieveTask.isCancelled())
-				return;
+			if (retrieveTask != null)
+				if (retrieveTask.isCancelled())
+					return;
 		}
 
 		@Override

@@ -124,14 +124,18 @@ public class ExplanationActivity extends SherlockActivity {
 		@Override
 		protected String doInBackground(Void... params) {
 			urlObject = new Explanations(getIntent().getDataString());
-			ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-			if (networkInfo != null && networkInfo.isConnected()) {
-				((Explanations) urlObject).retrieveName();
-				urlObject.retrievePage();
-				return urlObject.getPage();
-			} else
-				return "No internet connection found.";
+			try {
+				ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+				NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+				if (networkInfo != null && networkInfo.isConnected()) {
+					((Explanations) urlObject).retrieveName();
+					urlObject.retrievePage();
+					return urlObject.getPage();
+				} else
+					return "No internet connection found.";
+			} catch (Exception ex) {
+				return "There was a problem getting information about your network status.";
+			}
 		}
 
 		protected void onPostExecute(String result) {
