@@ -201,7 +201,7 @@ public class ForumThreadActivity extends SherlockActivity {
 			x.setText(Html.fromHtml(getItem(position)));
 
 			// Remove underline from links
-			// Need to use spannablestring
+			// Need to use spannablestring for list
 			Spannable text = (Spannable) new SpannableString(x.getText());
 			URLSpan[] spans = text.getSpans(0, text.length(), URLSpan.class);
 			for (URLSpan span : spans) {

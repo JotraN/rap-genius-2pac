@@ -64,9 +64,8 @@ public class ExplanationActivity extends SherlockActivity {
 
 		((ProgressBar) mLoadingView).setIndeterminateDrawable(getResources()
 				.getDrawable(R.xml.progress_animation));
-
-		// necessary for 2.3 for some reason
-		lyricsField.setMovementMethod(LinkMovementMethod.getInstance());
+		
+		lyricsField.setMovementMethod(new LinkMovementMethod());
 	}
 
 	@Override

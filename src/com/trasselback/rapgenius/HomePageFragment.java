@@ -53,6 +53,10 @@ public class HomePageFragment extends Fragment {
 		super.onPause();
 		// Stop retrieving news feed if switching fragments
 		retrieveTask.cancel(true);
+		// If still loading, content wasn't loaded.
+		if (mLoadingView.isShown()) {
+			contentLoaded = false;
+		}
 	}
 
 	@Override
@@ -64,13 +68,9 @@ public class HomePageFragment extends Fragment {
 				SettingsFragment.KEY_PREF_LOAD_HOME, true);
 
 		// Restart task if it was cancelled and never completed
-		if (contentLoaded) {
-			if (lyricsField.getText().length() < 5)
-				retrieveTask.execute();
-		}
-		
-		// If not already loaded
 		if (!contentLoaded) {
+			// Reset retrieveTask to RetrieveNewsFeed
+			retrieveTask = new RetrieveNewsFeed();
 			if (loadHome) {
 				mLoadingView.setVisibility(View.VISIBLE);
 				mContent.setVisibility(View.GONE);
@@ -84,7 +84,11 @@ public class HomePageFragment extends Fragment {
 			if (loadHome) {
 				mLoadingView.setVisibility(View.GONE);
 				mContent.setVisibility(View.VISIBLE);
-				lyricsField.setText(Html.fromHtml(homeData));
+				// Check to make sure home data exists
+				if (homeData.length() > 5) {
+					lyricsField.setText(Html.fromHtml(homeData));
+				} else
+					retrieveTask.execute();
 				RemoveUnderLine.removeUnderline(lyricsField);
 			} else {
 				lyricsField.setText("Home disabled in settings.");
@@ -146,7 +150,6 @@ public class HomePageFragment extends Fragment {
 				if (networkInfo != null && networkInfo.isConnected()) {
 					if (urlObject.openURL())
 						urlObject.retrievePage();
-					contentLoaded = true;
 					return urlObject.getPage();
 				} else
 					return "No internet connection found.";
@@ -158,6 +161,7 @@ public class HomePageFragment extends Fragment {
 		@Override
 		protected void onPreExecute() {
 			if (retrieveTask != null)
+				// Doesn't look like this gets called
 				if (retrieveTask.isCancelled())
 					return;
 		}
@@ -174,6 +178,7 @@ public class HomePageFragment extends Fragment {
 				mContent.setVisibility(View.VISIBLE);
 				mLoadingView.setVisibility(View.GONE);
 			}
+			contentLoaded = true;
 		}
 	}
 }

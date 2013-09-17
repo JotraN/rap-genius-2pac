@@ -2,6 +2,8 @@ package com.trasselback.rapgenius;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -45,17 +47,27 @@ public class ForumThread implements URLObject {
 	}
 
 	public void retrievePosts() {
-		Elements content = forumsPage.getElementsByClass("embedly_pro");
-		Elements content1 = forumsPage.getElementsByClass("user_details");
-		for (int i = 0; i < content.toArray().length; i++) {
-			posts.add(content.toArray()[i].toString()
+		Elements post = forumsPage.getElementsByClass("embedly_pro");
+		Elements postedBy = forumsPage.getElementsByClass("user_details");
+		for (int i = 0; i < post.toArray().length; i++) {
+			String link = "";
+			if (post.toArray()[i].toString().contains("<img")) {
+				Pattern pattern = Pattern.compile("<img.+?src=\"(.+?)\".+?>");
+				Matcher matcher = pattern.matcher(post.toArray()[i]
+						.toString());
+				if (matcher.find())
+					link = post.toArray()[i].toString().substring(
+							matcher.start(1), matcher.end(1));
+			}
+			posts.add(post.toArray()[i]
+					.toString()
 					.replace("href=\"/", "href=\"http://rapgenius.com/")
 					.replaceAll("<h\\d+?>", "<h6>")
 					.replaceAll("</h\\d+?>", "</h6>")
-					// TODO Remove link
-					.replace("><img", "><a href=\"http://google.com\"><img")
+					.replaceAll("<img.+?src=\"(.+?)\".+?>",
+							"<a href=\"" + link + "\">" + link + "</a>")
 					+ "<br>Posted by:"
-					+ content1.toArray()[i]
+					+ postedBy.toArray()[i]
 							.toString()
 							.replaceAll("<p.+?>", ", ")
 							.replaceAll("<div.+?>", "")

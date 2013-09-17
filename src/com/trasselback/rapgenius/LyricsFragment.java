@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ public class LyricsFragment extends Fragment {
 	private URLObject urlObject;
 	public static String message = "";
 	private AsyncTask<String, Void, String> retrieveTask;
+	private static boolean taskStarted = false;
 
 	private boolean cacheLyricsEnabled = false;
 
@@ -50,6 +52,9 @@ public class LyricsFragment extends Fragment {
 	public void onPause() {
 		super.onPause();
 		retrieveTask.cancel(true);
+		// If still loading, task was interrupted and needs to be restarted
+		if (mLoadingView.isShown())
+			taskStarted = false;
 	}
 
 	private void initialize() {
@@ -78,9 +83,11 @@ public class LyricsFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		// Restart retrieve task if it was cancelled
-		if (retrieveTask.isCancelled()) {
+		if (!taskStarted && mLoadingView.isShown()) {
 			retrieveTask = new RetrieveLyricsTask();
+			Log.v("sasa", "jahaha");
 			startLyrics();
+			Log.v("sasa", "sasa");
 		}
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
@@ -124,11 +131,20 @@ public class LyricsFragment extends Fragment {
 		mLoadingView.setVisibility(View.GONE);
 		mContent.setVisibility(View.VISIBLE);
 		String cachedData = CacheManager.getCache(getActivity(), message);
-		String nameData = cachedData.substring(0, cachedData.indexOf('<'));
-		String lyricsData = cachedData.substring(cachedData.indexOf('<'));
-		nameField.setText(nameData);
-		lyricsField.setText(Html.fromHtml(lyricsData));
-		RemoveUnderLine.removeUnderline(lyricsField);
+		if (cachedData.length() > 5) {
+			Log.v("cached", cachedData);
+			String nameData = cachedData.substring(0, cachedData.indexOf('<'));
+			String lyricsData = cachedData.substring(cachedData.indexOf('<'));
+			nameField.setText(nameData);
+			lyricsField.setText(Html.fromHtml(lyricsData));
+			RemoveUnderLine.removeUnderline(lyricsField);
+		} else{
+			String nameData = "Error loading the lyrics.";
+			String lyricsData = "Try re-loading the song.";
+			nameField.setText(nameData);
+			lyricsField.setText(Html.fromHtml(lyricsData));
+			RemoveUnderLine.removeUnderline(lyricsField);
+		}
 	}
 
 	// Find what started lyrics activity and continue from there
@@ -189,6 +205,7 @@ public class LyricsFragment extends Fragment {
 			if (retrieveTask != null)
 				if (retrieveTask.isCancelled())
 					return;
+			taskStarted = false;
 		}
 
 		@Override
@@ -206,6 +223,7 @@ public class LyricsFragment extends Fragment {
 			if (cacheLyricsEnabled)
 				CacheManager.saveData(getActivity(), message, nameField
 						.getText().toString() + result);
+			taskStarted = true;
 		}
 	}
 }

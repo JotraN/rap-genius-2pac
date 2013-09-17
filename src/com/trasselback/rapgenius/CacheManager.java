@@ -13,8 +13,11 @@ import android.content.Context;
 public class CacheManager {
 
 	public static void saveData(Context context, String name, String lyrics) {
-		// Only save if lyrics found.
-		if (!lyrics.contains("Lyrics not found."))
+		// Only save data if lyrics found.
+		if (!lyrics.contains("There was a problem with finding the lyrics.")
+				&& !lyrics
+						.contains("There was a problem getting information about your network status.")
+				&& !lyrics.contains("No internet connection found."))
 			try {
 				File file = new File(context.getCacheDir(), name + ".cache");
 				FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
@@ -24,6 +27,9 @@ public class CacheManager {
 				fileWriter.close();
 			} catch (FileNotFoundException e) {
 			} catch (IOException e) {
+			} catch (NullPointerException e) {
+				// TODO Caused when application attempts to saveCache outside of
+				// lyrics fragment
 			}
 	}
 
