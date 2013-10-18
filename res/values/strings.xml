@@ -25,14 +25,14 @@
         <item>HOME</item>
         <item>FAVORITES</item>
         <item>SETTINGS</item>
-<!--         <item>FORUMS</item> -->
     </string-array>
 
     <string name="title_activity_more_songs">More Songs</string>
     <string name="close_drawer">Close drawer.</string>
     <string name="open_drawer">Open drawer.</string>
     <string name="title_activity_explanation">Explanation</string>
-    <string name="title_activity_forum_thread">Thread</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="favsSearch">Enter favorited song</string>
+    <string name="title_favs_search">Enable Favorites Search</string>
+    <string name="summary_favs_search">Shows a search bar for favorited songs. Appears after 10 songs are added.</string>
 
 </resources>

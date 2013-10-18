@@ -1,5 +1,6 @@
 package com.trasselback.rapgenius;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -350,6 +351,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 			super(context, resource);
 		}
 
+		@SuppressLint("NewApi")
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View v = super.getView(position, convertView, parent);
@@ -395,7 +397,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 		favItem.setVisible(true);
 		// Reload favorites icon
 		if (FavoritesManager.checkFavorites(getApplicationContext(),
-				search_text.getText().toString())) {
+				favsArray[position])) {
 			favItem.setIcon(R.drawable.ic_star_pressed);
 		} else {
 			favItem.setIcon(R.drawable.ic_star_not_pressed);

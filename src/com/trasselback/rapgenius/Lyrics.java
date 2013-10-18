@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Lyrics implements URLObject {
@@ -14,6 +15,7 @@ public class Lyrics implements URLObject {
 	private String url = "";
 	private String song = "";
 	private String message = "";
+	private String musicLink = "";
 	private Document lyricsPage;
 
 	Lyrics(String x) {
@@ -50,7 +52,7 @@ public class Lyrics implements URLObject {
 						"href=\"",
 						"href=\"explanation_clicked:[" + name
 								+ "]http://rapgenius.com");
-		page = page.replaceAll("<a.+?class=\"no_annotation.+?>", "");
+		page = page.replaceAll("<a\\s+?class=\"no_annotation.+?>", "");
 		// TODO Strange bug where rough explanations don't load.
 		page = page.replace("rough", "accepted");
 		if (page.contains("needs_exegesis")) {
@@ -74,6 +76,15 @@ public class Lyrics implements URLObject {
 		}
 	}
 
+	public void retrieveMusicLink(){
+		Element content = lyricsPage.getElementById("bopPlayer");
+		Pattern pattern = Pattern.compile("www.youtube.com.+?(\"|&)");
+		Matcher matcher = pattern.matcher(content.toString());
+		if(matcher.find())
+			musicLink = content.toString().substring(matcher.start(), matcher.end());
+		musicLink = musicLink.replace("\"", "").replace("&", "").replace("%2F", "/").replace("%3D", "=").replace("%3F", "?");
+	}
+	
 	public void searchIt() {
 		String searchUrl = "http://google.com/search?q="
 				+ message.replace(" ", "+") + "+rapgenius"

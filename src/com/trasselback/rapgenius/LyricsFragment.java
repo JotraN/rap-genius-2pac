@@ -12,7 +12,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,9 +84,7 @@ public class LyricsFragment extends Fragment {
 		// Restart retrieve task if it was cancelled
 		if (!taskStarted && mLoadingView.isShown()) {
 			retrieveTask = new RetrieveLyricsTask();
-			Log.v("sasa", "jahaha");
 			startLyrics();
-			Log.v("sasa", "sasa");
 		}
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
@@ -132,7 +129,6 @@ public class LyricsFragment extends Fragment {
 		mContent.setVisibility(View.VISIBLE);
 		String cachedData = CacheManager.getCache(getActivity(), message);
 		if (cachedData.length() > 5) {
-			Log.v("cached", cachedData);
 			String nameData = cachedData.substring(0, cachedData.indexOf('<'));
 			String lyricsData = cachedData.substring(cachedData.indexOf('<'));
 			nameField.setText(nameData);

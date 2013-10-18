@@ -36,7 +36,7 @@ public class MoreSongsFragment extends Fragment {
 	public MoreSongsFragment() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -57,7 +57,10 @@ public class MoreSongsFragment extends Fragment {
 		mContent.setVisibility(View.GONE);
 		retrieveTask = new RetrieveMoreSongs();
 		message = getArguments().getString(MainActivity.EXTRA_MESSAGE);
-		retrieveTask.execute(message);
+		if (!message.contains("There was a problem with finding the lyrics."))
+			retrieveTask.execute(message);
+		else
+			nameField.setText("Song not found.");
 	}
 
 	@Override
@@ -90,7 +93,11 @@ public class MoreSongsFragment extends Fragment {
 		// Restart retrieve task if it was cancelled
 		if (retrieveTask.isCancelled()) {
 			retrieveTask = new RetrieveMoreSongs();
-			retrieveTask.execute(message);
+			if (!message
+					.contains("There was a problem with finding the lyrics."))
+				retrieveTask.execute(message);
+			else
+				nameField.setText("Song not found.");
 		}
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
@@ -134,19 +141,19 @@ public class MoreSongsFragment extends Fragment {
 		@Override
 		protected String doInBackground(String... names) {
 			moreSongs = new MoreSongs(names[0]);
-			try{
-			ConnectivityManager connMgr = (ConnectivityManager) getActivity()
-					.getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-			if (networkInfo != null && networkInfo.isConnected()) {
-				if (moreSongs.openURL()) {
-					moreSongs.retrievePage();
-					moreSongs.retrieveName();
-				}
-				return moreSongs.getPage();
-			} else
-				return "No internet connection found.";
-			} catch(Exception ex){
+			try {
+				ConnectivityManager connMgr = (ConnectivityManager) getActivity()
+						.getSystemService(Context.CONNECTIVITY_SERVICE);
+				NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+				if (networkInfo != null && networkInfo.isConnected()) {
+					if (moreSongs.openURL()) {
+						moreSongs.retrievePage();
+						moreSongs.retrieveName();
+					}
+					return moreSongs.getPage();
+				} else
+					return "No internet connection found.";
+			} catch (Exception ex) {
 				return "There was a problem getting information about your network status.";
 			}
 		}

@@ -7,10 +7,15 @@
             android:summary="@string/summary_load_home"
             android:title="@string/title_load_home" />
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="pref_key_cache_lyrics"
             android:summary="@string/summary_cache_lyrics"
             android:title="@string/title_cache_lyrics" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="pref_key_favs_search"
+            android:summary="@string/summary_favs_search"
+            android:title="@string/title_favs_search" />
 
         <com.trasselback.rapgenius.OverridedDialogPreference
             android:dialogIcon="@android:drawable/ic_dialog_alert"

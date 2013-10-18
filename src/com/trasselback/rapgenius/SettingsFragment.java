@@ -26,6 +26,7 @@ public class SettingsFragment extends PreferenceFragment implements
 	public static final String KEY_PREF_EXPLAINED_LYRICS_COLOR = "pref_key_explained_lyrics_color";
 	public static final String KEY_PREF_FAVORITES_COLOR = "pref_key_favorites_color";
 	public static final String KEY_PREF_BACKGROUND_COLOR = "pref_key_background_color";
+	public static final String KEY_PREF_FAVS_SEARCH = "pref_key_favs_search";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

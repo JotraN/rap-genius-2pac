@@ -10,8 +10,6 @@ package com.trasselback.rapgenius;
 public final class R {
     public static final class array {
         public static final int app_colors_entries=0x7f0c0002;
-        /**          <item>FORUMS</item> 
-         */
         public static final int navigation_array=0x7f0c0003;
         public static final int text_sizes_entries=0x7f0c0000;
         public static final int text_sizes_entry_values=0x7f0c0001;
@@ -993,20 +991,21 @@ containing a value of this type.
         public static final int action_favorite=0x7f050041;
         public static final int action_search=0x7f050040;
         public static final int action_settings=0x7f05003f;
-        public static final int content_frame=0x7f05003a;
+        public static final int content_frame=0x7f050039;
         public static final int disableHome=0x7f050009;
-        public static final int drawer_layout=0x7f050039;
+        public static final int drawer_layout=0x7f050038;
         public static final int edit_query=0x7f050026;
-        public static final int favsList=0x7f05003c;
+        public static final int favsList=0x7f05003d;
+        public static final int favsSearch=0x7f05003c;
+        public static final int favsTop=0x7f05003b;
         public static final int homeAsUp=0x7f050006;
         public static final int infoView=0x7f050033;
-        public static final int left_drawer=0x7f05003b;
+        public static final int left_drawer=0x7f05003a;
         public static final int listMode=0x7f050002;
         public static final int loadingView=0x7f050037;
         public static final int lyricsText=0x7f050036;
         public static final int nameText=0x7f050034;
         public static final int normal=0x7f050001;
-        public static final int postsList=0x7f050038;
         public static final int scrollView1=0x7f050035;
         public static final int search_text=0x7f050032;
         public static final int showCustom=0x7f050008;
@@ -1014,7 +1013,6 @@ containing a value of this type.
         public static final int showTitle=0x7f050007;
         public static final int songsList=0x7f05003e;
         public static final int tabMode=0x7f050003;
-        public static final int threadsList=0x7f05003d;
         public static final int useLogo=0x7f050004;
         public static final int wrap_content=0x7f050000;
     }
@@ -1045,20 +1043,17 @@ containing a value of this type.
         public static final int abs__simple_dropdown_hint=0x7f030014;
         public static final int action_search_layout=0x7f030015;
         public static final int activity_explanation=0x7f030016;
-        public static final int activity_forum_thread=0x7f030017;
-        public static final int activity_lyrics=0x7f030018;
-        public static final int activity_main=0x7f030019;
-        public static final int drawer_list_item=0x7f03001a;
-        public static final int favs_list_item=0x7f03001b;
-        public static final int fragment_favorites_layout=0x7f03001c;
-        public static final int fragment_forums_layout=0x7f03001d;
-        public static final int fragment_home_page_layout=0x7f03001e;
-        public static final int fragment_lyrics_layout=0x7f03001f;
-        public static final int fragment_more_songs_layout=0x7f030020;
-        public static final int more_songs_list_item=0x7f030021;
-        public static final int posts_list_item=0x7f030022;
-        public static final int sherlock_spinner_dropdown_item=0x7f030023;
-        public static final int sherlock_spinner_item=0x7f030024;
+        public static final int activity_lyrics=0x7f030017;
+        public static final int activity_main=0x7f030018;
+        public static final int drawer_list_item=0x7f030019;
+        public static final int favs_list_item=0x7f03001a;
+        public static final int fragment_favorites_layout=0x7f03001b;
+        public static final int fragment_home_page_layout=0x7f03001c;
+        public static final int fragment_lyrics_layout=0x7f03001d;
+        public static final int fragment_more_songs_layout=0x7f03001e;
+        public static final int more_songs_list_item=0x7f03001f;
+        public static final int sherlock_spinner_dropdown_item=0x7f030020;
+        public static final int sherlock_spinner_item=0x7f030021;
     }
     public static final class menu {
         public static final int explanation=0x7f0d0000;
@@ -1115,21 +1110,22 @@ containing a value of this type.
         public static final int default_search=0x7f0a000f;
         public static final int dialog_clear_cache=0x7f0a001f;
         public static final int dialog_remove_favorites=0x7f0a001a;
-        public static final int hello_world=0x7f0a0025;
+        public static final int favsSearch=0x7f0a0024;
         public static final int open_drawer=0x7f0a0022;
         public static final int summary_cache_lyrics=0x7f0a0017;
         public static final int summary_clear_cache=0x7f0a001e;
         public static final int summary_donate=0x7f0a001c;
+        public static final int summary_favs_search=0x7f0a0026;
         public static final int summary_load_home=0x7f0a0015;
         public static final int summary_remove_favorites=0x7f0a0019;
         public static final int title_activity_explanation=0x7f0a0023;
-        public static final int title_activity_forum_thread=0x7f0a0024;
         public static final int title_activity_more_songs=0x7f0a0020;
         public static final int title_activity_settings=0x7f0a0013;
         public static final int title_cache_lyrics=0x7f0a0016;
         public static final int title_clear_cache=0x7f0a001d;
         public static final int title_donate=0x7f0a001b;
         public static final int title_favorites=0x7f0a0012;
+        public static final int title_favs_search=0x7f0a0025;
         public static final int title_load_home=0x7f0a0014;
         public static final int title_remove_favorites=0x7f0a0018;
     }

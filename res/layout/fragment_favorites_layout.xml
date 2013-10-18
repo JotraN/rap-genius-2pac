@@ -2,23 +2,45 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <TextView
-        android:id="@+id/nameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:textColor="@color/LightGray"
-        android:textIsSelectable="true"
-        android:textSize="30sp" />
+    <RelativeLayout
+        android:id="@+id/favsTop"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/nameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:textColor="@color/LightGray"
+            android:textIsSelectable="true"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/favsSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:ems="10"
+            android:hint="@string/favsSearch"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:textSize="30sp" 
+            android:textColor="@color/LightGray"
+            android:textCursorDrawable="@null">
+            <requestFocus />
+        </EditText>
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/favsList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/nameText"
+        android:layout_below="@+id/favsTop"
         android:dividerHeight="1dp"
         android:drawSelectorOnTop="true"
         android:listSelector="@drawable/list_selector" >
