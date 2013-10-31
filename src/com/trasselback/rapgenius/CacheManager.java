@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Locale;
 
 import android.content.Context;
 
@@ -19,7 +20,7 @@ public class CacheManager {
 						.contains("There was a problem getting information about your network status.")
 				&& !lyrics.contains("No internet connection found."))
 			try {
-				File file = new File(context.getCacheDir(), name + ".cache");
+				File file = new File(context.getCacheDir(), name.replace("-", " ").toUpperCase(Locale.ENGLISH) + ".cache");
 				FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
 				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 				bufferedWriter.write(lyrics);
@@ -36,7 +37,7 @@ public class CacheManager {
 	public static String getCache(Context context, String name) {
 		String cachedData = "";
 		try {
-			File file = new File(context.getCacheDir(), name + ".cache");
+			File file = new File(context.getCacheDir(), name.replace("-", " ").toUpperCase(Locale.ENGLISH) + ".cache");
 			FileReader fileReader = new FileReader(file.getAbsoluteFile());
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			String line = "";

@@ -30,6 +30,7 @@ public class Lyrics implements URLObject {
 
 	public boolean openURL() {
 		try {
+			// TODO better timeout time
 			lyricsPage = Jsoup.connect(url).timeout(10000).get();
 			return true;
 		} catch (IOException e) {

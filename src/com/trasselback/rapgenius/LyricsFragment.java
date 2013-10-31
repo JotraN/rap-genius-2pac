@@ -134,7 +134,7 @@ public class LyricsFragment extends Fragment {
 			nameField.setText(nameData);
 			lyricsField.setText(Html.fromHtml(lyricsData));
 			RemoveUnderLine.removeUnderline(lyricsField);
-		} else{
+		} else {
 			String nameData = "Error loading the lyrics.";
 			String lyricsData = "Try re-loading the song.";
 			nameField.setText(nameData);
