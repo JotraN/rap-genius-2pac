@@ -34,5 +34,6 @@
     <string name="favsSearch">Enter favorited song</string>
     <string name="title_favs_search">Enable Favorites Search</string>
     <string name="summary_favs_search">Shows a search bar for favorited songs. Appears after 10 songs are added.</string>
+    <string name="drawer_image">Drawer Image</string>
 
 </resources>

@@ -1,10 +1,13 @@
 package com.trasselback.rapgenius.activities;
 
-import android.annotation.SuppressLint;
+import java.io.IOException;
+import java.io.InputStream;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,12 +16,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -298,18 +303,18 @@ public class MainActivity extends SherlockFragmentActivity implements
 				intent = new Intent(this, SettingsPreferenceActivity.class);
 			startActivity(intent);
 			break;
-//		case 3:
-//			fragment = new ForumsFragment();
-//			fragmentManager.beginTransaction()
-//					.replace(R.id.content_frame, fragment).commit();
-//			mDrawerList.setItemChecked(position, true);
-//			setTitle(mDrawerTitles[position]);
-//			if (!hideFavs) {
-//				favItem.setVisible(false);
-//				hideFavs = true;
-//			}
-//			cleanUpDrawer();
-//			break;
+		// case 3:
+		// fragment = new ForumsFragment();
+		// fragmentManager.beginTransaction()
+		// .replace(R.id.content_frame, fragment).commit();
+		// mDrawerList.setItemChecked(position, true);
+		// setTitle(mDrawerTitles[position]);
+		// if (!hideFavs) {
+		// favItem.setVisible(false);
+		// hideFavs = true;
+		// }
+		// cleanUpDrawer();
+		// break;
 		case 3:
 			if (adapter.getItem(3).contains("MORE SONGS")) {
 				fragment = new MoreSongsFragment();
@@ -355,32 +360,74 @@ public class MainActivity extends SherlockFragmentActivity implements
 	}
 
 	private class ListAdapter extends ArrayAdapter<String> {
+		private final Context context;
+		private final int resource;
+
 		public ListAdapter(Context context, int resource) {
 			super(context, resource);
+			this.context = context;
+			this.resource = resource;
 		}
 
-		@SuppressLint("NewApi")
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			View v = super.getView(position, convertView, parent);
+			LayoutInflater inflater = (LayoutInflater) context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View v = inflater.inflate(resource, parent, false);
+			
+			ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
+			TextView textView = (TextView) v.findViewById(R.id.textView);
+			// Have to manually set text because adapter isn't just text view
+			textView.setText(adapter.getItem(position));
+			
+			InputStream ims = null;
+			
+			// Change background and icon depending on position
 			switch (position) {
 			case 0:
+				try {
+					ims = context.getAssets().open("ic_menu_home.png");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				v.setBackgroundColor(getResources().getColor(R.color.LightBlue));
 				break;
 			case 1:
+				try {
+					ims = context.getAssets().open("ic_menu_star.png");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				v.setBackgroundColor(getResources().getColor(R.color.Red));
 				break;
 			case 2:
+				try {
+					ims = context.getAssets().open("ic_menu_manage.png");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				v.setBackgroundColor(getResources().getColor(R.color.Green));
 				break;
 			case 3:
+				try {
+					if (adapter.getItem(position) == "MORE SONGS")
+						ims = context.getAssets().open("ic_menu_info_details.png");
+					else
+						ims = context.getAssets().open("ic_menu_revert.png");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				v.setBackgroundColor(getResources().getColor(R.color.Yellow));
 				break;
 			default:
 				v.setBackgroundColor(getResources().getColor(R.color.Orange));
 				break;
 			}
-			TextView x = (TextView) v;
+			Drawable d = Drawable.createFromStream(ims, null);
+			imageView.setImageDrawable(d);
+
+			// Set font
+			TextView x = (TextView) textView;
 			Typeface tf = Typeface.createFromAsset(getAssets(),
 					"fonts/roboto_condensed_light.ttf");
 			x.setTypeface(tf);
