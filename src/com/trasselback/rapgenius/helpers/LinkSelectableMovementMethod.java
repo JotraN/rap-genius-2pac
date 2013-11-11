@@ -22,8 +22,11 @@ public class LinkSelectableMovementMethod extends LinkMovementMethod {
 	public void onTakeFocus(TextView view, Spannable text, int dir) {
 		if ((dir & (View.FOCUS_FORWARD | View.FOCUS_DOWN)) != 0) {
 			if (view.getLayout() == null) {
-				// This shouldn't be null, but do something sensible if it is.
-				Selection.setSelection(text, text.length());
+				// Stop application from crashing for some users
+				try{
+					Selection.setSelection(text, text.length());
+				} catch(StringIndexOutOfBoundsException e){
+				}
 			}
 		} else {
 			Selection.setSelection(text, text.length());

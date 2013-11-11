@@ -17,7 +17,7 @@
             android:summary="@string/summary_favs_search"
             android:title="@string/title_favs_search" />
 
-        <com.trasselback.rapgenius.OverridedDialogPreference
+        <com.trasselback.rapgenius.preferences.OverridedDialogPreference
             android:dialogIcon="@android:drawable/ic_dialog_alert"
             android:dialogMessage="@string/dialog_clear_cache"
             android:key="pref_key_clear_cache"
@@ -25,7 +25,7 @@
             android:positiveButtonText="Ok"
             android:summary="@string/summary_clear_cache"
             android:title="@string/title_clear_cache" />
-        <com.trasselback.rapgenius.OverridedDialogPreference
+        <com.trasselback.rapgenius.preferences.OverridedDialogPreference
             android:dialogIcon="@android:drawable/ic_dialog_alert"
             android:dialogMessage="@string/dialog_remove_favorites"
             android:key="pref_key_remove_favorites"

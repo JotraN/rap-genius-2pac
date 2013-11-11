@@ -41,7 +41,6 @@ public class MoreSongsFragment extends Fragment {
 	private String[] songsArray;
 
 	public MoreSongsFragment() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
