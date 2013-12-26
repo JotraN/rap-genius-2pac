@@ -694,12 +694,13 @@ containing a value of this type.
         public static final int LightBlack=0x7f07000f;
         public static final int LightBlue=0x7f070012;
         public static final int LightGray=0x7f070011;
-        public static final int LighterBlack=0x7f070015;
+        public static final int LighterBlack=0x7f070016;
         public static final int Orange=0x7f070007;
         public static final int Purple=0x7f07000b;
         public static final int Red=0x7f070006;
         public static final int TransBlack=0x7f070014;
         public static final int TransGray=0x7f070013;
+        public static final int Transparent=0x7f070015;
         public static final int White=0x7f07000d;
         public static final int Yellow=0x7f070008;
         public static final int abs__background_holo_dark=0x7f070000;
@@ -708,10 +709,10 @@ containing a value of this type.
         public static final int abs__bright_foreground_disabled_holo_light=0x7f070005;
         public static final int abs__bright_foreground_holo_dark=0x7f070002;
         public static final int abs__bright_foreground_holo_light=0x7f070003;
-        public static final int abs__primary_text_disable_only_holo_dark=0x7f070016;
-        public static final int abs__primary_text_disable_only_holo_light=0x7f070017;
-        public static final int abs__primary_text_holo_dark=0x7f070018;
-        public static final int abs__primary_text_holo_light=0x7f070019;
+        public static final int abs__primary_text_disable_only_holo_dark=0x7f070017;
+        public static final int abs__primary_text_disable_only_holo_light=0x7f070018;
+        public static final int abs__primary_text_holo_dark=0x7f070019;
+        public static final int abs__primary_text_holo_light=0x7f07001a;
     }
     public static final class dimen {
         /**  Default height of an action bar. 
@@ -1140,11 +1141,6 @@ containing a value of this type.
     }
     public static final class style {
         public static final int AnimationDisabledAppBaseTheme=0x7f0b005a;
-        /** 
-        Base application theme for API 11+. This theme completely replaces
-        AppBaseTheme from res/values/styles.xml on API 11+ devices.
-    
-         */
         public static final int AppBaseTheme=0x7f0b0059;
         /**  Application theme. 
          */

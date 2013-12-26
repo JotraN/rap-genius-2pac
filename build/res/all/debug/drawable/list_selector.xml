@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Needed for 2.3 selector bug  -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" >
+    <solid android:color="@color/TransGray" />
+</shape><!-- From: file:/media/joseph/Local%20Disk/Users/Joseph/Documents/Java/RapGenius/res/drawable/list_selector.xml -->

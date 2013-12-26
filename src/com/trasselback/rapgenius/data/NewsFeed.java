@@ -6,11 +6,12 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-public class NewsFeed implements URLObject {
-	private String page = "";
+public class NewsFeed extends URLObject {
+	// Jsoup document for home page
 	private Document homePage;
 
 	public NewsFeed() {
+		url = "http://rapgenius.com";
 	}
 
 	public boolean openURL() {
@@ -20,11 +21,13 @@ public class NewsFeed implements URLObject {
 			return true;
 		} catch (IOException e) {
 			try {
+				// Try looking for it again if any network pipes broke the first
+				// time
 				homePage = Jsoup.connect("http://rapgenius.com").timeout(10000)
 						.get();
 				return true;
 			} catch (IOException e1) {
-				page = "There was a problem with connecting to Rap Genius.<br>Rap Genius may be down.";
+				htmlPage = "There was a problem with connecting to Rap Genius.<br>Rap Genius may be down.";
 				return false;
 			}
 		}
@@ -32,18 +35,13 @@ public class NewsFeed implements URLObject {
 
 	public void retrievePage() {
 		Elements content = homePage.getElementsByClass("newsfeed");
-		page = content.toString().replace("</span>", "</span><br>")
+		htmlPage = content.toString().replace("</span>", "</span><br>")
 				.replace("href=\"", "href=\"song_clicked:")
-				// Formatting
+				// Format the page
 				.replace("<p class=\"label\">", "").replace("</p>", "<br>")
-				// remove header
+				// Remove HTML header
 				.replaceAll("<h1.+?</h1>", "");
-		if (page.length() != 0 && page.contains("<a"))
-			page = page.substring(0, page.lastIndexOf("<a"));
+		if (htmlPage.length() != 0 && htmlPage.contains("<a"))
+			htmlPage = htmlPage.substring(0, htmlPage.lastIndexOf("<a"));
 	}
-
-	public String getPage() {
-		return page;
-	}
-
 }

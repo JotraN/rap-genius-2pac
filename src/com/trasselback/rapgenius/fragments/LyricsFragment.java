@@ -3,7 +3,6 @@ package com.trasselback.rapgenius.fragments;
 import com.trasselback.rapgenius.R;
 import com.trasselback.rapgenius.activities.MainActivity;
 import com.trasselback.rapgenius.data.Lyrics;
-import com.trasselback.rapgenius.data.URLObject;
 import com.trasselback.rapgenius.helpers.CacheManager;
 import com.trasselback.rapgenius.helpers.ColorManager;
 import com.trasselback.rapgenius.helpers.CrossfadeAnimation;
@@ -32,12 +31,12 @@ public class LyricsFragment extends Fragment {
 	private TextView nameField, lyricsField;
 	private View mLoadingView;
 	private View mContent;
-	private URLObject urlObject;
+	private Lyrics lyrics;
 	public static String message = "";
 	private AsyncTask<String, Void, String> retrieveTask;
 	private static boolean taskStarted = false;
 
-	private boolean cacheLyricsEnabled = false;
+	private boolean cacheLyricsEnabled = true;
 
 	public LyricsFragment() {
 	}
@@ -188,17 +187,18 @@ public class LyricsFragment extends Fragment {
 
 		@Override
 		protected String doInBackground(String... names) {
-			urlObject = new Lyrics(names[0]);
+			lyrics = new Lyrics(names[0]);
 			try {
 				ConnectivityManager connMgr = (ConnectivityManager) getActivity()
 						.getSystemService(Context.CONNECTIVITY_SERVICE);
 				NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 				if (networkInfo != null && networkInfo.isConnected()) {
-					if (urlObject.openURL()) {
-						((Lyrics) urlObject).retrieveName();
-						urlObject.retrievePage();
-					}
-					return urlObject.getPage();
+					if (lyrics.openedURL()) {
+						lyrics.retrieveName();
+						lyrics.retrievePage();
+					} else
+						lyrics.googleIt();
+					return lyrics.getPage();
 				} else
 					return "No internet connection found.";
 			} catch (Exception ex) {
@@ -216,7 +216,7 @@ public class LyricsFragment extends Fragment {
 
 		@Override
 		protected void onPostExecute(String result) {
-			nameField.setText(((Lyrics) urlObject).getName());
+			nameField.setText(lyrics.getName());
 			lyricsField.setText(Html.fromHtml(result));
 			RemoveUnderLine.removeUnderline(lyricsField);
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1)

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger>
+
+    <dataSet config="JavaActionbarsherlockUnspecified.aar" >
+        <source path="/media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/build/exploded-bundles/JavaActionbarsherlockUnspecified.aar/assets" />
+    </dataSet>
+    <dataSet config="main" >
+        <source path="/media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/assets" >
+            <file
+                name="fonts/roboto_condensed_light.ttf"
+                path="/media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/assets/fonts/roboto_condensed_light.ttf" />
+            <file
+                name="fonts/roboto_thin.ttf"
+                path="/media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/assets/fonts/roboto_thin.ttf" />
+            <file
+                name="ic_menu_home.png"
+                path="/media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/assets/ic_menu_home.png" />
+            <file
+                name="ic_menu_info_details.png"
+                path="/media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/assets/ic_menu_info_details.png" />
+            <file
+                name="ic_menu_manage.png"
+                path="/media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/assets/ic_menu_manage.png" />
+            <file
+                name="ic_menu_revert.png"
+                path="/media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/assets/ic_menu_revert.png" />
+            <file
+                name="ic_menu_star.png"
+                path="/media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/assets/ic_menu_star.png" />
+        </source>
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="/media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/build-types/debug/assets" />
+    </dataSet>
+
+</merger>

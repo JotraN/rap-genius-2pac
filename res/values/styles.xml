@@ -15,11 +15,6 @@
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
-
-        <!--
-        All customizations that are NOT specific to a particular API-level can go here.
-        <item name="android:background">@color/LightBlack</item>
-        -->
         <item name="android:textColor">@color/Gray</item>
         <item name="android:textColorSecondary">@color/LightGray</item>
         <item name="android:windowBackground">@color/LightBlack</item>

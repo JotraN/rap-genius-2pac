@@ -1,6 +1,5 @@
 package com.trasselback.rapgenius.helpers;
 
-import com.trasselback.rapgenius.data.URLOverride;
 
 import android.graphics.Color;
 import android.text.Spannable;

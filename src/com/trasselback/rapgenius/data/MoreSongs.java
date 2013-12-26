@@ -11,12 +11,11 @@ public class MoreSongs {
 	private String page = "";
 	private String url = "";
 	private String song = "";
-	private Document lyricsPage;
+	// Jsoup document for more songs page
+	private Document morePage;
 
 	public MoreSongs(String x) {
-		// Rap Genius ignores punctuation in names, remove extra spaces,
-		// cleaning inputed data
-		// TODO replace song_clicked in function?
+		// Removes punctuation and extra spaces in names, clean the inputed data
 		song = x.trim().replaceAll("[\\.\\(\\),']", "").replace("-", " ")
 				.replace("$", "s").replace("song_clicked:", "");
 		url = "http://rapgenius.com/" + song.replace(' ', '-') + "-lyrics";
@@ -24,11 +23,13 @@ public class MoreSongs {
 
 	public boolean openURL() {
 		try {
-			lyricsPage = Jsoup.connect(url).timeout(10000).get();
+			morePage = Jsoup.connect(url).timeout(10000).get();
 			return true;
 		} catch (IOException e) {
 			try {
-				lyricsPage = Jsoup.connect(url).timeout(10000).get();
+				// Try looking for it again if any network pipes broke the first
+				// time
+				morePage = Jsoup.connect(url).timeout(10000).get();
 				return true;
 			} catch (IOException e1) {
 				name = "More songs not found.";
@@ -39,12 +40,13 @@ public class MoreSongs {
 	}
 
 	public void retrieveName() {
-		name += lyricsPage.title().replaceAll(" –.+?\\|.+?Genius", "");
+		name += morePage.title().replaceAll(" –.+?\\|.+?Genius", "");
 	}
 
 	public void retrievePage() {
-		Elements content = lyricsPage.getElementsByClass("song_list");
-		page = content.toString().replaceAll("<span class=\"track_number\">.+?</span>", "")
+		Elements content = morePage.getElementsByClass("song_list");
+		page = content.toString()
+				.replaceAll("<span class=\"track_number\">.+?</span>", "")
 				.replaceAll("\\s*?<.+?\">\\s*", "").replace("</a>", "<br>");
 		page = page.replaceAll("\\s*</.+?>\\s*", "").replace("\n", "");
 	}

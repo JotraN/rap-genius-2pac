@@ -1,0 +1,13 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    android:layout_width="fill_parent"
+    android:layout_height="55dp"
+    android:gravity="center_vertical"
+    android:maxLines="1"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:textColor="@color/Red"
+    android:textSize="22sp" />
+<!-- From: file:/media/joseph/Local%20Disk/Users/Joseph/Documents/Java/RapGenius/res/layout/favs_list_item.xml -->

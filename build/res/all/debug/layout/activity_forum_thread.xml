@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ForumThreadActivity" >
+
+    <RelativeLayout
+        android:id="@+id/infoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/nameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:paddingBottom="10dp"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="10dp"
+            android:textColor="@color/LightGray"
+            android:textIsSelectable="true"
+            android:textSize="30sp" />
+
+        <ListView
+            android:id="@+id/postsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/nameText"
+            android:divider="@color/LightBlack"
+            android:dividerHeight="15dp"
+            android:drawSelectorOnTop="true"
+            android:listSelector="@drawable/list_selector"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" >
+        </ListView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ProgressBar
+            android:id="@+id/loadingView"
+            style="?android:progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+</RelativeLayout><!-- From: file:/media/joseph/Local%20Disk/Users/Joseph/Documents/Java/RapGenius/res/layout/activity_forum_thread.xml -->

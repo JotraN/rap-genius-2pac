@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="5dp" >
+
+    <EditText
+        android:hint="@string/default_search"
+        android:id="@+id/search_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:background="@color/LightBlack"
+        android:inputType="text"
+        android:textColor="@color/Gray"
+        android:textCursorDrawable="@null"
+        android:textSize="20sp" 
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+    </EditText>
+
+</RelativeLayout><!-- From: file:/media/joseph/Local%20Disk/Users/Joseph/Documents/Java/RapGenius/res/layout/action_search_layout.xml -->

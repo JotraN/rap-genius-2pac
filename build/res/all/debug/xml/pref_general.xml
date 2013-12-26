@@ -1,0 +1,109 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="Performance" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="pref_key_load_home"
+            android:summary="@string/summary_load_home"
+            android:title="@string/title_load_home" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="pref_key_cache_lyrics"
+            android:summary="@string/summary_cache_lyrics"
+            android:title="@string/title_cache_lyrics" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="pref_key_favs_search"
+            android:summary="@string/summary_favs_search"
+            android:title="@string/title_favs_search" />
+
+        <com.trasselback.rapgenius.preferences.OverridedDialogPreference
+            android:dialogIcon="@android:drawable/ic_dialog_alert"
+            android:dialogMessage="@string/dialog_clear_cache"
+            android:key="pref_key_clear_cache"
+            android:negativeButtonText="Cancel"
+            android:positiveButtonText="Ok"
+            android:summary="@string/summary_clear_cache"
+            android:title="@string/title_clear_cache" />
+        <com.trasselback.rapgenius.preferences.OverridedDialogPreference
+            android:dialogIcon="@android:drawable/ic_dialog_alert"
+            android:dialogMessage="@string/dialog_remove_favorites"
+            android:key="pref_key_remove_favorites"
+            android:negativeButtonText="Cancel"
+            android:positiveButtonText="Ok"
+            android:summary="@string/summary_remove_favorites"
+            android:title="@string/title_remove_favorites" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Customization" >
+        <PreferenceScreen
+            android:persistent="false"
+            android:title="Text Settings" >
+            <ListPreference
+                android:defaultValue="22"
+                android:dialogTitle="Text Size"
+                android:entries="@array/text_sizes_entries"
+                android:entryValues="@array/text_sizes_entry_values"
+                android:key="pref_key_text_size"
+                android:summary="Change the text size."
+                android:title="Size" />
+            <ListPreference
+                android:defaultValue="Default"
+                android:dialogTitle="Default Text Color"
+                android:entries="@array/app_colors_entries"
+                android:entryValues="@array/app_colors_entries"
+                android:key="pref_key_default_text_color"
+                android:summary="Default text color."
+                android:title="Default Text" />
+            <ListPreference
+                android:defaultValue="Default"
+                android:dialogTitle="Title Color"
+                android:entries="@array/app_colors_entries"
+                android:entryValues="@array/app_colors_entries"
+                android:key="pref_key_title_color"
+                android:summary="Color for titles."
+                android:title="Title Text" />
+            <ListPreference
+                android:defaultValue="Default"
+                android:dialogTitle="Home Page Text Color"
+                android:entries="@array/app_colors_entries"
+                android:entryValues="@array/app_colors_entries"
+                android:key="pref_key_home_page_color"
+                android:summary="Color for home page songs."
+                android:title="Home Page Text Color" />
+            <ListPreference
+                android:defaultValue="Default"
+                android:dialogTitle="Explained Lyrics"
+                android:entries="@array/app_colors_entries"
+                android:entryValues="@array/app_colors_entries"
+                android:key="pref_key_explained_lyrics_color"
+                android:summary="Color for lyrics explained by the community."
+                android:title="Explained Lyrics" />
+            <ListPreference
+                android:defaultValue="Default"
+                android:dialogTitle="Favorites Color"
+                android:entries="@array/app_colors_entries"
+                android:entryValues="@array/app_colors_entries"
+                android:key="pref_key_favorites_color"
+                android:summary="Color for Favorites list."
+                android:title="Favorites Color" />
+        </PreferenceScreen>
+
+        <ListPreference
+            android:defaultValue="Default"
+            android:dialogTitle="Text Sizes"
+            android:entries="@array/app_colors_entries"
+            android:entryValues="@array/app_colors_entries"
+            android:key="pref_key_background_color"
+            android:title="Background Color" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="About" >
+        <Preference
+            android:summary="@string/summary_donate"
+            android:title="@string/title_donate" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://www.redcross.org/charitable-donations" />
+        </Preference>
+    </PreferenceCategory>
+
+</PreferenceScreen><!-- From: file:/media/joseph/Local%20Disk/Users/Joseph/Documents/Java/RapGenius/res/xml/pref_general.xml -->

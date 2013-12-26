@@ -16,6 +16,7 @@
     <color name="LightBlue">#33B5E5</color>
     <color name="TransGray">#DDFFFFFF</color>
     <color name="TransBlack">#BB0F0F0F</color>
+    <color name="Transparent">#00000000</color>
     <color name="LighterBlack">#181818</color>
 
 </resources>

@@ -303,18 +303,6 @@ public class MainActivity extends SherlockFragmentActivity implements
 				intent = new Intent(this, SettingsPreferenceActivity.class);
 			startActivity(intent);
 			break;
-		// case 3:
-		// fragment = new ForumsFragment();
-		// fragmentManager.beginTransaction()
-		// .replace(R.id.content_frame, fragment).commit();
-		// mDrawerList.setItemChecked(position, true);
-		// setTitle(mDrawerTitles[position]);
-		// if (!hideFavs) {
-		// favItem.setVisible(false);
-		// hideFavs = true;
-		// }
-		// cleanUpDrawer();
-		// break;
 		case 3:
 			if (adapter.getItem(3).contains("MORE SONGS")) {
 				fragment = new MoreSongsFragment();
@@ -359,6 +347,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 		getSupportActionBar().setTitle(mTitle);
 	}
 
+	// List adapter for drawer
 	private class ListAdapter extends ArrayAdapter<String> {
 		private final Context context;
 		private final int resource;

@@ -20,7 +20,6 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.trasselback.rapgenius.R;
 import com.trasselback.rapgenius.data.Explanations;
-import com.trasselback.rapgenius.data.URLObject;
 import com.trasselback.rapgenius.helpers.ColorManager;
 import com.trasselback.rapgenius.helpers.CrossfadeAnimation;
 import com.trasselback.rapgenius.helpers.RemoveUnderLine;
@@ -30,7 +29,7 @@ public class ExplanationActivity extends SherlockActivity {
 	private TextView nameField, lyricsField;
 	private View mLoadingView;
 	private View mContent;
-	private URLObject urlObject;
+	private Explanations explanation;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +70,7 @@ public class ExplanationActivity extends SherlockActivity {
 
 		((ProgressBar) mLoadingView).setIndeterminateDrawable(getResources()
 				.getDrawable(R.xml.progress_animation));
-		
+
 		lyricsField.setMovementMethod(new LinkMovementMethod());
 	}
 
@@ -129,14 +128,16 @@ public class ExplanationActivity extends SherlockActivity {
 
 		@Override
 		protected String doInBackground(Void... params) {
-			urlObject = new Explanations(getIntent().getDataString());
+			explanation = new Explanations(getIntent().getDataString());
 			try {
 				ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 				NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 				if (networkInfo != null && networkInfo.isConnected()) {
-					((Explanations) urlObject).retrieveName();
-					urlObject.retrievePage();
-					return urlObject.getPage();
+					explanation.retrieveUrl();
+					explanation.retrieveName();
+					if (explanation.openedURL())
+						explanation.retrievePage();
+					return explanation.getPage();
 				} else
 					return "No internet connection found.";
 			} catch (Exception ex) {
@@ -145,7 +146,7 @@ public class ExplanationActivity extends SherlockActivity {
 		}
 
 		protected void onPostExecute(String result) {
-			nameField.setText(((Explanations) urlObject).getName());
+			nameField.setText(explanation.getName());
 			lyricsField.setText(Html.fromHtml(result));
 			RemoveUnderLine.removeUnderline(lyricsField);
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1)

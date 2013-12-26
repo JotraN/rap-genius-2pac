@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_search"
+        android:actionLayout="@layout/action_search_layout"
+        android:icon="@drawable/ic_search"
+        android:showAsAction="always|collapseActionView"
+        android:title="@string/action_search"/>
+    <item
+        android:id="@+id/action_favorite"
+        android:icon="@drawable/ic_star_not_pressed"
+        android:showAsAction="always"
+        android:title="@string/action_favorite"/>
+
+</menu><!-- From: file:/media/joseph/Local%20Disk/Users/Joseph/Documents/Java/RapGenius/res/menu/lyrics.xml -->

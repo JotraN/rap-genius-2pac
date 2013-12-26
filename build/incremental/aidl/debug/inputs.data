@@ -1,0 +1,29 @@
+# incremental data. DO NOT EDIT.
+# format is <lastModified> <length> <SHA-1> <path>
+# Encoding is UTF-8
+1384823826000 419 c87c9aa6f781022dd1a2247e56eef3b149bc2bef /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/helpers/URLOverride.java
+1384822194000 15885 74911cff165317326c558aae99abde48d8eee7ee /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/activities/MainActivity.java
+1383351875000 3671 7f97d33958dcddba61190a01435108b0c4e0698d /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/helpers/FavoritesManager.java
+1384823758000 1327 285f5dc0ca077f237cd99c95e3aceefadfa4a258 /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/data/NewsFeed.java
+1384823736000 4696 8956da56c6afb4190ced81800c614abd7f1d7edc /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/data/Lyrics.java
+1383351842000 1257 edf05fc1a96a7e41af82a09ebe37a714f442feb1 /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/data/Forums.java
+1383351935000 6121 1a3f6cd2abf206aa7e499e97c7baa84470fdfa99 /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/fragments/HomePageFragment.java
+1383351875000 2241 d68fffa1b71ba0b3bc759b91ad49795bb28201f9 /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/helpers/CacheManager.java
+1383351935000 5577 4cf95b1ab62ff34447667898526fa4892402448d /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/fragments/ForumsFragment.java
+1384211438000 7115 5408e3d8d18487095f1e30dc050dc70d0fc5eb5d /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/fragments/MoreSongsFragment.java
+1383351936000 3449 d14accea0c1b18ec600e86e1769185240e3be486 /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/preferences/SettingsFragment.java
+1386031504000 9610 d0e573cbea11ad1b1fd8a4296e43e0045c5bd1d4 /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/activities/ExplanationActivity.java
+1383351936000 2526 8f3e8da5a029a69d849f4792d2525e5f450b7298 /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/preferences/SettingsPreferenceActivity.java
+1383351935000 7952 630c603ba65a5b1cd40bfd815040bbb6dae73479 /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/fragments/LyricsFragment.java
+1383351945000 2331 f0feb7ad396e9a20e9ca648539201cf3ccebd0f7 /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/data/ForumThread.java
+1386027934000 2497 a2c065235b5ff5c73f75e1f21f60a35f8d953d61 /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/data/Explanations.java
+1383351875000 3499 1487d3cff767d5571413b27c8864f307253cd91a /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/helpers/ColorManager.java
+1384823826000 1028 6e28db5c4f4312a95118c17df704036fa27eb439 /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/helpers/RemoveUnderLine.java
+1384211449000 5753 b3aaf17c5fa154b371e9c2bd6cce6bdea7635f98 /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/fragments/FavoritesFragment.java
+1384211889000 915 205ce5d63ecd5049f11b8f6076cd747262ff5dcf /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/helpers/LinkSelectableMovementMethod.java
+1383351936000 1184 2af23e9e739369fac28d420c048e6756f3cc96dd /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/preferences/SettingsActivity.java
+1383351842000 156 5933a8ed2202aa5a9f18ce9aceddcefe2432e33e /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/data/URLObject.java
+1384823826000 7764 4bf8dcc046823730e3a1da97548c2d3566f414d1 /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/activities/ForumThreadActivity.java
+1383351890000 1060 6359fde08a46cd9fb832e920beab5d5f865e6827 /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/helpers/CrossfadeAnimation.java
+1384823571000 1657 62f92b05bd673194c21e4f6f252ea86d49dfc5c1 /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/data/MoreSongs.java
+1384077045000 479 57e4814f086f7735dcd35db36579a5a4baa98171 /media/joseph/Local Disk/Users/Joseph/Documents/Java/RapGenius/src/com/trasselback/rapgenius/preferences/OverridedDialogPreference.java

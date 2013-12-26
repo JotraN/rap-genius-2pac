@@ -2,7 +2,6 @@ package com.trasselback.rapgenius.fragments;
 
 import com.trasselback.rapgenius.R;
 import com.trasselback.rapgenius.data.NewsFeed;
-import com.trasselback.rapgenius.data.URLObject;
 import com.trasselback.rapgenius.helpers.ColorManager;
 import com.trasselback.rapgenius.helpers.CrossfadeAnimation;
 import com.trasselback.rapgenius.helpers.RemoveUnderLine;
@@ -32,7 +31,7 @@ public class HomePageFragment extends Fragment {
 	private TextView lyricsField;
 	private ProgressBar mLoadingView;
 	private View mContent;
-	private URLObject urlObject;
+	private NewsFeed news;
 	private AsyncTask<Void, Void, String> retrieveTask;
 
 	private static boolean contentLoaded = false;
@@ -150,15 +149,15 @@ public class HomePageFragment extends Fragment {
 
 		@Override
 		protected String doInBackground(Void... names) {
-			urlObject = new NewsFeed();
+			news = new NewsFeed();
 			try {
 				ConnectivityManager connMgr = (ConnectivityManager) getActivity()
 						.getSystemService(Context.CONNECTIVITY_SERVICE);
 				NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 				if (networkInfo != null && networkInfo.isConnected()) {
-					if (urlObject.openURL())
-						urlObject.retrievePage();
-					return urlObject.getPage();
+					if (news.openURL())
+						news.retrievePage();
+					return news.getPage();
 				} else
 					return "No internet connection found.";
 			} catch (Exception ex) {
