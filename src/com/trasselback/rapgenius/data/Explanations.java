@@ -9,34 +9,33 @@ import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
 
 public class Explanations extends URLObject {
-	// Explanation link clicked + app identifiers ([name]URL)
-	private String data = "";
-	private String name = "";
+	private String dataLink = "";	// Artist Name + SongID + URL
+	private String artistName = "";
 	private String songID = "";
 	private String explanationID = "";
 
-	public Explanations(String x) {
-		data = x;
+	public Explanations(String clickedLink) {
+		dataLink = clickedLink;
 	}
 
 	public void retrieveName() {
 		Pattern pattern = Pattern.compile("\\[(.+?)\\]");
-		Matcher matcher = pattern.matcher(data);
+		Matcher matcher = pattern.matcher(dataLink);
 		if (matcher.find())
-			name = data.substring(matcher.start(1), matcher.end(1));
+			artistName = dataLink.substring(matcher.start(1), matcher.end(1));
 		else
-			name = "Not found.\nDid you lose internet connection?";
+			artistName = "Not found.\nDid you lose internet connection?";
 	}
 
 	public void retrieveUrl() {
 		retrieveSongID();
-		data += "/";
+		dataLink += "/";
 		Pattern pattern = Pattern.compile("/(\\d+?)/");
-		Matcher matcher = pattern.matcher(data);
+		Matcher matcher = pattern.matcher(dataLink);
 		if (matcher.find()) {
-			explanationID = data.substring(matcher.start(1), matcher.end(1));
+			explanationID = dataLink.substring(matcher.start(1), matcher.end(1));
 			// Explanation was verified by the artist
-			if (data.contains("*"))
+			if (dataLink.contains("*"))
 				// Increment ID because Rap Genius increments explanations if it
 				// was verified by an artist
 				explanationID = (Integer.parseInt(explanationID) + 1) + "";
@@ -48,9 +47,9 @@ public class Explanations extends URLObject {
 
 	public void retrieveSongID() {
 		Pattern pattern = Pattern.compile("](\\d+?)h");
-		Matcher matcher = pattern.matcher(data);
+		Matcher matcher = pattern.matcher(dataLink);
 		if (matcher.find()) {
-			songID = data.substring(matcher.start(1), matcher.end(1));
+			songID = dataLink.substring(matcher.start(1), matcher.end(1));
 		} else
 			url = "Not found.\nDid you lose internet connection?";
 	}
@@ -91,6 +90,6 @@ public class Explanations extends URLObject {
 	}
 
 	public String getName() {
-		return name;
+		return artistName;
 	}
 }

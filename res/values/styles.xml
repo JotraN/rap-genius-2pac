@@ -2,6 +2,7 @@
 
     <style name="AppBaseTheme" parent="Theme.Sherlock">
         <item name="actionBarStyle">@style/MyActionBar</item>
+        <item name="android:windowBackground">@color/LightBlack</item>
     </style>
 
     <style name="AnimationDisabledAppBaseTheme" parent="AppBaseTheme">
@@ -17,7 +18,6 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <item name="android:textColor">@color/Gray</item>
         <item name="android:textColorSecondary">@color/LightGray</item>
-        <item name="android:windowBackground">@color/LightBlack</item>
     </style>
 
 </resources>

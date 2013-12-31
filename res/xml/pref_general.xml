@@ -39,7 +39,7 @@
             android:persistent="false"
             android:title="Text Settings" >
             <ListPreference
-                android:defaultValue="22"
+                android:defaultValue="20"
                 android:dialogTitle="Text Size"
                 android:entries="@array/text_sizes_entries"
                 android:entryValues="@array/text_sizes_entry_values"
@@ -47,52 +47,52 @@
                 android:summary="Change the text size."
                 android:title="Size" />
             <ListPreference
-                android:defaultValue="Default"
+                android:defaultValue="0"
                 android:dialogTitle="Default Text Color"
                 android:entries="@array/app_colors_entries"
-                android:entryValues="@array/app_colors_entries"
+                android:entryValues="@array/app_colors_values"
                 android:key="pref_key_default_text_color"
                 android:summary="Default text color."
                 android:title="Default Text" />
             <ListPreference
-                android:defaultValue="Default"
+                android:defaultValue="0"
                 android:dialogTitle="Title Color"
                 android:entries="@array/app_colors_entries"
-                android:entryValues="@array/app_colors_entries"
+                android:entryValues="@array/app_colors_values"
                 android:key="pref_key_title_color"
                 android:summary="Color for titles."
                 android:title="Title Text" />
             <ListPreference
-                android:defaultValue="Default"
+                android:defaultValue="0"
                 android:dialogTitle="Home Page Text Color"
                 android:entries="@array/app_colors_entries"
-                android:entryValues="@array/app_colors_entries"
+                android:entryValues="@array/app_colors_values"
                 android:key="pref_key_home_page_color"
                 android:summary="Color for home page songs."
                 android:title="Home Page Text Color" />
             <ListPreference
-                android:defaultValue="Default"
+                android:defaultValue="0"
                 android:dialogTitle="Explained Lyrics"
                 android:entries="@array/app_colors_entries"
-                android:entryValues="@array/app_colors_entries"
+                android:entryValues="@array/app_colors_values"
                 android:key="pref_key_explained_lyrics_color"
                 android:summary="Color for lyrics explained by the community."
                 android:title="Explained Lyrics" />
             <ListPreference
-                android:defaultValue="Default"
+                android:defaultValue="0"
                 android:dialogTitle="Favorites Color"
                 android:entries="@array/app_colors_entries"
-                android:entryValues="@array/app_colors_entries"
+                android:entryValues="@array/app_colors_values"
                 android:key="pref_key_favorites_color"
                 android:summary="Color for Favorites list."
                 android:title="Favorites Color" />
         </PreferenceScreen>
 
         <ListPreference
-            android:defaultValue="Default"
+            android:defaultValue="0"
             android:dialogTitle="Text Sizes"
             android:entries="@array/app_colors_entries"
-            android:entryValues="@array/app_colors_entries"
+            android:entryValues="@array/app_colors_values"
             android:key="pref_key_background_color"
             android:title="Background Color" />
     </PreferenceCategory>

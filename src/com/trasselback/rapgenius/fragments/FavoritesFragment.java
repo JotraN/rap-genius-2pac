@@ -77,33 +77,16 @@ public class FavoritesFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		SharedPreferences sharedPref = PreferenceManager
-				.getDefaultSharedPreferences(getActivity());
-		// Update colors
-		String color = sharedPref.getString(
-				SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "Default");
-		if (!color.contains("Default")) {
-			ColorManager.setBackgroundColor(getActivity(), color);
-		} else
-			getActivity().getWindow().setBackgroundDrawableResource(
-					R.color.LightBlack);
+		checkSettings();
 
-		color = sharedPref.getString(SettingsFragment.KEY_PREF_TITLE_COLOR,
-				"Default");
-		if (!color.contains("Default")) {
-			ColorManager.setColor(getActivity(), nameField, color);
-		} else
-			nameField.setTextColor(getResources().getColor(R.color.LightGray));
-		int size = Integer.parseInt(sharedPref.getString(
-				SettingsFragment.KEY_PREF_TEXT_SIZE, "22"));
-
-		nameField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size + 10);
 		listView = (ListView) getView().findViewById(R.id.favsList);
 		String favsString = FavoritesManager.getFavorites(getActivity())
 				.toUpperCase(Locale.ENGLISH);
 		favsSearch.setVisibility(View.GONE);
 		if (favsString != "") {
 			String[] favsArray = favsString.split("<BR>");
+			SharedPreferences sharedPref = PreferenceManager
+					.getDefaultSharedPreferences(getActivity());
 			if (sharedPref.getBoolean(SettingsFragment.KEY_PREF_FAVS_SEARCH,
 					true)) {
 				if (favsArray.length > 10) {
@@ -152,6 +135,23 @@ public class FavoritesFragment extends Fragment {
 		}
 	}
 
+	private void checkSettings() {
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(getActivity());
+		// Update text size
+		int size = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_TEXT_SIZE, "20"));
+		nameField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size + 10);
+
+		// Update colors
+		int titleColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_TITLE_COLOR, "0"));
+		ColorManager.setColor(getActivity(), nameField, titleColor);
+		int backgroundColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "0"));
+		ColorManager.setBackgroundColor(getActivity(), backgroundColor);
+	}
+
 	private class ListAdapter extends ArrayAdapter<String> {
 		public ListAdapter(Context context, int resource) {
 			super(context, resource);
@@ -163,12 +163,9 @@ public class FavoritesFragment extends Fragment {
 			TextView x = (TextView) v;
 			SharedPreferences sharedPref = PreferenceManager
 					.getDefaultSharedPreferences(getActivity());
-			String color = sharedPref.getString(
-					SettingsFragment.KEY_PREF_FAVORITES_COLOR, "Default");
-			if (!color.contains("Default"))
-				ColorManager.setColor(getActivity(), x, color);
-			else
-				x.setTextColor(getResources().getColor(R.color.Red));
+			int favsColor = Integer.parseInt(sharedPref.getString(
+					SettingsFragment.KEY_PREF_FAVORITES_COLOR, "0"));
+			ColorManager.setColor(getActivity(), x, favsColor);
 			int size = Integer.parseInt(sharedPref.getString(
 					SettingsFragment.KEY_PREF_TEXT_SIZE, "22"));
 			x.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);

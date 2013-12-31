@@ -105,26 +105,8 @@ public class MoreSongsFragment extends Fragment {
 			else
 				nameField.setText("Song not found.");
 		}
-		SharedPreferences sharedPref = PreferenceManager
-				.getDefaultSharedPreferences(getActivity());
-		int size = Integer.parseInt(sharedPref.getString(
-				SettingsFragment.KEY_PREF_TEXT_SIZE, "22"));
-		nameField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size + 10);
 
-		// Update colors
-		String color = sharedPref.getString(
-				SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "Default");
-		if (!color.contains("Default")) {
-			ColorManager.setBackgroundColor(getActivity(), color);
-		} else
-			getActivity().getWindow().setBackgroundDrawableResource(
-					R.color.LightBlack);
-		color = sharedPref.getString(SettingsFragment.KEY_PREF_TITLE_COLOR,
-				"Default");
-		if (!color.contains("Default")) {
-			ColorManager.setColor(getActivity(), nameField, color);
-		} else
-			nameField.setTextColor(getResources().getColor(R.color.LightGray));
+		checkSettings();
 
 		songsList = (ListView) getView().findViewById(R.id.songsList);
 		songs = new ListAdapter(getActivity(), R.layout.more_songs_list_item);
@@ -140,6 +122,23 @@ public class MoreSongsFragment extends Fragment {
 		if (songs.isEmpty() && songsArray != null)
 			for (String x : songsArray)
 				songs.add(x);
+	}
+
+	private void checkSettings() {
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(getActivity());
+		// Update text size
+		int size = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_TEXT_SIZE, "20"));
+		nameField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size + 10);
+
+		// Update colors
+		int titleColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_TITLE_COLOR, "0"));
+		ColorManager.setColor(getActivity(), nameField, titleColor);
+		int backgroundColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "0"));
+		ColorManager.setBackgroundColor(getActivity(), backgroundColor);
 	}
 
 	private class RetrieveMoreSongs extends AsyncTask<String, Void, String> {
@@ -199,14 +198,12 @@ public class MoreSongsFragment extends Fragment {
 			TextView x = (TextView) v;
 			SharedPreferences sharedPref = PreferenceManager
 					.getDefaultSharedPreferences(getActivity());
-			String color = sharedPref
+			int color = Integer.parseInt(sharedPref
 					.getString(
 							SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR,
-							"Default");
-			if (!color.contains("Default"))
-				ColorManager.setColor(getContext(), x, color);
-			else
-				x.setTextColor(getResources().getColor(R.color.Orange));
+							"Default"));
+			ColorManager.setColor(getContext(), x, color);
+
 			int size = Integer.parseInt(sharedPref.getString(
 					SettingsFragment.KEY_PREF_TEXT_SIZE, "22"));
 			x.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);

@@ -34,26 +34,26 @@ public class Lyrics extends URLObject {
 		Elements content = pageDocument.getElementsByClass("lyrics");
 		htmlPage = content.toString().replaceAll(
 				"href=\".+?\".+?\"",
-				"href=\"explanation_clicked:[" + artistName
-						+ "]" + songID + "http://rapgenius.com/");
+				"href=\"explanation_clicked:[" + artistName + "]" + songID
+						+ "http://rapgenius.com/");
 		htmlPage = htmlPage.replaceAll("<a\\s+?class=\"no_annotation.+?>", "");
-		// Fixes strange bug where some rough explanations don't load.
+		// Fixes bug where some rough explanations don't load.
 		htmlPage = htmlPage.replace("=\"rough", "=\"accepted");
 		if (htmlPage.contains("needs_exegesis")) {
 			replaceArtistIdentifiedExplanations();
 		}
 	}
 
-	public void retrieveSongID(){
-		songID = pageDocument.getElementsByAttribute(
-				"data-pusher_channel").toString();
+	public void retrieveSongID() {
+		songID = pageDocument.getElementsByAttribute("data-pusher_channel")
+				.toString();
 		Pattern pattern = Pattern.compile("data-id=\"(\\d+?)\"");
 		Matcher matcher = pattern.matcher(songID);
 		if (matcher.find()) {
 			songID = songID.substring(matcher.start(1), matcher.end(1));
 		}
 	}
-	
+
 	public void replaceArtistIdentifiedExplanations() {
 		// Identify needs_exegesis editorials i.e. artist explanations
 		htmlPage = htmlPage.replace(
@@ -76,7 +76,7 @@ public class Lyrics extends URLObject {
 		}
 	}
 
-	// Google the song and name, looking for a rap genius link for it
+	// Google the song and name, looking for a rap genius link
 	public void googleIt() {
 		String searchUrl = "http://google.com/search?q="
 				+ searchMessage.replace(" ", "+") + "+site:rapgenius.com"
@@ -107,8 +107,8 @@ public class Lyrics extends URLObject {
 			foundLink = true;
 		}
 		while (foundLink) {
-			rapGeniusLinks += googlePage
-					.substring(matcher.start(), matcher.end());
+			rapGeniusLinks += googlePage.substring(matcher.start(),
+					matcher.end());
 			if (!matcher.find(matcher.end()))
 				foundLink = false;
 		}
@@ -117,8 +117,8 @@ public class Lyrics extends URLObject {
 						.replace("href=\"", "href=\"song_clicked:")
 						.replace("</a>", "</a><br>")
 						.replace("http://rapgenius.com", "")
-						// Replace rock.rapgenius poetry.rapgenius
-						// news.rapgenius
+						// Replace rock.rapgenius.com poetry.rapgenius.com
+						// news.rapgenius.com
 						.replaceAll("http://\\w+.rapgenius.com", "")
 						// Format the search results
 						.replaceAll(" Lyrics.+?Rap Genius", "")

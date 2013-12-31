@@ -10,7 +10,8 @@ package com.trasselback.rapgenius;
 public final class R {
     public static final class array {
         public static final int app_colors_entries=0x7f0c0002;
-        public static final int navigation_array=0x7f0c0003;
+        public static final int app_colors_values=0x7f0c0003;
+        public static final int navigation_array=0x7f0c0004;
         public static final int text_sizes_entries=0x7f0c0000;
         public static final int text_sizes_entry_values=0x7f0c0001;
     }

@@ -1,14 +1,5 @@
 package com.trasselback.rapgenius.fragments;
 
-import com.trasselback.rapgenius.R;
-import com.trasselback.rapgenius.activities.MainActivity;
-import com.trasselback.rapgenius.data.Lyrics;
-import com.trasselback.rapgenius.helpers.CacheManager;
-import com.trasselback.rapgenius.helpers.ColorManager;
-import com.trasselback.rapgenius.helpers.CrossfadeAnimation;
-import com.trasselback.rapgenius.helpers.RemoveUnderLine;
-import com.trasselback.rapgenius.preferences.SettingsFragment;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -27,16 +18,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.trasselback.rapgenius.R;
+import com.trasselback.rapgenius.activities.MainActivity;
+import com.trasselback.rapgenius.data.Lyrics;
+import com.trasselback.rapgenius.helpers.CacheManager;
+import com.trasselback.rapgenius.helpers.ColorManager;
+import com.trasselback.rapgenius.helpers.CrossfadeAnimation;
+import com.trasselback.rapgenius.helpers.RemoveUnderLine;
+import com.trasselback.rapgenius.preferences.SettingsFragment;
+
 public class LyricsFragment extends Fragment {
 	private TextView nameField, lyricsField;
-	private View mLoadingView;
-	private View mContent;
+	private View loadingView;
+	private View contentView;
 	private Lyrics lyrics;
-	public static String message = "";
 	private AsyncTask<String, Void, String> retrieveTask;
-	private static boolean taskStarted = false;
-
 	private boolean cacheLyricsEnabled = true;
+	private static boolean taskStarted = false;
+	// Static variable to pass to MainActivity easily
+	public static String artistNameSongName = "";
 
 	public LyricsFragment() {
 	}
@@ -61,7 +61,7 @@ public class LyricsFragment extends Fragment {
 		super.onPause();
 		retrieveTask.cancel(true);
 		// If still loading, task was interrupted and needs to be restarted
-		if (mLoadingView.isShown())
+		if (loadingView.isShown())
 			taskStarted = false;
 	}
 
@@ -71,11 +71,10 @@ public class LyricsFragment extends Fragment {
 				"fonts/roboto_thin.ttf");
 		nameField.setTypeface(tf);
 		lyricsField = (TextView) getView().findViewById(R.id.lyricsText);
-		mLoadingView = getView().findViewById(R.id.loadingView);
-		mContent = getView().findViewById(R.id.infoView);
-		mContent.setVisibility(View.GONE);
-
-		// necessary for 2.3 for some reason
+		loadingView = getView().findViewById(R.id.loadingView);
+		contentView = getView().findViewById(R.id.infoView);
+		contentView.setVisibility(View.GONE);
+		// Needed for Android 2.3
 		lyricsField.setMovementMethod(LinkMovementMethod.getInstance());
 
 		// Get cache lyrics setting
@@ -91,52 +90,63 @@ public class LyricsFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		// Restart retrieve task if it was cancelled
-		if (!taskStarted && mLoadingView.isShown()) {
+		if (!taskStarted && loadingView.isShown()) {
 			retrieveTask = new RetrieveLyricsTask();
 			startLyrics();
 		}
+		checkSettings();
+	}
+
+	private void checkSettings() {
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
-
 		// Update text size
 		int size = Integer.parseInt(sharedPref.getString(
-				SettingsFragment.KEY_PREF_TEXT_SIZE, "22"));
+				SettingsFragment.KEY_PREF_TEXT_SIZE, "20"));
 		lyricsField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
 		nameField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size + 10);
 
 		// Update colors
-		String color = sharedPref.getString(
-				SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR, "Default");
-		if (!color.contains("Default")) {
-			ColorManager.setColor(getActivity(), lyricsField, color);
-		} else
-			lyricsField.setTextColor(getResources().getColor(R.color.Gray));
-		color = sharedPref.getString(SettingsFragment.KEY_PREF_TITLE_COLOR,
-				"Default");
-		if (!color.contains("Default")) {
-			ColorManager.setColor(getActivity(), nameField, color);
-		} else
-			nameField.setTextColor(getResources().getColor(R.color.LightGray));
-		color = sharedPref.getString(
-				SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR, "Default");
-		if (!color.contains("Default")) {
-			ColorManager.setLinkColor(getActivity(), lyricsField, color);
-		} else
-			lyricsField.setLinkTextColor(getResources()
-					.getColor(R.color.Orange));
-		color = sharedPref.getString(
-				SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "Default");
-		if (!color.contains("Default")) {
-			ColorManager.setBackgroundColor(getActivity(), color);
-		} else
-			getActivity().getWindow().setBackgroundDrawableResource(
-					R.color.LightBlack);
+		int textColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR, "0"));
+		ColorManager.setColor(getActivity(), lyricsField, textColor);
+		int titleColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_TITLE_COLOR, "0"));
+		ColorManager.setColor(getActivity(), nameField, titleColor);
+		int linkColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR, "0"));
+		ColorManager.setLinkColor(getActivity(), lyricsField, linkColor);
+		int backgroundColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "0"));
+		ColorManager.setBackgroundColor(getActivity(), backgroundColor);
+	}
+
+	// Find what started lyrics fragment and clean input
+	private void startLyrics() {
+		artistNameSongName = getArguments().getString(
+				MainActivity.EXTRA_MESSAGE);
+		// Home song clicked
+		if (artistNameSongName.contains("song_clicked"))
+			// remove the -lyrics at the end of the URL
+			artistNameSongName = artistNameSongName.substring(
+					artistNameSongName.indexOf("/") + 1,
+					artistNameSongName.length() - "-lyrics".length());
+		// Favorite song clicked
+		else if (artistNameSongName.contains("fav_clicked"))
+			artistNameSongName = artistNameSongName
+					.substring(artistNameSongName.indexOf(":") + 1);
+		if (CacheManager.getCache(getActivity(), artistNameSongName).length() <= 0)
+			retrieveTask.execute(artistNameSongName);
+		else
+			setCache();
 	}
 
 	private void setCache() {
-		mLoadingView.setVisibility(View.GONE);
-		mContent.setVisibility(View.VISIBLE);
-		String cachedData = CacheManager.getCache(getActivity(), message);
+		loadingView.setVisibility(View.GONE);
+		contentView.setVisibility(View.VISIBLE);
+		String cachedData = CacheManager.getCache(getActivity(),
+				artistNameSongName);
+		// If cached data actually exists
 		if (cachedData.length() > 5) {
 			String nameData = cachedData.substring(0, cachedData.indexOf('<'));
 			String lyricsData = cachedData.substring(cachedData.indexOf('<'));
@@ -149,37 +159,6 @@ public class LyricsFragment extends Fragment {
 			nameField.setText(nameData);
 			lyricsField.setText(Html.fromHtml(lyricsData));
 			RemoveUnderLine.removeUnderline(lyricsField);
-		}
-	}
-
-	// Find what started lyrics activity and continue from there
-	private void startLyrics() {
-		if (getArguments().getString(MainActivity.EXTRA_MESSAGE).contains(
-				"song_clicked")) {
-			message = getArguments().getString(MainActivity.EXTRA_MESSAGE);
-			// remove the -lyrics at the end of the URL
-			message = message.substring(message.indexOf("/") + 1,
-					message.length() - 7);
-			if (CacheManager.getCache(getActivity(), message).length() <= 0)
-				retrieveTask.execute(message);
-			else
-				setCache();
-		} else if (getArguments().getString(MainActivity.EXTRA_MESSAGE)
-				.contains("fav_clicked")) {
-			message = getArguments().getString(MainActivity.EXTRA_MESSAGE);
-			message = message.substring(message.indexOf(":") + 1);
-			if (CacheManager.getCache(getActivity(), message).length() <= 0)
-				retrieveTask.execute(message);
-			else
-				setCache();
-		}
-		// Search text
-		else {
-			message = getArguments().getString(MainActivity.EXTRA_MESSAGE);
-			if (CacheManager.getCache(getActivity(), message).length() <= 0)
-				retrieveTask.execute(message);
-			else
-				setCache();
 		}
 	}
 
@@ -220,15 +199,15 @@ public class LyricsFragment extends Fragment {
 			lyricsField.setText(Html.fromHtml(result));
 			RemoveUnderLine.removeUnderline(lyricsField);
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1)
-				CrossfadeAnimation.crossfade(getActivity(), mContent,
-						mLoadingView);
+				CrossfadeAnimation.crossfade(getActivity(), contentView,
+						loadingView);
 			else {
-				mContent.setVisibility(View.VISIBLE);
-				mLoadingView.setVisibility(View.GONE);
+				contentView.setVisibility(View.VISIBLE);
+				loadingView.setVisibility(View.GONE);
 			}
 			if (cacheLyricsEnabled)
-				CacheManager.saveData(getActivity(), message, nameField
-						.getText().toString() + result);
+				CacheManager.saveData(getActivity(), artistNameSongName,
+						nameField.getText().toString() + result);
 			taskStarted = true;
 		}
 	}

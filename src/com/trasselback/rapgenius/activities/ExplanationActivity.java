@@ -26,9 +26,9 @@ import com.trasselback.rapgenius.helpers.RemoveUnderLine;
 import com.trasselback.rapgenius.preferences.SettingsFragment;
 
 public class ExplanationActivity extends SherlockActivity {
-	private TextView nameField, lyricsField;
-	private View mLoadingView;
-	private View mContent;
+	private TextView nameField, explanationsField;
+	private View loadingView;
+	private View contentView;
 	private Explanations explanation;
 
 	@Override
@@ -37,7 +37,7 @@ public class ExplanationActivity extends SherlockActivity {
 		setContentView(R.layout.activity_explanation);
 		setupActionBar();
 		initialize();
-		startLyrics();
+		grabExplanation();
 	}
 
 	private void setupActionBar() {
@@ -63,64 +63,52 @@ public class ExplanationActivity extends SherlockActivity {
 		Typeface tf = Typeface.createFromAsset(getAssets(),
 				"fonts/roboto_thin.ttf");
 		nameField.setTypeface(tf);
-		lyricsField = (TextView) findViewById(R.id.lyricsText);
-		mLoadingView = findViewById(R.id.loadingView);
-		mContent = findViewById(R.id.infoView);
-		mContent.setVisibility(View.GONE);
+		explanationsField = (TextView) findViewById(R.id.lyricsText);
+		loadingView = findViewById(R.id.loadingView);
+		contentView = findViewById(R.id.infoView);
+		contentView.setVisibility(View.GONE);
 
-		((ProgressBar) mLoadingView).setIndeterminateDrawable(getResources()
-				.getDrawable(R.xml.progress_animation));
-
-		lyricsField.setMovementMethod(new LinkMovementMethod());
+//		((ProgressBar) loadingView).setIndeterminateDrawable(getResources()
+//				.getDrawable(R.xml.progress_animation));
+		// Needed for Android 2.3
+		explanationsField.setMovementMethod(new LinkMovementMethod());
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		checkSettings();
+	}
+
+	private void checkSettings() {
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(this);
-
 		// Update text size
 		int size = Integer.parseInt(sharedPref.getString(
-				SettingsFragment.KEY_PREF_TEXT_SIZE, "22"));
-		lyricsField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+				SettingsFragment.KEY_PREF_TEXT_SIZE, "20"));
+		explanationsField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
 		nameField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size + 10);
 
 		// Update colors
-		String color = sharedPref.getString(
-				SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR, "Default");
-		if (!color.contains("Default")) {
-			ColorManager.setColor(this, lyricsField, color);
-		} else
-			lyricsField.setTextColor(getResources().getColor(R.color.Gray));
-		color = sharedPref.getString(SettingsFragment.KEY_PREF_TITLE_COLOR,
-				"Default");
-		if (!color.contains("Default")) {
-			ColorManager.setColor(this, nameField, color);
-		} else
-			nameField.setTextColor(getResources().getColor(R.color.LightGray));
-		color = sharedPref.getString(
-				SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR, "Default");
-		if (!color.contains("Default")) {
-			ColorManager.setLinkColor(this, lyricsField, color);
-		} else
-			lyricsField.setLinkTextColor(getResources()
-					.getColor(R.color.Orange));
-		color = sharedPref.getString(
-				SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "Default");
-		if (!color.contains("Default")) {
-			ColorManager.setBackgroundColor(this, color);
-		} else
-			getWindow().setBackgroundDrawableResource(R.color.LightBlack);
+		int textColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR, "Default"));
+		ColorManager.setColor(this, explanationsField, textColor);
+		int titleColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_TITLE_COLOR, "Default"));
+		ColorManager.setColor(this, nameField, titleColor);
+		int linkColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR, "Default"));
+		ColorManager.setLinkColor(this, explanationsField, linkColor);
+		int backgroundColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "Default"));
+		ColorManager.setBackgroundColor(this, backgroundColor);
 	}
 
-	// Find what started lyrics activity and continue from there
-	private void startLyrics() {
-		if (getIntent().getData() != null) {
-			if (getIntent().getDataString().contains("explanation_clicked")) {
+	private void grabExplanation() {
+		if (getIntent().getData() != null)
+			// Make sure explanations activity was started by explanation link
+			if (getIntent().getDataString().contains("explanation_clicked"))
 				new RetrieveExplanationsTask().execute();
-			}
-		}
 	}
 
 	private class RetrieveExplanationsTask extends
@@ -147,15 +135,15 @@ public class ExplanationActivity extends SherlockActivity {
 
 		protected void onPostExecute(String result) {
 			nameField.setText(explanation.getName());
-			lyricsField.setText(Html.fromHtml(result));
-			RemoveUnderLine.removeUnderline(lyricsField);
+			explanationsField.setText(Html.fromHtml(result));
+			RemoveUnderLine.removeUnderline(explanationsField);
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1)
-				CrossfadeAnimation.crossfade(getApplicationContext(), mContent,
-						mLoadingView);
+				CrossfadeAnimation.crossfade(getApplicationContext(), contentView,
+						loadingView);
 			else {
-				lyricsField.setMovementMethod(new LinkMovementMethod());
-				mContent.setVisibility(View.VISIBLE);
-				mLoadingView.setVisibility(View.GONE);
+				explanationsField.setMovementMethod(new LinkMovementMethod());
+				contentView.setVisibility(View.VISIBLE);
+				loadingView.setVisibility(View.GONE);
 			}
 		}
 	}

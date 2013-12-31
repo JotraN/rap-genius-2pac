@@ -144,10 +144,10 @@ public class MainActivity extends SherlockFragmentActivity implements
 		favItem = menu.findItem(R.id.action_favorite);
 		if (hideFavs)
 			favItem.setVisible(false);
-		else if (FavoritesManager.checkFavorites(this, LyricsFragment.message))
+		else if (FavoritesManager.checkFavorites(this, LyricsFragment.artistNameSongName))
 			favItem.setIcon(R.drawable.ic_star_pressed);
 
-		// MenuItem to close search bar
+		// MenuItem to close/open search bar
 		final MenuItem searchItem = menu.findItem(R.id.action_search);
 
 		mHandler = new Handler();
@@ -191,6 +191,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 		// Get search from search action view
 		View v = (View) menu.findItem(R.id.action_search).getActionView();
 		search_text = (EditText) v.findViewById(R.id.search_text);
+		search_text.setBackgroundColor(getResources().getColor(R.color.Orange));
 
 		final MenuItem favsItem = menu.findItem(R.id.action_favorite);
 
@@ -241,8 +242,8 @@ public class MainActivity extends SherlockFragmentActivity implements
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
 		case R.id.action_favorite:
-			FavoritesManager.addFavorites(this, LyricsFragment.message);
-			if (FavoritesManager.checkFavorites(this, LyricsFragment.message)) {
+			FavoritesManager.addFavorites(this, LyricsFragment.artistNameSongName);
+			if (FavoritesManager.checkFavorites(this, LyricsFragment.artistNameSongName)) {
 				item.setIcon(R.drawable.ic_star_pressed);
 			} else {
 				item.setIcon(R.drawable.ic_star_not_pressed);
@@ -307,7 +308,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 			if (adapter.getItem(3).contains("MORE SONGS")) {
 				fragment = new MoreSongsFragment();
 				Bundle song = new Bundle();
-				song.putString(EXTRA_MESSAGE, LyricsFragment.message);
+				song.putString(EXTRA_MESSAGE, LyricsFragment.artistNameSongName);
 				fragment.setArguments(song);
 				fragmentManager = getSupportFragmentManager();
 				fragmentManager.beginTransaction()
@@ -324,7 +325,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 			} else if (adapter.getItem(3).contains("BACK TO LYRICS")) {
 				fragment = new LyricsFragment();
 				Bundle song = new Bundle();
-				song.putString(EXTRA_MESSAGE, LyricsFragment.message);
+				song.putString(EXTRA_MESSAGE, LyricsFragment.artistNameSongName);
 				fragment.setArguments(song);
 				fragmentManager.beginTransaction()
 						.replace(R.id.content_frame, fragment).commit();

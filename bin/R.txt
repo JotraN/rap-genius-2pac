@@ -1,5 +1,6 @@
 int array app_colors_entries 0x7f0c0002
-int array navigation_array 0x7f0c0003
+int array app_colors_values 0x7f0c0003
+int array navigation_array 0x7f0c0004
 int array text_sizes_entries 0x7f0c0000
 int array text_sizes_entry_values 0x7f0c0001
 int attr actionBarDivider 0x7f01000e
