@@ -133,7 +133,7 @@ public class HomePageFragment extends Fragment {
 				SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR, "0"));
 		ColorManager.setColor(getActivity(), lyricsField, textColor);
 		int linkColor = Integer.parseInt(sharedPref.getString(
-				SettingsFragment.KEY_PREF_HOME_PAGE_COLOR, "Default"));
+				SettingsFragment.KEY_PREF_HOME_PAGE_COLOR, "0"));
 		ColorManager.setLinkColor(getActivity(), lyricsField, linkColor);
 		int backgroundColor = Integer.parseInt(sharedPref.getString(
 				SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "0"));

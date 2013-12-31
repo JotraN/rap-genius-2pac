@@ -13,7 +13,6 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -68,8 +67,6 @@ public class ExplanationActivity extends SherlockActivity {
 		contentView = findViewById(R.id.infoView);
 		contentView.setVisibility(View.GONE);
 
-//		((ProgressBar) loadingView).setIndeterminateDrawable(getResources()
-//				.getDrawable(R.xml.progress_animation));
 		// Needed for Android 2.3
 		explanationsField.setMovementMethod(new LinkMovementMethod());
 	}
@@ -91,16 +88,16 @@ public class ExplanationActivity extends SherlockActivity {
 
 		// Update colors
 		int textColor = Integer.parseInt(sharedPref.getString(
-				SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR, "Default"));
+				SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR, "0"));
 		ColorManager.setColor(this, explanationsField, textColor);
 		int titleColor = Integer.parseInt(sharedPref.getString(
-				SettingsFragment.KEY_PREF_TITLE_COLOR, "Default"));
+				SettingsFragment.KEY_PREF_TITLE_COLOR, "0"));
 		ColorManager.setColor(this, nameField, titleColor);
 		int linkColor = Integer.parseInt(sharedPref.getString(
-				SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR, "Default"));
+				SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR, "0"));
 		ColorManager.setLinkColor(this, explanationsField, linkColor);
 		int backgroundColor = Integer.parseInt(sharedPref.getString(
-				SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "Default"));
+				SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "0"));
 		ColorManager.setBackgroundColor(this, backgroundColor);
 	}
 

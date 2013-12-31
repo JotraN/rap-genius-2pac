@@ -57,23 +57,21 @@ public class SettingsFragment extends PreferenceFragment implements
 		super.onPause();
 		getPreferenceManager().getSharedPreferences()
 				.unregisterOnSharedPreferenceChangeListener(this);
-		SharedPreferences prefs = android.preference.PreferenceManager
-				.getDefaultSharedPreferences(getActivity());
-
-		// Check remove favorites dialog preference
-		if (prefs.getBoolean((KEY_PREF_REMOVE_FAV), true)) {
-			File file = new File(getActivity().getFilesDir(), "favorites");
-			file.delete();
-			// Reset preference to false since dialog preference persists
-			Editor editor = prefs.edit();
-			editor.putBoolean(KEY_PREF_REMOVE_FAV, false);
-			editor.commit();
-		}
 	}
 
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
+		// Check remove favorites dialog preference
+		if (sharedPreferences.getBoolean((KEY_PREF_REMOVE_FAV), true)) {
+			File file = new File(getActivity().getFilesDir(), "favorites");
+			file.delete();
+			// Reset preference to false since dialog preference persists
+			Editor editor = sharedPreferences.edit();
+			editor.putBoolean(KEY_PREF_REMOVE_FAV, false);
+			editor.commit();
+		}
+		
 		if (key.equals(KEY_PREF_CLEAR_CACHE)) {
 			if (sharedPreferences.getBoolean(KEY_PREF_CLEAR_CACHE, true)) {
 				CacheManager.deleteCache(getActivity());

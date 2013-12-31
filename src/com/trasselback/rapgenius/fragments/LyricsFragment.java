@@ -81,7 +81,7 @@ public class LyricsFragment extends Fragment {
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
 		cacheLyricsEnabled = sharedPref.getBoolean(
-				SettingsFragment.KEY_PREF_CACHE_LYRICS, false);
+				SettingsFragment.KEY_PREF_CACHE_LYRICS, true);
 
 		retrieveTask = new RetrieveLyricsTask();
 	}
