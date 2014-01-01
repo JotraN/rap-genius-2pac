@@ -90,7 +90,7 @@
 
         <ListPreference
             android:defaultValue="0"
-            android:dialogTitle="Text Sizes"
+            android:dialogTitle="Background Color"
             android:entries="@array/app_colors_entries"
             android:entryValues="@array/app_colors_values"
             android:key="pref_key_background_color"

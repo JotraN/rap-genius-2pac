@@ -6972,6 +6972,10 @@ com.actionbarsherlock.widget.SuggestionsAdapter$ChildViewCache -> com.actionbars
 com.trasselback.rapgenius.BuildConfig -> com.trasselback.rapgenius.BuildConfig:
     boolean DEBUG -> DEBUG
 com.trasselback.rapgenius.R -> com.trasselback.rapgenius.R:
+com.trasselback.rapgenius.R$anim -> com.trasselback.rapgenius.R$anim:
+    int hold -> hold
+    int left_in -> left_in
+    int right_in -> right_in
 com.trasselback.rapgenius.R$array -> com.trasselback.rapgenius.R$array:
     int app_colors_entries -> app_colors_entries
     int app_colors_values -> app_colors_values
@@ -7388,6 +7392,8 @@ com.trasselback.rapgenius.R$string -> com.trasselback.rapgenius.R$string:
     int action_settings -> action_settings
     int app_name -> app_name
     int close_drawer -> close_drawer
+    int default_favorite -> default_favorite
+    int default_home -> default_home
     int default_search -> default_search
     int dialog_clear_cache -> dialog_clear_cache
     int dialog_remove_favorites -> dialog_remove_favorites
@@ -7415,7 +7421,6 @@ com.trasselback.rapgenius.R$string -> com.trasselback.rapgenius.R$string:
     int title_load_home -> title_load_home
     int title_remove_favorites -> title_remove_favorites
 com.trasselback.rapgenius.R$style -> com.trasselback.rapgenius.R$style:
-    int AnimationDisabledAppBaseTheme -> AnimationDisabledAppBaseTheme
     int AppBaseTheme -> AppBaseTheme
     int AppTheme -> AppTheme
     int MyActionBar -> MyActionBar
@@ -7675,7 +7680,8 @@ com.trasselback.rapgenius.activities.ExplanationActivity -> com.trasselback.rapg
     void initialize() -> b
     void onResume() -> onResume
     void checkSettings() -> c
-    void grabExplanation() -> d
+    void clearSettings() -> d
+    void grabExplanation() -> e
     void access$0(com.trasselback.rapgenius.activities.ExplanationActivity,com.trasselback.rapgenius.data.Explanations) -> a
     com.trasselback.rapgenius.data.Explanations access$1(com.trasselback.rapgenius.activities.ExplanationActivity) -> a
     android.widget.TextView access$2(com.trasselback.rapgenius.activities.ExplanationActivity) -> b
@@ -7784,42 +7790,47 @@ com.trasselback.rapgenius.fragments.FavoritesFragment -> com.trasselback.rapgeni
     android.widget.ListView listView -> a
     android.widget.TextView nameField -> b
     android.widget.EditText favsSearch -> c
-    com.trasselback.rapgenius.fragments.FavoritesFragment$OnFavoriteSelectedListener mCallback -> d
+    com.trasselback.rapgenius.fragments.FavoritesFragment$OnFavoriteSelectedListener callback -> d
     android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     void onActivityCreated(android.os.Bundle) -> onActivityCreated
     void onAttach(android.app.Activity) -> onAttach
     void onResume() -> onResume
     void searchFavorites() -> a
+    void setupFavsAdapter(java.lang.String[]) -> a
     void checkSettings() -> b
-    com.trasselback.rapgenius.fragments.FavoritesFragment$OnFavoriteSelectedListener access$0(com.trasselback.rapgenius.fragments.FavoritesFragment) -> a
+    void clearSettings() -> c
+    void access$0(com.trasselback.rapgenius.fragments.FavoritesFragment) -> a
     android.widget.ListView access$1(com.trasselback.rapgenius.fragments.FavoritesFragment) -> b
+    com.trasselback.rapgenius.fragments.FavoritesFragment$OnFavoriteSelectedListener access$2(com.trasselback.rapgenius.fragments.FavoritesFragment) -> c
 com.trasselback.rapgenius.fragments.FavoritesFragment$1 -> com.trasselback.rapgenius.b.b:
-    com.trasselback.rapgenius.fragments.FavoritesFragment this$0 -> a
-    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.trasselback.rapgenius.fragments.FavoritesFragment$2 -> com.trasselback.rapgenius.b.c:
     com.trasselback.rapgenius.fragments.FavoritesFragment this$0 -> a
     void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
     void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
     void afterTextChanged(android.text.Editable) -> afterTextChanged
-com.trasselback.rapgenius.fragments.FavoritesFragment$ListAdapter -> com.trasselback.rapgenius.b.d:
+com.trasselback.rapgenius.fragments.FavoritesFragment$2 -> com.trasselback.rapgenius.b.c:
+    com.trasselback.rapgenius.fragments.FavoritesFragment this$0 -> a
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+com.trasselback.rapgenius.fragments.FavoritesFragment$FavoritesListAdapter -> com.trasselback.rapgenius.b.d:
     com.trasselback.rapgenius.fragments.FavoritesFragment this$0 -> a
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
 com.trasselback.rapgenius.fragments.FavoritesFragment$OnFavoriteSelectedListener -> com.trasselback.rapgenius.b.e:
     void onFavoriteSelected(int) -> a
 com.trasselback.rapgenius.fragments.HomePageFragment -> com.trasselback.rapgenius.b.f:
     android.widget.TextView lyricsField -> a
-    android.widget.ProgressBar mLoadingView -> b
-    android.view.View mContent -> c
+    android.widget.ProgressBar loadingView -> b
+    android.view.View contentView -> c
     com.trasselback.rapgenius.data.NewsFeed news -> d
     android.os.AsyncTask retrieveTask -> e
-    boolean contentLoaded -> f
+    boolean homeLoaded -> f
     java.lang.String homeData -> g
     android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     void onActivityCreated(android.os.Bundle) -> onActivityCreated
     void initialize() -> a
     void onPause() -> onPause
     void onResume() -> onResume
-    void checkSettings() -> b
+    void loadHome() -> b
+    void checkSettings() -> c
+    void clearSettings() -> d
     void access$0(com.trasselback.rapgenius.fragments.HomePageFragment,com.trasselback.rapgenius.data.NewsFeed) -> a
     com.trasselback.rapgenius.data.NewsFeed access$1(com.trasselback.rapgenius.fragments.HomePageFragment) -> a
     android.os.AsyncTask access$2(com.trasselback.rapgenius.fragments.HomePageFragment) -> b
@@ -7851,8 +7862,9 @@ com.trasselback.rapgenius.fragments.LyricsFragment -> com.trasselback.rapgenius.
     void initialize() -> a
     void onResume() -> onResume
     void checkSettings() -> b
-    void startLyrics() -> c
-    void setCache() -> d
+    void clearSettings() -> c
+    void startLyrics() -> d
+    void setCache() -> e
     void access$0(com.trasselback.rapgenius.fragments.LyricsFragment,com.trasselback.rapgenius.data.Lyrics) -> a
     com.trasselback.rapgenius.data.Lyrics access$1(com.trasselback.rapgenius.fragments.LyricsFragment) -> a
     android.os.AsyncTask access$2(com.trasselback.rapgenius.fragments.LyricsFragment) -> b
@@ -7872,13 +7884,13 @@ com.trasselback.rapgenius.fragments.LyricsFragment$RetrieveLyricsTask -> com.tra
 com.trasselback.rapgenius.fragments.MoreSongsFragment -> com.trasselback.rapgenius.b.j:
     android.widget.TextView nameField -> a
     android.widget.ListView songsList -> b
-    com.trasselback.rapgenius.fragments.MoreSongsFragment$ListAdapter songs -> c
-    android.view.View mLoadingView -> d
-    android.view.View mContent -> e
-    java.lang.String message -> f
+    com.trasselback.rapgenius.fragments.MoreSongsFragment$MoreSongsListAdapter songs -> c
+    android.view.View loadingView -> d
+    android.view.View contentView -> e
+    java.lang.String artistNameSongName -> f
     com.trasselback.rapgenius.data.MoreSongs moreSongs -> g
     android.os.AsyncTask retrieveTask -> h
-    com.trasselback.rapgenius.fragments.MoreSongsFragment$OnMoreSongsSelectedListener mCallback -> i
+    com.trasselback.rapgenius.fragments.MoreSongsFragment$OnMoreSongsSelectedListener callback -> i
     java.lang.String[] songsArray -> j
     android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     void onActivityCreated(android.os.Bundle) -> onActivityCreated
@@ -7886,20 +7898,22 @@ com.trasselback.rapgenius.fragments.MoreSongsFragment -> com.trasselback.rapgeni
     void onAttach(android.app.Activity) -> onAttach
     void onResume() -> onResume
     void checkSettings() -> a
+    void clearSettings() -> b
     void access$0(com.trasselback.rapgenius.fragments.MoreSongsFragment,com.trasselback.rapgenius.data.MoreSongs) -> a
     com.trasselback.rapgenius.data.MoreSongs access$1(com.trasselback.rapgenius.fragments.MoreSongsFragment) -> a
     android.os.AsyncTask access$2(com.trasselback.rapgenius.fragments.MoreSongsFragment) -> b
     android.widget.TextView access$3(com.trasselback.rapgenius.fragments.MoreSongsFragment) -> c
     void access$4(com.trasselback.rapgenius.fragments.MoreSongsFragment,java.lang.String[]) -> a
     java.lang.String[] access$5(com.trasselback.rapgenius.fragments.MoreSongsFragment) -> d
-    com.trasselback.rapgenius.fragments.MoreSongsFragment$ListAdapter access$6(com.trasselback.rapgenius.fragments.MoreSongsFragment) -> e
+    com.trasselback.rapgenius.fragments.MoreSongsFragment$MoreSongsListAdapter access$6(com.trasselback.rapgenius.fragments.MoreSongsFragment) -> e
     android.view.View access$7(com.trasselback.rapgenius.fragments.MoreSongsFragment) -> f
     android.view.View access$8(com.trasselback.rapgenius.fragments.MoreSongsFragment) -> g
-    com.trasselback.rapgenius.fragments.MoreSongsFragment$OnMoreSongsSelectedListener access$9(com.trasselback.rapgenius.fragments.MoreSongsFragment) -> h
+    void access$9(com.trasselback.rapgenius.fragments.MoreSongsFragment) -> h
+    com.trasselback.rapgenius.fragments.MoreSongsFragment$OnMoreSongsSelectedListener access$10(com.trasselback.rapgenius.fragments.MoreSongsFragment) -> i
 com.trasselback.rapgenius.fragments.MoreSongsFragment$1 -> com.trasselback.rapgenius.b.k:
     com.trasselback.rapgenius.fragments.MoreSongsFragment this$0 -> a
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.trasselback.rapgenius.fragments.MoreSongsFragment$ListAdapter -> com.trasselback.rapgenius.b.l:
+com.trasselback.rapgenius.fragments.MoreSongsFragment$MoreSongsListAdapter -> com.trasselback.rapgenius.b.l:
     com.trasselback.rapgenius.fragments.MoreSongsFragment this$0 -> a
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
 com.trasselback.rapgenius.fragments.MoreSongsFragment$OnMoreSongsSelectedListener -> com.trasselback.rapgenius.b.m:

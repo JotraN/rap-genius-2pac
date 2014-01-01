@@ -5972,6 +5972,11 @@ com.trasselback.rapgenius.BuildConfig: boolean DEBUG
 com.trasselback.rapgenius.BuildConfig: BuildConfig()
 com.trasselback.rapgenius.R
 com.trasselback.rapgenius.R: R()
+com.trasselback.rapgenius.R$anim
+com.trasselback.rapgenius.R$anim: int hold
+com.trasselback.rapgenius.R$anim: int left_in
+com.trasselback.rapgenius.R$anim: int right_in
+com.trasselback.rapgenius.R$anim: R$anim()
 com.trasselback.rapgenius.R$array
 com.trasselback.rapgenius.R$array: int app_colors_entries
 com.trasselback.rapgenius.R$array: int app_colors_values
@@ -6398,6 +6403,8 @@ com.trasselback.rapgenius.R$string: int action_search
 com.trasselback.rapgenius.R$string: int action_settings
 com.trasselback.rapgenius.R$string: int app_name
 com.trasselback.rapgenius.R$string: int close_drawer
+com.trasselback.rapgenius.R$string: int default_favorite
+com.trasselback.rapgenius.R$string: int default_home
 com.trasselback.rapgenius.R$string: int default_search
 com.trasselback.rapgenius.R$string: int dialog_clear_cache
 com.trasselback.rapgenius.R$string: int dialog_remove_favorites
@@ -6426,7 +6433,6 @@ com.trasselback.rapgenius.R$string: int title_load_home
 com.trasselback.rapgenius.R$string: int title_remove_favorites
 com.trasselback.rapgenius.R$string: R$string()
 com.trasselback.rapgenius.R$style
-com.trasselback.rapgenius.R$style: int AnimationDisabledAppBaseTheme
 com.trasselback.rapgenius.R$style: int AppBaseTheme
 com.trasselback.rapgenius.R$style: int AppTheme
 com.trasselback.rapgenius.R$style: int MyActionBar

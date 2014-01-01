@@ -1,6 +1,8 @@
 package com.trasselback.rapgenius.fragments;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -95,6 +97,7 @@ public class LyricsFragment extends Fragment {
 	}
 
 	private void checkSettings() {
+		try{
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
 		// Update text size
@@ -116,8 +119,43 @@ public class LyricsFragment extends Fragment {
 		int backgroundColor = Integer.parseInt(sharedPref.getString(
 				SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "0"));
 		ColorManager.setBackgroundColor(getActivity(), backgroundColor);
+		} catch(NumberFormatException ex){
+			clearSettings();
+		}
 	}
 
+	// Needed to reset settings for those who updated and are still using old color settings
+	private void clearSettings() {
+		Editor editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_TEXT_SIZE,
+				Context.MODE_PRIVATE).edit();
+		editor.clear();
+		editor.commit();
+		editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_BACKGROUND_COLOR,
+				Context.MODE_PRIVATE).edit();
+		editor.clear();
+		editor.commit();
+		editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR,
+				Context.MODE_PRIVATE).edit();
+		editor.clear();
+		editor.commit();
+		editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR,
+				Context.MODE_PRIVATE).edit();
+		editor.clear();
+		editor.commit();
+		editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_FAVORITES_COLOR,
+				Context.MODE_PRIVATE).edit();
+		editor.clear();
+		editor.commit();
+		editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_HOME_PAGE_COLOR,
+				Context.MODE_PRIVATE).edit();
+		editor.clear();
+		editor.commit();
+		editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_TITLE_COLOR,
+				Context.MODE_PRIVATE).edit();
+		editor.clear();
+		editor.commit();
+	}
+	
 	// Find what started lyrics fragment and clean input
 	private void startLyrics() {
 		artistNameSongName = getArguments().getString(
