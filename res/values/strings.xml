@@ -36,9 +36,14 @@
     <string name="summary_favs_search">Shows a search bar for favorited songs. Appears after 10 songs are added.</string>
     <string name="drawer_image">Drawer Image</string>
     
+    <!-- Error messages -->
     <string name="error_cache_loading">Error loading lyrics.</string>
     <string name="error_reload">Try reloading the song.</string>
     <string name="error_network_check">A problem occurred while getting information about your network status.</string>
     <string name="error_no_internet">No internet connection found.</string>
 
+    <!-- Default text -->
+    <string name="default_favorite">Favorited Songs</string>
+    <string name="default_home">Loading home is disabled in settings.</string>
+    
 </resources>

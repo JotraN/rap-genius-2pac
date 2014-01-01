@@ -6,10 +6,6 @@
         <item name="android:windowBackground">@color/LightBlack</item>
     </style>
 
-    <style name="AnimationDisabledAppBaseTheme" parent="AppBaseTheme">
-        <item name="android:windowAnimationStyle">@null</item>
-    </style>
-
     <style name="MyActionBar" parent="Widget.Sherlock.ActionBar.Solid">
         <item name="background">@drawable/action_bar_background</item>
         <item name="android:background">@drawable/action_bar_background</item>

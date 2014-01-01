@@ -9,8 +9,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import android.util.Log;
-
 public class Lyrics extends URLObject {
 	private String artistName = "";
 	private String songName = "";
@@ -93,7 +91,6 @@ public class Lyrics extends URLObject {
 					.referrer("http://www.google.com").get();
 			Elements content = searchPage.getElementsByClass("r");
 			String googleHTML = content.toString();
-			// htmlPage = googleHTML;
 			findRapGeniusLinks(googleHTML);
 		} catch (IOException e) {
 			artistName += songName + " not found.";
@@ -111,6 +108,7 @@ public class Lyrics extends URLObject {
 			foundLink = true;
 		}
 		while (foundLink) {
+			// Clean up link text
 			String songName = googlePage
 					.substring(matcher.start(1), matcher.end(1))
 					.replace("-", " ").replace("/", "");
@@ -121,7 +119,6 @@ public class Lyrics extends URLObject {
 					.replace(unformattedName, songName);
 			if(!rapGeniusLinks.contains(songName))
 				rapGeniusLinks += link;
-			Log.v(unformattedName, link);
 			if (!matcher.find(matcher.end()))
 				foundLink = false;
 		}

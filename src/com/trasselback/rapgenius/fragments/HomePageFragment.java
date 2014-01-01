@@ -24,16 +24,13 @@ import com.trasselback.rapgenius.preferences.SettingsFragment;
 
 public class HomePageFragment extends Fragment {
 	public final static String EXTRA_MESSAGE = "com.trasselback.rapgenius.MESSAGE";
-
 	private TextView lyricsField;
-	private ProgressBar mLoadingView;
-	private View mContent;
+	private ProgressBar loadingView;
+	private View contentView;
 	private NewsFeed news;
 	private AsyncTask<Void, Void, String> retrieveTask;
-
-	private static boolean contentLoaded = false;
-	// holds home page data
-	private static String homeData = "";
+	private static boolean homeLoaded = false;
+	private static String homeData = ""; // Home page data
 
 	public HomePageFragment() {
 	}
@@ -54,52 +51,57 @@ public class HomePageFragment extends Fragment {
 
 	private void initialize() {
 		lyricsField = (TextView) getView().findViewById(R.id.lyricsText);
-		mLoadingView = (ProgressBar) getView().findViewById(R.id.loadingView);
-		mContent = getView().findViewById(R.id.scrollView1);
-		mContent.setVisibility(View.GONE);
+		loadingView = (ProgressBar) getView().findViewById(R.id.loadingView);
+		contentView = getView().findViewById(R.id.scrollView1);
+		contentView.setVisibility(View.GONE);
 
 		// makes links operable
 		lyricsField.setMovementMethod(LinkMovementMethod.getInstance());
 
 		retrieveTask = new RetrieveNewsFeed();
 	}
-	
+
 	@Override
 	public void onPause() {
 		super.onPause();
 		// Stop retrieving news feed if switching fragments
 		retrieveTask.cancel(true);
 		// If still loading, content wasn't loaded.
-		if (mLoadingView.isShown()) {
-			contentLoaded = false;
+		if (loadingView.isShown()) {
+			homeLoaded = false;
 		}
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		loadHome();
+		checkSettings();
+	}
+
+	private void loadHome() {
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
-		boolean loadHome = sharedPref.getBoolean(
+		boolean loadHomeEnabled = sharedPref.getBoolean(
 				SettingsFragment.KEY_PREF_LOAD_HOME, true);
 
 		// Restart task if it was cancelled and never completed
-		if (!contentLoaded) {
+		if (!homeLoaded) {
 			// Reset retrieveTask to RetrieveNewsFeed
 			retrieveTask = new RetrieveNewsFeed();
-			if (loadHome) {
-				mLoadingView.setVisibility(View.VISIBLE);
-				mContent.setVisibility(View.GONE);
+			if (loadHomeEnabled) {
+				loadingView.setVisibility(View.VISIBLE);
+				contentView.setVisibility(View.GONE);
 				retrieveTask.execute();
 			} else {
-				lyricsField.setText("Home disabled in settings.");
-				mContent.setVisibility(View.VISIBLE);
-				mLoadingView.setVisibility(View.GONE);
+				lyricsField.setText(R.string.default_home);
+				contentView.setVisibility(View.VISIBLE);
+				loadingView.setVisibility(View.GONE);
 			}
 		} else {
-			if (loadHome) {
-				mLoadingView.setVisibility(View.GONE);
-				mContent.setVisibility(View.VISIBLE);
+			if (loadHomeEnabled) {
+				loadingView.setVisibility(View.GONE);
+				contentView.setVisibility(View.VISIBLE);
 				// Check to make sure home data exists
 				if (homeData.length() > 5) {
 					lyricsField.setText(Html.fromHtml(homeData));
@@ -107,15 +109,12 @@ public class HomePageFragment extends Fragment {
 					retrieveTask.execute();
 				RemoveUnderLine.removeUnderline(lyricsField);
 			} else {
-				lyricsField.setText("Home disabled in settings.");
-				mContent.setVisibility(View.VISIBLE);
-				mLoadingView.setVisibility(View.GONE);
+				lyricsField.setText(R.string.default_home);
+				contentView.setVisibility(View.VISIBLE);
+				loadingView.setVisibility(View.GONE);
 			}
 		}
-		checkSettings();
 	}
-
-
 
 	private void checkSettings() {
 		SharedPreferences sharedPref = PreferenceManager
@@ -136,14 +135,14 @@ public class HomePageFragment extends Fragment {
 				SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "0"));
 		ColorManager.setBackgroundColor(getActivity(), backgroundColor);
 	}
-	
+
 	private class RetrieveNewsFeed extends AsyncTask<Void, Void, String> {
 
 		@Override
 		protected String doInBackground(Void... names) {
 			news = new NewsFeed();
 			try {
-				if(news.isOnline(getActivity())){
+				if (news.isOnline(getActivity())) {
 					if (news.openURL())
 						news.retrievePage();
 					return news.getPage();
@@ -168,13 +167,13 @@ public class HomePageFragment extends Fragment {
 			lyricsField.setText(Html.fromHtml(result));
 			RemoveUnderLine.removeUnderline(lyricsField);
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1)
-				CrossfadeAnimation.crossfade(getActivity(), mContent,
-						mLoadingView);
+				CrossfadeAnimation.crossfade(getActivity(), contentView,
+						loadingView);
 			else {
-				mContent.setVisibility(View.VISIBLE);
-				mLoadingView.setVisibility(View.GONE);
+				contentView.setVisibility(View.VISIBLE);
+				loadingView.setVisibility(View.GONE);
 			}
-			contentLoaded = true;
+			homeLoaded = true;
 		}
 	}
 }

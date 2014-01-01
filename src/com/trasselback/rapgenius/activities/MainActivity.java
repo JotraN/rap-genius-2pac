@@ -92,6 +92,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 
 	private void setupActionBar() {
 		getSupportActionBar().setDisplayShowTitleEnabled(true);
+		// Need to set manually because actionbarSherlock bug
 		getSupportActionBar().setLogo(R.drawable.ic_drawer);
 		getSupportActionBar().setDisplayUseLogoEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
@@ -191,7 +192,6 @@ public class MainActivity extends SherlockFragmentActivity implements
 		// Get search from search action view
 		View v = (View) menu.findItem(R.id.action_search).getActionView();
 		search_text = (EditText) v.findViewById(R.id.search_text);
-		search_text.setBackgroundColor(getResources().getColor(R.color.Orange));
 
 		final MenuItem favsItem = menu.findItem(R.id.action_favorite);
 

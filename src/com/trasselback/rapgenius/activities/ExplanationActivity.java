@@ -30,6 +30,7 @@ public class ExplanationActivity extends SherlockActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		overridePendingTransition(R.anim.right_in, R.anim.hold);
 		setContentView(R.layout.activity_explanation);
 		setupActionBar();
 		initialize();
@@ -48,6 +49,7 @@ public class ExplanationActivity extends SherlockActivity {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			onBackPressed();
+			overridePendingTransition(R.anim.hold, R.anim.left_in);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

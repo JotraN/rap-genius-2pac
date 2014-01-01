@@ -1,18 +1,9 @@
 package com.trasselback.rapgenius.fragments;
 
-import com.trasselback.rapgenius.R;
-import com.trasselback.rapgenius.activities.MainActivity;
-import com.trasselback.rapgenius.data.MoreSongs;
-import com.trasselback.rapgenius.helpers.ColorManager;
-import com.trasselback.rapgenius.helpers.CrossfadeAnimation;
-import com.trasselback.rapgenius.preferences.SettingsFragment;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,16 +19,23 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.trasselback.rapgenius.R;
+import com.trasselback.rapgenius.activities.MainActivity;
+import com.trasselback.rapgenius.data.MoreSongs;
+import com.trasselback.rapgenius.helpers.ColorManager;
+import com.trasselback.rapgenius.helpers.CrossfadeAnimation;
+import com.trasselback.rapgenius.preferences.SettingsFragment;
+
 public class MoreSongsFragment extends Fragment {
 	private TextView nameField;
 	private ListView songsList;
-	private ListAdapter songs;
-	private View mLoadingView;
-	private View mContent;
-	private String message = "";
+	private MoreSongsListAdapter songs;
+	private View loadingView;
+	private View contentView;
+	private String artistNameSongName = "";
 	private MoreSongs moreSongs;
 	private AsyncTask<String, Void, String> retrieveTask;
-	private OnMoreSongsSelectedListener mCallback;
+	private OnMoreSongsSelectedListener callback;
 	private String[] songsArray;
 
 	public MoreSongsFragment() {
@@ -58,13 +56,13 @@ public class MoreSongsFragment extends Fragment {
 		Typeface tf = Typeface.createFromAsset(getActivity().getAssets(),
 				"fonts/roboto_thin.ttf");
 		nameField.setTypeface(tf);
-		mLoadingView = getView().findViewById(R.id.loadingView);
-		mContent = getView().findViewById(R.id.infoView);
-		mContent.setVisibility(View.GONE);
+		loadingView = getView().findViewById(R.id.loadingView);
+		contentView = getView().findViewById(R.id.infoView);
+		contentView.setVisibility(View.GONE);
 		retrieveTask = new RetrieveMoreSongs();
-		message = getArguments().getString(MainActivity.EXTRA_MESSAGE);
-		if (!message.contains("There was a problem with finding the lyrics."))
-			retrieveTask.execute(message);
+		artistNameSongName = getArguments().getString(MainActivity.EXTRA_MESSAGE);
+		if (!artistNameSongName.contains("There was a problem with finding the lyrics."))
+			retrieveTask.execute(artistNameSongName);
 		else
 			nameField.setText("Song not found.");
 	}
@@ -86,7 +84,7 @@ public class MoreSongsFragment extends Fragment {
 		// This makes sure that the container activity has implemented
 		// the callback interface. If not, it throws an exception
 		try {
-			mCallback = (OnMoreSongsSelectedListener) activity;
+			callback = (OnMoreSongsSelectedListener) activity;
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString()
 					+ " must implement OnHeadlineSelectedListener");
@@ -99,9 +97,9 @@ public class MoreSongsFragment extends Fragment {
 		// Restart retrieve task if it was cancelled
 		if (retrieveTask.isCancelled()) {
 			retrieveTask = new RetrieveMoreSongs();
-			if (!message
+			if (!artistNameSongName
 					.contains("There was a problem with finding the lyrics."))
-				retrieveTask.execute(message);
+				retrieveTask.execute(artistNameSongName);
 			else
 				nameField.setText("Song not found.");
 		}
@@ -109,12 +107,12 @@ public class MoreSongsFragment extends Fragment {
 		checkSettings();
 
 		songsList = (ListView) getView().findViewById(R.id.songsList);
-		songs = new ListAdapter(getActivity(), R.layout.more_songs_list_item);
+		songs = new MoreSongsListAdapter(getActivity(), R.layout.more_songs_list_item);
 		songsList.setAdapter(songs);
 		songsList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
-				mCallback.onMoreSongsSelected(nameField.getText().toString()
+				callback.onMoreSongsSelected(nameField.getText().toString()
 						.replace("More Songs by ", "")
 						+ " " + songs.getItem(position));
 			}
@@ -147,19 +145,16 @@ public class MoreSongsFragment extends Fragment {
 		protected String doInBackground(String... names) {
 			moreSongs = new MoreSongs(names[0]);
 			try {
-				ConnectivityManager connMgr = (ConnectivityManager) getActivity()
-						.getSystemService(Context.CONNECTIVITY_SERVICE);
-				NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-				if (networkInfo != null && networkInfo.isConnected()) {
+				if(moreSongs.isOnline(getActivity())){
 					if (moreSongs.openURL()) {
 						moreSongs.retrievePage();
 						moreSongs.retrieveName();
 					}
 					return moreSongs.getPage();
 				} else
-					return "No internet connection found.";
+					return getString(R.string.error_no_internet);
 			} catch (Exception ex) {
-				return "There was a problem getting information about your network status.";
+				return getString(R.string.error_network_check);
 			}
 		}
 
@@ -177,18 +172,18 @@ public class MoreSongsFragment extends Fragment {
 			for (String x : songsArray)
 				songs.add(x);
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1)
-				CrossfadeAnimation.crossfade(getActivity(), mContent,
-						mLoadingView);
+				CrossfadeAnimation.crossfade(getActivity(), contentView,
+						loadingView);
 			else {
 				// lyricsField.setMovementMethod(new LinkMovementMethod());
-				mContent.setVisibility(View.VISIBLE);
-				mLoadingView.setVisibility(View.GONE);
+				contentView.setVisibility(View.VISIBLE);
+				loadingView.setVisibility(View.GONE);
 			}
 		}
 	}
 
-	private class ListAdapter extends ArrayAdapter<String> {
-		public ListAdapter(Context context, int resource) {
+	private class MoreSongsListAdapter extends ArrayAdapter<String> {
+		public MoreSongsListAdapter(Context context, int resource) {
 			super(context, resource);
 		}
 

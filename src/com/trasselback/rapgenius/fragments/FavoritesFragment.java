@@ -31,7 +31,7 @@ public class FavoritesFragment extends Fragment {
 	private ListView listView;
 	private TextView nameField;
 	private EditText favsSearch;
-	private OnFavoriteSelectedListener mCallback;
+	private OnFavoriteSelectedListener callback;
 
 	public FavoritesFragment() {
 	}
@@ -51,9 +51,10 @@ public class FavoritesFragment extends Fragment {
 		Typeface tf = Typeface.createFromAsset(getActivity().getAssets(),
 				"fonts/roboto_thin.ttf");
 		nameField.setTypeface(tf);
-		nameField.setText("Favorited Songs");
+		nameField.setText(R.string.default_favorite);
 		favsSearch = (EditText) getView().findViewById(R.id.favsSearch);
 		favsSearch.setTypeface(tf);
+		listView = (ListView) getView().findViewById(R.id.favsList);
 	}
 
 	// Container Activity must implement this interface
@@ -67,7 +68,7 @@ public class FavoritesFragment extends Fragment {
 		// This makes sure that the container activity has implemented
 		// the callback interface. If not, it throws an exception
 		try {
-			mCallback = (OnFavoriteSelectedListener) activity;
+			callback = (OnFavoriteSelectedListener) activity;
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString()
 					+ " must implement OnHeadlineSelectedListener");
@@ -78,17 +79,17 @@ public class FavoritesFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 
-		listView = (ListView) getView().findViewById(R.id.favsList);
-		
-		String favsString = FavoritesManager.getFavorites(getActivity())
-				.toUpperCase(Locale.ENGLISH);
 		favsSearch.setVisibility(View.GONE);
-		if (favsString != "") {
-			String[] favsArray = favsString.split("<BR>");
+
+		String favoritesFile = FavoritesManager.getFavorites(getActivity())
+				.toUpperCase(Locale.ENGLISH);
+		
+		if (favoritesFile != "") {
+			String[] favsArray = favoritesFile.split("<BR>");
 			SharedPreferences sharedPref = PreferenceManager
 					.getDefaultSharedPreferences(getActivity());
-			if (sharedPref.getBoolean(SettingsFragment.KEY_PREF_FAVS_SEARCH,
-					true)) {
+			boolean favoritesSearchEnabled = sharedPref.getBoolean(SettingsFragment.KEY_PREF_FAVS_SEARCH, true);
+			if (favoritesSearchEnabled) {
 				if (favsArray.length > 10) {
 					nameField.setVisibility(View.GONE);
 					favsSearch.setVisibility(View.VISIBLE);
@@ -96,17 +97,7 @@ public class FavoritesFragment extends Fragment {
 				}
 			} else
 				nameField.setVisibility(View.VISIBLE);
-			ListAdapter favs = new ListAdapter(getActivity(),
-					R.layout.favs_list_item);
-			for (String fav : favsArray)
-				favs.add(fav);
-			listView.setAdapter(favs);
-			listView.setOnItemClickListener(new OnItemClickListener() {
-				public void onItemClick(AdapterView<?> parent, View v,
-						int position, long id) {
-					mCallback.onFavoriteSelected(position);
-				}
-			});
+			setupFavsAdapter(favsArray);
 		}
 
 		checkSettings();
@@ -138,6 +129,20 @@ public class FavoritesFragment extends Fragment {
 		});
 	}
 
+	private void setupFavsAdapter(String[] favorites) {
+		FavoritesListAdapter favs = new FavoritesListAdapter(getActivity(),
+				R.layout.favs_list_item);
+		for (String fav : favorites)
+			favs.add(fav);
+		listView.setAdapter(favs);
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View v,
+					int position, long id) {
+				callback.onFavoriteSelected(position);
+			}
+		});
+	}
+
 	private void checkSettings() {
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
@@ -155,8 +160,8 @@ public class FavoritesFragment extends Fragment {
 		ColorManager.setBackgroundColor(getActivity(), backgroundColor);
 	}
 
-	private class ListAdapter extends ArrayAdapter<String> {
-		public ListAdapter(Context context, int resource) {
+	private class FavoritesListAdapter extends ArrayAdapter<String> {
+		public FavoritesListAdapter(Context context, int resource) {
 			super(context, resource);
 		}
 

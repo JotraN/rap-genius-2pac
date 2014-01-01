@@ -71,10 +71,10 @@ public class LyricsFragment extends Fragment {
 		loadingView = getView().findViewById(R.id.loadingView);
 		contentView = getView().findViewById(R.id.infoView);
 		contentView.setVisibility(View.GONE);
+		
 		// Needed for Android 2.3
 		lyricsField.setMovementMethod(LinkMovementMethod.getInstance());
 
-		// Get cache lyrics setting
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
 		cacheLyricsEnabled = sharedPref.getBoolean(
