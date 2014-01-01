@@ -7392,6 +7392,9 @@ com.trasselback.rapgenius.R$string -> com.trasselback.rapgenius.R$string:
     int dialog_clear_cache -> dialog_clear_cache
     int dialog_remove_favorites -> dialog_remove_favorites
     int drawer_image -> drawer_image
+    int error_cache_loading -> error_cache_loading
+    int error_network_check -> error_network_check
+    int error_reload -> error_reload
     int favsSearch -> favsSearch
     int open_drawer -> open_drawer
     int summary_cache_lyrics -> summary_cache_lyrics

@@ -1114,6 +1114,9 @@ containing a value of this type.
         public static final int dialog_clear_cache=0x7f0a001f;
         public static final int dialog_remove_favorites=0x7f0a001a;
         public static final int drawer_image=0x7f0a0027;
+        public static final int error_cache_loading=0x7f0a0028;
+        public static final int error_network_check=0x7f0a002a;
+        public static final int error_reload=0x7f0a0029;
         public static final int favsSearch=0x7f0a0024;
         public static final int open_drawer=0x7f0a0022;
         public static final int summary_cache_lyrics=0x7f0a0017;

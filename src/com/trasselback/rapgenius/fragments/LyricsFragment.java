@@ -154,8 +154,8 @@ public class LyricsFragment extends Fragment {
 			lyricsField.setText(Html.fromHtml(lyricsData));
 			RemoveUnderLine.removeUnderline(lyricsField);
 		} else {
-			String nameData = "Error loading the lyrics.";
-			String lyricsData = "Try re-loading the song.";
+			String nameData = getString(R.string.error_cache_loading);
+			String lyricsData = getString(R.string.error_reload);
 			nameField.setText(nameData);
 			lyricsField.setText(Html.fromHtml(lyricsData));
 			RemoveUnderLine.removeUnderline(lyricsField);
@@ -210,5 +210,12 @@ public class LyricsFragment extends Fragment {
 						nameField.getText().toString() + result);
 			taskStarted = true;
 		}
+	}
+
+	public boolean isOnline() {
+		ConnectivityManager connMgr = (ConnectivityManager) getActivity()
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		return (networkInfo != null && networkInfo.isConnected());
 	}
 }

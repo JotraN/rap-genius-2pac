@@ -18,7 +18,7 @@ public class CacheManager {
 		if (!lyrics.contains("There was a problem with finding the lyrics.")
 				&& !lyrics
 						.contains("There was a problem getting information about your network status.")
-				&& !lyrics.contains("No internet connection found.") 
+				&& !lyrics.contains("No internet connection found.")
 				&& !lyrics.contains("Error loading the lyrics."))
 			try {
 				File file = new File(context.getCacheDir(), name.replace("-",

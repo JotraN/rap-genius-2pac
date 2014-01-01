@@ -90,6 +90,7 @@ public class Lyrics extends URLObject {
 					.referrer("http://www.google.com").get();
 			Elements content = searchPage.getElementsByClass("r");
 			String googleHTML = content.toString();
+			// htmlPage = googleHTML;
 			findRapGeniusLinks(googleHTML);
 		} catch (IOException e) {
 			artistName += songName + " not found.";
@@ -99,7 +100,7 @@ public class Lyrics extends URLObject {
 
 	public void findRapGeniusLinks(String googlePage) {
 		Pattern pattern = Pattern
-				.compile("<a href=\".+rapgenius\\.com.+lyrics\".+>.+</a>");
+				.compile("<a href=\".+rapgenius\\.com.+lyrics/.+?\".+>.+</a>");
 		Matcher matcher = pattern.matcher(googlePage);
 		boolean foundLink = false;
 		String rapGeniusLinks = "";
@@ -112,19 +113,20 @@ public class Lyrics extends URLObject {
 			if (!matcher.find(matcher.end()))
 				foundLink = false;
 		}
-		htmlPage = "<br>Did you mean any of the following?<br>"
-				+ rapGeniusLinks
-						.replace("href=\"", "href=\"song_clicked:")
-						.replace("</a>", "</a><br>")
-						.replace("http://rapgenius.com", "")
-						// Replace rock.rapgenius.com poetry.rapgenius.com
-						// news.rapgenius.com
-						.replaceAll("http://\\w+.rapgenius.com", "")
-						// Format the search results
-						.replaceAll(" Lyrics.+?Rap Genius", "")
-						.replaceAll("-\\s+Rap Genius", "")
-						.replaceAll("\\s*?|\\s*?Poetry Genius", "")
-						.replaceAll("- Poetry.+?Rap Genius", "");
+		artistName = "Did you mean any of the following:";
+		htmlPage = rapGeniusLinks
+				.replace("href=\"", "href=\"song_clicked:")
+				.replace("</a>", "</a><br><br>")
+				.replace("http://rapgenius.com", "")
+				.replaceAll("lyrics/.+?\"", "lyrics\"")
+				// Replace rock.rapgenius.com poetry.rapgenius.com
+				// news.rapgenius.com
+				.replaceAll("http://\\w+.rapgenius.com", "")
+				// Format the search results
+				.replaceAll(" Lyrics.+?Rap Genius", "")
+				.replaceAll("-\\s+Rap Genius", "")
+				.replaceAll("\\s*?|\\s*?Poetry Genius", "")
+				.replaceAll("- Poetry.+?Rap Genius", "");
 	}
 
 	public String getName() {
