@@ -77,9 +77,9 @@ public class FavoritesFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		checkSettings();
 
 		listView = (ListView) getView().findViewById(R.id.favsList);
+		
 		String favsString = FavoritesManager.getFavorites(getActivity())
 				.toUpperCase(Locale.ENGLISH);
 		favsSearch.setVisibility(View.GONE);
@@ -92,32 +92,7 @@ public class FavoritesFragment extends Fragment {
 				if (favsArray.length > 10) {
 					nameField.setVisibility(View.GONE);
 					favsSearch.setVisibility(View.VISIBLE);
-					favsSearch.addTextChangedListener(new TextWatcher() {
-
-						@Override
-						public void onTextChanged(CharSequence s, int start,
-								int before, int count) {
-							for (int i = 0; i < listView.getCount(); i++) {
-								if (listView
-										.getItemAtPosition(i)
-										.toString()
-										.contains(
-												s.toString().toUpperCase(
-														Locale.getDefault()))) {
-									listView.smoothScrollToPosition(i);
-								}
-							}
-						}
-
-						@Override
-						public void beforeTextChanged(CharSequence s,
-								int start, int count, int after) {
-						}
-
-						@Override
-						public void afterTextChanged(Editable s) {
-						}
-					});
+					searchFavorites();
 				}
 			} else
 				nameField.setVisibility(View.VISIBLE);
@@ -133,6 +108,34 @@ public class FavoritesFragment extends Fragment {
 				}
 			});
 		}
+
+		checkSettings();
+	}
+
+	private void searchFavorites() {
+		favsSearch.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				for (int i = 0; i < listView.getCount(); i++) {
+					String item = listView.getItemAtPosition(i).toString();
+					// Scroll to item position if item contains search text
+					if (item.contains(s.toString().toUpperCase(
+							Locale.getDefault())))
+						listView.smoothScrollToPosition(i);
+				}
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		});
 	}
 
 	private void checkSettings() {

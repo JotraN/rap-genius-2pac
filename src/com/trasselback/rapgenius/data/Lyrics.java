@@ -1,12 +1,15 @@
 package com.trasselback.rapgenius.data;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+
+import android.util.Log;
 
 public class Lyrics extends URLObject {
 	private String artistName = "";
@@ -100,7 +103,7 @@ public class Lyrics extends URLObject {
 
 	public void findRapGeniusLinks(String googlePage) {
 		Pattern pattern = Pattern
-				.compile("<a href=\".+rapgenius\\.com.+lyrics/.+?\".+>.+</a>");
+				.compile("<a href=\".+rapgenius\\.com(.+)lyrics/.+?\".+?>(.+)</a>");
 		Matcher matcher = pattern.matcher(googlePage);
 		boolean foundLink = false;
 		String rapGeniusLinks = "";
@@ -108,8 +111,17 @@ public class Lyrics extends URLObject {
 			foundLink = true;
 		}
 		while (foundLink) {
-			rapGeniusLinks += googlePage.substring(matcher.start(),
-					matcher.end());
+			String songName = googlePage
+					.substring(matcher.start(1), matcher.end(1))
+					.replace("-", " ").replace("/", "");
+			songName = songName.toUpperCase(Locale.ENGLISH);
+			String unformattedName = googlePage.substring(matcher.start(2),
+					matcher.end(2));
+			String link = googlePage.substring(matcher.start(), matcher.end())
+					.replace(unformattedName, songName);
+			if(!rapGeniusLinks.contains(songName))
+				rapGeniusLinks += link;
+			Log.v(unformattedName, link);
 			if (!matcher.find(matcher.end()))
 				foundLink = false;
 		}

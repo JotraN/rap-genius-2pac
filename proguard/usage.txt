@@ -973,8 +973,6 @@ com.trasselback.rapgenius.data.URLObject:
     public abstract void retrievePage()
 com.trasselback.rapgenius.fragments.HomePageFragment:
     public static final java.lang.String EXTRA_MESSAGE
-com.trasselback.rapgenius.fragments.LyricsFragment:
-    216:219:public boolean isOnline()
 com.trasselback.rapgenius.helpers.CacheManager:
     14:14:public CacheManager()
 com.trasselback.rapgenius.helpers.ColorManager:

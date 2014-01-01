@@ -1,10 +1,7 @@
 package com.trasselback.rapgenius.fragments;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -167,11 +164,9 @@ public class LyricsFragment extends Fragment {
 		@Override
 		protected String doInBackground(String... names) {
 			lyrics = new Lyrics(names[0]);
+			// Checking connection sometimes throws exception
 			try {
-				ConnectivityManager connMgr = (ConnectivityManager) getActivity()
-						.getSystemService(Context.CONNECTIVITY_SERVICE);
-				NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-				if (networkInfo != null && networkInfo.isConnected()) {
+				if(lyrics.isOnline(getActivity())){
 					if (lyrics.openedURL()) {
 						lyrics.retrieveName();
 						lyrics.retrievePage();
@@ -179,9 +174,9 @@ public class LyricsFragment extends Fragment {
 						lyrics.googleIt();
 					return lyrics.getPage();
 				} else
-					return "No internet connection found.";
+					return getString(R.string.error_no_internet);
 			} catch (Exception ex) {
-				return "There was a problem getting information about your network status.";
+				return getString(R.string.error_network_check);
 			}
 		}
 
@@ -210,12 +205,5 @@ public class LyricsFragment extends Fragment {
 						nameField.getText().toString() + result);
 			taskStarted = true;
 		}
-	}
-
-	public boolean isOnline() {
-		ConnectivityManager connMgr = (ConnectivityManager) getActivity()
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		return (networkInfo != null && networkInfo.isConnected());
 	}
 }

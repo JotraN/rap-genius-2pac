@@ -1,9 +1,6 @@
 package com.trasselback.rapgenius.fragments;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -146,17 +143,14 @@ public class HomePageFragment extends Fragment {
 		protected String doInBackground(Void... names) {
 			news = new NewsFeed();
 			try {
-				ConnectivityManager connMgr = (ConnectivityManager) getActivity()
-						.getSystemService(Context.CONNECTIVITY_SERVICE);
-				NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-				if (networkInfo != null && networkInfo.isConnected()) {
+				if(news.isOnline(getActivity())){
 					if (news.openURL())
 						news.retrievePage();
 					return news.getPage();
 				} else
-					return "No internet connection found.";
+					return getString(R.string.error_no_internet);
 			} catch (Exception ex) {
-				return "There was a problem getting information about your network status.";
+				return getString(R.string.error_network_check);
 			}
 		}
 

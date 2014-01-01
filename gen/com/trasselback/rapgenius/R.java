@@ -1116,6 +1116,7 @@ containing a value of this type.
         public static final int drawer_image=0x7f0a0027;
         public static final int error_cache_loading=0x7f0a0028;
         public static final int error_network_check=0x7f0a002a;
+        public static final int error_no_internet=0x7f0a002b;
         public static final int error_reload=0x7f0a0029;
         public static final int favsSearch=0x7f0a0024;
         public static final int open_drawer=0x7f0a0022;

@@ -7394,6 +7394,7 @@ com.trasselback.rapgenius.R$string -> com.trasselback.rapgenius.R$string:
     int drawer_image -> drawer_image
     int error_cache_loading -> error_cache_loading
     int error_network_check -> error_network_check
+    int error_no_internet -> error_no_internet
     int error_reload -> error_reload
     int favsSearch -> favsSearch
     int open_drawer -> open_drawer
@@ -7776,6 +7777,7 @@ com.trasselback.rapgenius.data.URLObject -> com.trasselback.rapgenius.a.e:
     java.lang.String htmlPage -> a
     java.lang.String url -> b
     org.jsoup.nodes.Document pageDocument -> c
+    boolean isOnline(android.content.Context) -> a
     boolean openedURL() -> d
     java.lang.String getPage() -> h
 com.trasselback.rapgenius.fragments.FavoritesFragment -> com.trasselback.rapgenius.b.a:
@@ -7787,17 +7789,18 @@ com.trasselback.rapgenius.fragments.FavoritesFragment -> com.trasselback.rapgeni
     void onActivityCreated(android.os.Bundle) -> onActivityCreated
     void onAttach(android.app.Activity) -> onAttach
     void onResume() -> onResume
-    void checkSettings() -> a
-    android.widget.ListView access$0(com.trasselback.rapgenius.fragments.FavoritesFragment) -> a
-    com.trasselback.rapgenius.fragments.FavoritesFragment$OnFavoriteSelectedListener access$1(com.trasselback.rapgenius.fragments.FavoritesFragment) -> b
+    void searchFavorites() -> a
+    void checkSettings() -> b
+    com.trasselback.rapgenius.fragments.FavoritesFragment$OnFavoriteSelectedListener access$0(com.trasselback.rapgenius.fragments.FavoritesFragment) -> a
+    android.widget.ListView access$1(com.trasselback.rapgenius.fragments.FavoritesFragment) -> b
 com.trasselback.rapgenius.fragments.FavoritesFragment$1 -> com.trasselback.rapgenius.b.b:
+    com.trasselback.rapgenius.fragments.FavoritesFragment this$0 -> a
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+com.trasselback.rapgenius.fragments.FavoritesFragment$2 -> com.trasselback.rapgenius.b.c:
     com.trasselback.rapgenius.fragments.FavoritesFragment this$0 -> a
     void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
     void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
     void afterTextChanged(android.text.Editable) -> afterTextChanged
-com.trasselback.rapgenius.fragments.FavoritesFragment$2 -> com.trasselback.rapgenius.b.c:
-    com.trasselback.rapgenius.fragments.FavoritesFragment this$0 -> a
-    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
 com.trasselback.rapgenius.fragments.FavoritesFragment$ListAdapter -> com.trasselback.rapgenius.b.d:
     com.trasselback.rapgenius.fragments.FavoritesFragment this$0 -> a
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView

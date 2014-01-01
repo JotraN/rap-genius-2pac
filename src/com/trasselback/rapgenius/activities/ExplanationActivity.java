@@ -1,10 +1,7 @@
 package com.trasselback.rapgenius.activities;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -114,19 +111,18 @@ public class ExplanationActivity extends SherlockActivity {
 		@Override
 		protected String doInBackground(Void... params) {
 			explanation = new Explanations(getIntent().getDataString());
+			// Checking connection sometimes throws exception
 			try {
-				ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-				NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-				if (networkInfo != null && networkInfo.isConnected()) {
+				if(explanation.isOnline(getApplicationContext())){
 					explanation.retrieveUrl();
 					explanation.retrieveName();
 					if (explanation.openedURL())
 						explanation.retrievePage();
 					return explanation.getPage();
 				} else
-					return "No internet connection found.";
+					return getString(R.string.error_no_internet);
 			} catch (Exception ex) {
-				return "There was a problem getting information about your network status.";
+				return getString(R.string.error_network_check);
 			}
 		}
 
@@ -135,8 +131,8 @@ public class ExplanationActivity extends SherlockActivity {
 			explanationsField.setText(Html.fromHtml(result));
 			RemoveUnderLine.removeUnderline(explanationsField);
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1)
-				CrossfadeAnimation.crossfade(getApplicationContext(), contentView,
-						loadingView);
+				CrossfadeAnimation.crossfade(getApplicationContext(),
+						contentView, loadingView);
 			else {
 				explanationsField.setMovementMethod(new LinkMovementMethod());
 				contentView.setVisibility(View.VISIBLE);
