@@ -1117,18 +1117,17 @@ containing a value of this type.
         public static final int close_drawer=0x7f0b0021;
         /**  Default text 
          */
-        public static final int default_favorite=0x7f0b002c;
-        public static final int default_home=0x7f0b002d;
+        public static final int default_favorite=0x7f0b002b;
+        public static final int default_home=0x7f0b002c;
         public static final int default_search=0x7f0b000f;
         public static final int dialog_clear_cache=0x7f0b001f;
         public static final int dialog_remove_favorites=0x7f0b001a;
         public static final int drawer_image=0x7f0b0027;
+        public static final int error_network_check=0x7f0b0029;
+        public static final int error_no_internet=0x7f0b002a;
         /**  Error messages 
          */
-        public static final int error_cache_loading=0x7f0b0028;
-        public static final int error_network_check=0x7f0b002a;
-        public static final int error_no_internet=0x7f0b002b;
-        public static final int error_reload=0x7f0b0029;
+        public static final int error_reload=0x7f0b0028;
         public static final int favsSearch=0x7f0b0024;
         public static final int open_drawer=0x7f0b0022;
         public static final int summary_cache_lyrics=0x7f0b0017;

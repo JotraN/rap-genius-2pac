@@ -88,7 +88,7 @@ public class Explanations extends URLObject {
 		htmlPage = htmlPage.replace("href=\"/", "href=\"http://rapgenius.com/");
 
 	}
-
+	
 	public String getName() {
 		return artistName;
 	}

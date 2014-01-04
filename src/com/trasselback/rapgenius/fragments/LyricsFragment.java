@@ -170,6 +170,7 @@ public class LyricsFragment extends Fragment {
 		else if (artistNameSongName.contains("fav_clicked"))
 			artistNameSongName = artistNameSongName
 					.substring(artistNameSongName.indexOf(":") + 1);
+		
 		if (CacheManager.getCache(getActivity(), artistNameSongName).length() <= 0)
 			retrieveTask.execute(artistNameSongName);
 		else
@@ -182,18 +183,15 @@ public class LyricsFragment extends Fragment {
 		String cachedData = CacheManager.getCache(getActivity(),
 				artistNameSongName);
 		// If cached data actually exists
-		if (cachedData.length() > 5) {
+		if (cachedData.length() > 5 && cachedData.contains("<")) {
 			String nameData = cachedData.substring(0, cachedData.indexOf('<'));
 			String lyricsData = cachedData.substring(cachedData.indexOf('<'));
 			nameField.setText(nameData);
 			lyricsField.setText(Html.fromHtml(lyricsData));
 			RemoveUnderLine.removeUnderline(lyricsField);
+		// Problem loading cache, start retrieve task
 		} else {
-			String nameData = getString(R.string.error_cache_loading);
-			String lyricsData = getString(R.string.error_reload);
-			nameField.setText(nameData);
-			lyricsField.setText(Html.fromHtml(lyricsData));
-			RemoveUnderLine.removeUnderline(lyricsField);
+			retrieveTask.execute(artistNameSongName);
 		}
 	}
 
