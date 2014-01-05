@@ -982,7 +982,7 @@ com.trasselback.rapgenius.helpers.CrossfadeAnimation:
 com.trasselback.rapgenius.helpers.FavoritesManager:
     15:15:public FavoritesManager()
 com.trasselback.rapgenius.helpers.RemoveUnderLine:
-    10:10:public RemoveUnderLine()
+    11:11:public RemoveUnderLine()
 com.trasselback.rapgenius.preferences.SettingsFragment:
     public static final java.lang.String KEY_PREF_LOAD_HOME
     public static final java.lang.String KEY_PREF_REMOVE_FAV
