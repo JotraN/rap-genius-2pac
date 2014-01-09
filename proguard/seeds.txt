@@ -6095,7 +6095,6 @@ com.trasselback.rapgenius.R$bool: R$bool()
 com.trasselback.rapgenius.R$color
 com.trasselback.rapgenius.R$color: int Black
 com.trasselback.rapgenius.R$color: int Blue
-com.trasselback.rapgenius.R$color: int DrawerIconGray
 com.trasselback.rapgenius.R$color: int Gray
 com.trasselback.rapgenius.R$color: int Green
 com.trasselback.rapgenius.R$color: int LightBlack
@@ -6105,9 +6104,7 @@ com.trasselback.rapgenius.R$color: int LighterBlack
 com.trasselback.rapgenius.R$color: int Orange
 com.trasselback.rapgenius.R$color: int Purple
 com.trasselback.rapgenius.R$color: int Red
-com.trasselback.rapgenius.R$color: int TransBlack
 com.trasselback.rapgenius.R$color: int TransGray
-com.trasselback.rapgenius.R$color: int Transparent
 com.trasselback.rapgenius.R$color: int White
 com.trasselback.rapgenius.R$color: int Yellow
 com.trasselback.rapgenius.R$color: int abs__background_holo_dark
@@ -6254,7 +6251,6 @@ com.trasselback.rapgenius.R$drawable: int abs__textfield_searchview_right_holo_d
 com.trasselback.rapgenius.R$drawable: int abs__textfield_searchview_right_holo_light
 com.trasselback.rapgenius.R$drawable: int abs__toast_frame
 com.trasselback.rapgenius.R$drawable: int action_bar_background
-com.trasselback.rapgenius.R$drawable: int ic_back
 com.trasselback.rapgenius.R$drawable: int ic_blank
 com.trasselback.rapgenius.R$drawable: int ic_drawer
 com.trasselback.rapgenius.R$drawable: int ic_launcher
@@ -6264,10 +6260,12 @@ com.trasselback.rapgenius.R$drawable: int ic_progress2
 com.trasselback.rapgenius.R$drawable: int ic_progress3
 com.trasselback.rapgenius.R$drawable: int ic_progress4
 com.trasselback.rapgenius.R$drawable: int ic_search
-com.trasselback.rapgenius.R$drawable: int ic_settings
 com.trasselback.rapgenius.R$drawable: int ic_star_not_pressed
 com.trasselback.rapgenius.R$drawable: int ic_star_pressed
 com.trasselback.rapgenius.R$drawable: int list_selector
+com.trasselback.rapgenius.R$drawable: int unofficialrapgeniustheme_text_select_handle_left
+com.trasselback.rapgenius.R$drawable: int unofficialrapgeniustheme_text_select_handle_middle
+com.trasselback.rapgenius.R$drawable: int unofficialrapgeniustheme_text_select_handle_right
 com.trasselback.rapgenius.R$drawable: R$drawable()
 com.trasselback.rapgenius.R$id
 com.trasselback.rapgenius.R$id: int abs__action_bar
@@ -6335,7 +6333,6 @@ com.trasselback.rapgenius.R$id: int showTitle
 com.trasselback.rapgenius.R$id: int songsList
 com.trasselback.rapgenius.R$id: int tabMode
 com.trasselback.rapgenius.R$id: int textView
-com.trasselback.rapgenius.R$id: int threadsList
 com.trasselback.rapgenius.R$id: int useLogo
 com.trasselback.rapgenius.R$id: int wrap_content
 com.trasselback.rapgenius.R$id: R$id()
@@ -6370,19 +6367,15 @@ com.trasselback.rapgenius.R$layout: int activity_main
 com.trasselback.rapgenius.R$layout: int drawer_list_item
 com.trasselback.rapgenius.R$layout: int favs_list_item
 com.trasselback.rapgenius.R$layout: int fragment_favorites_layout
-com.trasselback.rapgenius.R$layout: int fragment_forums_layout
 com.trasselback.rapgenius.R$layout: int fragment_home_page_layout
 com.trasselback.rapgenius.R$layout: int fragment_lyrics_layout
 com.trasselback.rapgenius.R$layout: int fragment_more_songs_layout
 com.trasselback.rapgenius.R$layout: int more_songs_list_item
-com.trasselback.rapgenius.R$layout: int posts_list_item
 com.trasselback.rapgenius.R$layout: int sherlock_spinner_dropdown_item
 com.trasselback.rapgenius.R$layout: int sherlock_spinner_item
 com.trasselback.rapgenius.R$layout: R$layout()
 com.trasselback.rapgenius.R$menu
-com.trasselback.rapgenius.R$menu: int lyrics
 com.trasselback.rapgenius.R$menu: int main
-com.trasselback.rapgenius.R$menu: int search
 com.trasselback.rapgenius.R$menu: R$menu()
 com.trasselback.rapgenius.R$string
 com.trasselback.rapgenius.R$string: int abs__action_bar_home_description
@@ -6400,7 +6393,6 @@ com.trasselback.rapgenius.R$string: int abs__shareactionprovider_share_with
 com.trasselback.rapgenius.R$string: int abs__shareactionprovider_share_with_application
 com.trasselback.rapgenius.R$string: int action_favorite
 com.trasselback.rapgenius.R$string: int action_search
-com.trasselback.rapgenius.R$string: int action_settings
 com.trasselback.rapgenius.R$string: int app_name
 com.trasselback.rapgenius.R$string: int close_drawer
 com.trasselback.rapgenius.R$string: int default_favorite
@@ -6409,9 +6401,11 @@ com.trasselback.rapgenius.R$string: int default_search
 com.trasselback.rapgenius.R$string: int dialog_clear_cache
 com.trasselback.rapgenius.R$string: int dialog_remove_favorites
 com.trasselback.rapgenius.R$string: int drawer_image
+com.trasselback.rapgenius.R$string: int drawer_title_back_to_lyrics
+com.trasselback.rapgenius.R$string: int drawer_title_lyrics
+com.trasselback.rapgenius.R$string: int drawer_title_more_songs
 com.trasselback.rapgenius.R$string: int error_network_check
 com.trasselback.rapgenius.R$string: int error_no_internet
-com.trasselback.rapgenius.R$string: int error_reload
 com.trasselback.rapgenius.R$string: int favsSearch
 com.trasselback.rapgenius.R$string: int open_drawer
 com.trasselback.rapgenius.R$string: int summary_cache_lyrics
@@ -6421,12 +6415,10 @@ com.trasselback.rapgenius.R$string: int summary_favs_search
 com.trasselback.rapgenius.R$string: int summary_load_home
 com.trasselback.rapgenius.R$string: int summary_remove_favorites
 com.trasselback.rapgenius.R$string: int title_activity_explanation
-com.trasselback.rapgenius.R$string: int title_activity_more_songs
 com.trasselback.rapgenius.R$string: int title_activity_settings
 com.trasselback.rapgenius.R$string: int title_cache_lyrics
 com.trasselback.rapgenius.R$string: int title_clear_cache
 com.trasselback.rapgenius.R$string: int title_donate
-com.trasselback.rapgenius.R$string: int title_favorites
 com.trasselback.rapgenius.R$string: int title_favs_search
 com.trasselback.rapgenius.R$string: int title_load_home
 com.trasselback.rapgenius.R$string: int title_remove_favorites

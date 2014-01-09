@@ -46,48 +46,57 @@ public class MainActivity extends SherlockFragmentActivity implements
 		MoreSongsFragment.OnMoreSongsSelectedListener {
 	public final static String EXTRA_MESSAGE = "com.trasselback.rapgenius.MESSAGE";
 	private static boolean lyricsLoaded = false;
-	private boolean hideFavs = true;
-	private MenuItem favItem;
-
-	private EditText search_text;
-
-	private String[] mDrawerTitles;
-	private DrawerLayout mDrawerLayout;
-	private ListView mDrawerList;
-	private ActionBarDrawerToggle mDrawerToggle;
-	private CharSequence mTitle;
+	private boolean hideFavoritesIcon = true;
+	private MenuItem favoritesItem;
+	private EditText searchText;
+	private String[] drawerTitles;
+	private DrawerLayout drawerLayout;
+	private ListView drawerList;
+	private ActionBarDrawerToggle drawerToggle;
 	private ListAdapter adapter;
-	private Handler mHandler;
+	private Handler delayHandler;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		// TODO Delete later
-		FavoritesManager.updateFavorites(getApplicationContext());
-
 		initialize();
 		setupActionBar();
 
-		// Check to see if activity started by home song clicked
-		if (getIntent().getData() != null
+		// Check to see if activity was started by a home song being clicked
+		boolean homeSongClicked = getIntent().getData() != null
 				&& getIntent().getDataString().contains("clicked")
-				&& !lyricsLoaded) {
-			Fragment fragment = new LyricsFragment();
-			Bundle song = new Bundle();
-			song.putString(EXTRA_MESSAGE, getIntent().getDataString());
-			fragment.setArguments(song);
-			FragmentManager fragmentManager = getSupportFragmentManager();
-			fragmentManager.beginTransaction()
-					.replace(R.id.content_frame, fragment).commit();
-			setTitle("LYRICS");
-			if (adapter.getPosition("MORE SONGS") == -1)
-				adapter.add("MORE SONGS");
-			if (adapter.getPosition("BACK TO LYRICS") != -1)
-				adapter.remove("BACK TO LYRICS");
-			hideFavs = false;
+				&& !lyricsLoaded;
+		if (homeSongClicked)
+			loadHomeSong();
+
+	}
+
+	private void initialize() {
+		drawerTitles = getResources().getStringArray(R.array.navigation_array);
+		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		drawerList = (ListView) findViewById(R.id.left_drawer);
+
+		// Set the adapter for the list view
+		adapter = new ListAdapter(this, R.layout.drawer_list_item);
+		for (String title : drawerTitles) {
+			adapter.add(title);
 		}
+		drawerList.setAdapter(adapter);
+		drawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+		drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
+				R.drawable.ic_blank, R.string.open_drawer,
+				R.string.close_drawer);
+
+		// Set the drawer toggle as the DrawerListener
+		drawerLayout.setDrawerListener(drawerToggle);
+
+		// Set to home fragment by default
+		selectItem(0);
 	}
 
 	private void setupActionBar() {
@@ -98,152 +107,168 @@ public class MainActivity extends SherlockFragmentActivity implements
 		getSupportActionBar().setHomeButtonEnabled(true);
 	}
 
-	private void initialize() {
-		mDrawerTitles = getResources().getStringArray(R.array.navigation_array);
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
-		// Set the adapter for the list view
-		adapter = new ListAdapter(this, R.layout.drawer_list_item);
-		for (String x : mDrawerTitles) {
-			adapter.add(x);
-		}
-		mDrawerList.setAdapter(adapter);
-		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-				R.drawable.ic_blank, R.string.open_drawer,
-				R.string.close_drawer);
-
-		// Set the drawer toggle as the DrawerListener
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-		// Set to home fragment
-		selectItem(0);
+	public void loadHomeSong() {
+		Fragment fragment = new LyricsFragment();
+		Bundle song = new Bundle();
+		song.putString(EXTRA_MESSAGE, getIntent().getDataString());
+		fragment.setArguments(song);
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.content_frame, fragment).commit();
+		setTitle("LYRICS");
+		if (adapter.getPosition("MORE SONGS") == -1)
+			adapter.add("MORE SONGS");
+		if (adapter.getPosition("BACK TO LYRICS") != -1)
+			adapter.remove("BACK TO LYRICS");
+		hideFavoritesIcon = false;
 	}
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		// Sync the toggle state after onRestoreInstanceState has occurred.
-		mDrawerToggle.syncState();
+		drawerToggle.syncState();
 	}
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		// Pass any configuration change to the drawer toggles
-		mDrawerToggle.onConfigurationChanged(newConfig);
+		drawerToggle.onConfigurationChanged(newConfig);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.main, menu);
 
-		favItem = menu.findItem(R.id.action_favorite);
-		if (hideFavs)
-			favItem.setVisible(false);
-		else if (FavoritesManager.checkFavorites(this, LyricsFragment.artistNameSongName))
-			favItem.setIcon(R.drawable.ic_star_pressed);
+		manageFavoritesItem(menu);
 
 		// MenuItem to close/open search bar
 		final MenuItem searchItem = menu.findItem(R.id.action_search);
 
-		mHandler = new Handler();
-		searchItem.setOnActionExpandListener(new OnActionExpandListener() {
-			InputMethodManager keyboard = (InputMethodManager) getApplicationContext()
-					.getSystemService(Context.INPUT_METHOD_SERVICE);
-
-			@Override
-			public boolean onMenuItemActionExpand(MenuItem item) {
-				// Wait for edit text view to load before calling focus
-				mHandler.postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						search_text.clearFocus();
-						if (android.os.Build.VERSION.SDK_INT < 11)
-							keyboard.toggleSoftInput(
-									InputMethodManager.SHOW_FORCED,
-									InputMethodManager.HIDE_IMPLICIT_ONLY);
-						else
-							keyboard.showSoftInput(search_text,
-									InputMethodManager.SHOW_IMPLICIT);
-						search_text.requestFocus();
-					}
-				}, 1);
-				return true;
-			}
-
-			@Override
-			public boolean onMenuItemActionCollapse(MenuItem item) {
-				if (android.os.Build.VERSION.SDK_INT < 11)
-					keyboard.hideSoftInputFromWindow(
-							search_text.getWindowToken(), 0);
-				else
-					keyboard.hideSoftInputFromWindow(
-							search_text.getWindowToken(),
-							InputMethodManager.HIDE_NOT_ALWAYS);
-				return true;
-			}
-		});
+		delayHandler = new Handler();
+		searchItem.setOnActionExpandListener(new expandedSearchBar());
 
 		// Get search from search action view
-		View v = (View) menu.findItem(R.id.action_search).getActionView();
-		search_text = (EditText) v.findViewById(R.id.search_text);
+		View searchView = (View) menu.findItem(R.id.action_search)
+				.getActionView();
+		searchText = (EditText) searchView.findViewById(R.id.search_text);
 
 		final MenuItem favsItem = menu.findItem(R.id.action_favorite);
 
-		search_text.setOnEditorActionListener(new OnEditorActionListener() {
+		searchText.setOnEditorActionListener(new OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId,
 					KeyEvent event) {
-				Fragment fragment = new LyricsFragment();
-				Bundle song = new Bundle();
-				song.putString(MainActivity.EXTRA_MESSAGE, search_text
-						.getText().toString());
-				fragment.setArguments(song);
-				FragmentManager fragmentManager = getSupportFragmentManager();
-				fragmentManager.beginTransaction()
-						.replace(R.id.content_frame, fragment).commit();
-				if (adapter.getPosition("MORE SONGS") == -1)
-					adapter.add("MORE SONGS");
-				if (adapter.getPosition("BACK TO LYRICS") != -1)
-					adapter.remove("BACK TO LYRICS");
-
-				setTitle("LYRICS");
-				// Reload favorites icon
-				if (FavoritesManager.checkFavorites(getApplicationContext(),
-						search_text.getText().toString())) {
-					favsItem.setIcon(R.drawable.ic_star_pressed);
-				} else {
-					favsItem.setIcon(R.drawable.ic_star_not_pressed);
-				}
-				search_text.setText("");
-				searchItem.collapseActionView();
-				favsItem.setVisible(true);
-				hideFavs = false;
+				changeToLyricsFragment(searchItem, favsItem);
 				return false;
 			}
 		});
 		return true;
 	}
 
+	private void manageFavoritesItem(Menu menu) {
+		favoritesItem = menu.findItem(R.id.action_favorite);
+		if (hideFavoritesIcon)
+			favoritesItem.setVisible(false);
+		else if (FavoritesManager.checkFavorites(this,
+				LyricsFragment.artistNameSongName))
+			favoritesItem.setIcon(R.drawable.ic_star_pressed);
+	}
+
+	// Search bar that shows/hides keyboard when search is expanded/collapsed
+	private class expandedSearchBar implements OnActionExpandListener {
+		InputMethodManager keyboard = (InputMethodManager) getApplicationContext()
+				.getSystemService(Context.INPUT_METHOD_SERVICE);
+
+		@Override
+		public boolean onMenuItemActionExpand(MenuItem item) {
+			// Wait for edit text view to load before calling focus
+			delayHandler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					searchText.clearFocus();
+					if (android.os.Build.VERSION.SDK_INT < 11)
+						keyboard.toggleSoftInput(
+								InputMethodManager.SHOW_FORCED,
+								InputMethodManager.HIDE_IMPLICIT_ONLY);
+					else
+						keyboard.showSoftInput(searchText,
+								InputMethodManager.SHOW_IMPLICIT);
+					searchText.requestFocus();
+				}
+			}, 1);
+			return true;
+		}
+
+		@Override
+		public boolean onMenuItemActionCollapse(MenuItem item) {
+			if (android.os.Build.VERSION.SDK_INT < 11)
+				keyboard.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
+			else
+				keyboard.hideSoftInputFromWindow(searchText.getWindowToken(),
+						InputMethodManager.HIDE_NOT_ALWAYS);
+			return true;
+		}
+	};
+
+	private void changeToLyricsFragment(MenuItem searchItem, MenuItem favsItem) {
+		// Change to lyrics fragment
+		Fragment fragment = new LyricsFragment();
+		Bundle song = new Bundle();
+		song.putString(MainActivity.EXTRA_MESSAGE, searchText.getText()
+				.toString());
+		fragment.setArguments(song);
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.content_frame, fragment).commit();
+
+		// Update drawer
+		addMoreSongsItem();
+		setTitle(getResources().getString(R.string.drawer_title_lyrics));
+
+		// Reload favorites icon
+		if (FavoritesManager.checkFavorites(getApplicationContext(), searchText
+				.getText().toString())) {
+			favsItem.setIcon(R.drawable.ic_star_pressed);
+		} else {
+			favsItem.setIcon(R.drawable.ic_star_not_pressed);
+		}
+
+		searchText.setText("");
+		searchItem.collapseActionView();
+		favsItem.setVisible(true);
+		hideFavoritesIcon = false;
+	}
+
+	private void addMoreSongsItem() {
+		String moreSongsTitle = getResources().getString(
+				R.string.drawer_title_more_songs);
+		String backLyricsTitle = getResources().getString(
+				R.string.drawer_title_back_to_lyrics);
+
+		if (adapter.getPosition(moreSongsTitle) == -1)
+			adapter.add(moreSongsTitle);
+		if (adapter.getPosition(backLyricsTitle) != -1)
+			adapter.remove(backLyricsTitle);
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Add drawer toggle, temporary fix for SherlockActionBar
 		if (item.getItemId() == android.R.id.home)
-			if (mDrawerLayout.isDrawerOpen(mDrawerList))
-				mDrawerLayout.closeDrawer(mDrawerList);
+			if (drawerLayout.isDrawerOpen(drawerList))
+				drawerLayout.closeDrawer(drawerList);
 			else
-				mDrawerLayout.openDrawer(mDrawerList);
+				drawerLayout.openDrawer(drawerList);
 
-		// Handle presses on the action bar items
+		// Handle clicks on the action bar items
 		switch (item.getItemId()) {
 		case R.id.action_favorite:
-			FavoritesManager.addFavorites(this, LyricsFragment.artistNameSongName);
-			if (FavoritesManager.checkFavorites(this, LyricsFragment.artistNameSongName)) {
+			FavoritesManager.addFavorites(this,
+					LyricsFragment.artistNameSongName);
+			if (FavoritesManager.checkFavorites(this,
+					LyricsFragment.artistNameSongName)) {
 				item.setIcon(R.drawable.ic_star_pressed);
 			} else {
 				item.setIcon(R.drawable.ic_star_not_pressed);
@@ -261,7 +286,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 				long arg3) {
 			selectItem(arg2);
 			// Clear choice
-			mDrawerList.setItemChecked(-1, true);
+			drawerList.setItemChecked(-1, true);
 		}
 	}
 
@@ -273,26 +298,21 @@ public class MainActivity extends SherlockFragmentActivity implements
 		switch (position) {
 		case 0:
 			fragment = new HomePageFragment();
-			fragmentManager.beginTransaction()
-					.replace(R.id.content_frame, fragment).commit();
-			mDrawerList.setItemChecked(position, true);
-			setTitle(mDrawerTitles[position]);
-			if (!hideFavs) {
-				favItem.setVisible(false);
-				hideFavs = true;
+			drawerList.setItemChecked(position, true);
+			setTitle(drawerTitles[position]);
+			if (!hideFavoritesIcon) {
+				favoritesItem.setVisible(false);
+				hideFavoritesIcon = true;
 			}
 			cleanUpDrawer();
 			break;
 		case 1:
 			fragment = new FavoritesFragment();
-			fragmentManager = getSupportFragmentManager();
-			fragmentManager.beginTransaction()
-					.replace(R.id.content_frame, fragment).commit();
-			mDrawerList.setItemChecked(position, true);
-			setTitle(mDrawerTitles[position]);
-			if (!hideFavs) {
-				favItem.setVisible(false);
-				hideFavs = true;
+			drawerList.setItemChecked(position, true);
+			setTitle(drawerTitles[position]);
+			if (!hideFavoritesIcon) {
+				favoritesItem.setVisible(false);
+				hideFavoritesIcon = true;
 			}
 			cleanUpDrawer();
 			break;
@@ -305,47 +325,65 @@ public class MainActivity extends SherlockFragmentActivity implements
 			startActivity(intent);
 			break;
 		case 3:
-			if (adapter.getItem(3).contains("MORE SONGS")) {
-				fragment = new MoreSongsFragment();
-				Bundle song = new Bundle();
-				song.putString(EXTRA_MESSAGE, LyricsFragment.artistNameSongName);
-				fragment.setArguments(song);
-				fragmentManager = getSupportFragmentManager();
-				fragmentManager.beginTransaction()
-						.replace(R.id.content_frame, fragment).commit();
-				mDrawerList.setItemChecked(position, true);
-				setTitle("MORE SONGS");
-				if (adapter.getPosition("BACK TO LYRICS") == -1)
-					adapter.add("BACK TO LYRICS");
-				if (!hideFavs) {
-					favItem.setVisible(false);
-					hideFavs = true;
-				}
-				adapter.remove("MORE SONGS");
-			} else if (adapter.getItem(3).contains("BACK TO LYRICS")) {
-				fragment = new LyricsFragment();
-				Bundle song = new Bundle();
-				song.putString(EXTRA_MESSAGE, LyricsFragment.artistNameSongName);
-				fragment.setArguments(song);
-				fragmentManager.beginTransaction()
-						.replace(R.id.content_frame, fragment).commit();
-				setTitle("LYRICS");
-				if (adapter.getPosition("MORE SONGS") == -1)
-					adapter.add("MORE SONGS");
-				favItem.setVisible(true);
-				hideFavs = false;
-				adapter.remove("BACK TO LYRICS");
-			}
+			fragment = setupFourthItem();
 			break;
 		}
-
-		mDrawerLayout.closeDrawer(mDrawerList);
+		fragmentManager.beginTransaction()
+				.replace(R.id.content_frame, fragment).commit();
+		drawerLayout.closeDrawer(drawerList);
 	}
 
 	@Override
 	public void setTitle(CharSequence title) {
-		mTitle = title;
-		getSupportActionBar().setTitle(mTitle);
+		getSupportActionBar().setTitle(title);
+	}
+
+	private void cleanUpDrawer() {
+		String moreSongs = getResources().getString(
+				R.string.drawer_title_more_songs);
+		String backToLyrics = getResources().getString(
+				R.string.drawer_title_back_to_lyrics);
+		
+		if (adapter.getPosition(moreSongs) != -1)
+			adapter.remove(moreSongs);
+		if (adapter.getPosition(backToLyrics) != -1)
+			adapter.remove(backToLyrics);
+	}
+
+	private Fragment setupFourthItem() {
+		Fragment fragment = null;
+		String moreSongs = getResources().getString(
+				R.string.drawer_title_more_songs);
+		String backToLyrics = getResources().getString(
+				R.string.drawer_title_back_to_lyrics);
+
+		if (adapter.getItem(3).contains(moreSongs)) {
+			fragment = new MoreSongsFragment();
+			Bundle song = new Bundle();
+			song.putString(EXTRA_MESSAGE, LyricsFragment.artistNameSongName);
+			fragment.setArguments(song);
+			drawerList.setItemChecked(3, true);
+			setTitle(getResources().getString(R.string.drawer_title_more_songs));
+			if (adapter.getPosition(backToLyrics) == -1)
+				adapter.add(backToLyrics);
+			if (!hideFavoritesIcon) {
+				favoritesItem.setVisible(false);
+				hideFavoritesIcon = true;
+			}
+			adapter.remove(moreSongs);
+		} else if (adapter.getItem(3).contains(backToLyrics)) {
+			fragment = new LyricsFragment();
+			Bundle song = new Bundle();
+			song.putString(EXTRA_MESSAGE, LyricsFragment.artistNameSongName);
+			fragment.setArguments(song);
+			setTitle(getResources().getString(R.string.drawer_title_lyrics));
+			if (adapter.getPosition(moreSongs) == -1)
+				adapter.add(moreSongs);
+			favoritesItem.setVisible(true);
+			hideFavoritesIcon = false;
+			adapter.remove(backToLyrics);
+		}
+		return fragment;
 	}
 
 	// List adapter for drawer
@@ -364,14 +402,14 @@ public class MainActivity extends SherlockFragmentActivity implements
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View v = inflater.inflate(resource, parent, false);
-			
+
 			ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
 			TextView textView = (TextView) v.findViewById(R.id.textView);
 			// Have to manually set text because adapter isn't just text view
 			textView.setText(adapter.getItem(position));
-			
+
 			InputStream ims = null;
-			
+
 			// Change background and icon depending on position
 			switch (position) {
 			case 0:
@@ -400,8 +438,10 @@ public class MainActivity extends SherlockFragmentActivity implements
 				break;
 			case 3:
 				try {
-					if (adapter.getItem(position) == "MORE SONGS")
-						ims = context.getAssets().open("ic_menu_info_details.png");
+					if (adapter.getItem(position) == getResources().getString(
+							R.string.drawer_title_more_songs))
+						ims = context.getAssets().open(
+								"ic_menu_info_details.png");
 					else
 						ims = context.getAssets().open("ic_menu_revert.png");
 				} catch (IOException e) {
@@ -417,10 +457,9 @@ public class MainActivity extends SherlockFragmentActivity implements
 			imageView.setImageDrawable(d);
 
 			// Set font
-			TextView x = (TextView) textView;
 			Typeface tf = Typeface.createFromAsset(getAssets(),
 					"fonts/roboto_condensed_light.ttf");
-			x.setTypeface(tf);
+			textView.setTypeface(tf);
 			return v;
 		}
 	}
@@ -439,15 +478,15 @@ public class MainActivity extends SherlockFragmentActivity implements
 		setTitle("LYRICS");
 		if (adapter.getPosition("MORE SONGS") == -1)
 			adapter.add("MORE SONGS");
-		favItem.setVisible(true);
+		favoritesItem.setVisible(true);
 		// Reload favorites icon
 		if (FavoritesManager.checkFavorites(getApplicationContext(),
 				favsArray[position])) {
-			favItem.setIcon(R.drawable.ic_star_pressed);
+			favoritesItem.setIcon(R.drawable.ic_star_pressed);
 		} else {
-			favItem.setIcon(R.drawable.ic_star_not_pressed);
+			favoritesItem.setIcon(R.drawable.ic_star_not_pressed);
 		}
-		hideFavs = false;
+		hideFavoritesIcon = false;
 	}
 
 	@Override
@@ -462,22 +501,16 @@ public class MainActivity extends SherlockFragmentActivity implements
 		setTitle("LYRICS");
 		if (adapter.getPosition("MORE SONGS") == -1)
 			adapter.add("MORE SONGS");
-		favItem.setVisible(true);
+		favoritesItem.setVisible(true);
 		// Reload favorites icon
 		if (FavoritesManager.checkFavorites(getApplicationContext(),
 				songName.toString())) {
-			favItem.setIcon(R.drawable.ic_star_pressed);
+			favoritesItem.setIcon(R.drawable.ic_star_pressed);
 		} else {
-			favItem.setIcon(R.drawable.ic_star_not_pressed);
+			favoritesItem.setIcon(R.drawable.ic_star_not_pressed);
 		}
-		hideFavs = false;
+		hideFavoritesIcon = false;
 		adapter.remove("BACK TO LYRICS");
 	}
 
-	public void cleanUpDrawer() {
-		if (adapter.getPosition("MORE SONGS") != -1)
-			adapter.remove("MORE SONGS");
-		if (adapter.getPosition("BACK TO LYRICS") != -1)
-			adapter.remove("BACK TO LYRICS");
-	}
 }

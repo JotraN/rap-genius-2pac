@@ -694,19 +694,16 @@ containing a value of this type.
     public static final class color {
         public static final int Black=0x7f08000e;
         public static final int Blue=0x7f08000a;
-        public static final int DrawerIconGray=0x7f080010;
         public static final int Gray=0x7f08000c;
         public static final int Green=0x7f080009;
         public static final int LightBlack=0x7f08000f;
-        public static final int LightBlue=0x7f080012;
-        public static final int LightGray=0x7f080011;
-        public static final int LighterBlack=0x7f080016;
+        public static final int LightBlue=0x7f080011;
+        public static final int LightGray=0x7f080010;
+        public static final int LighterBlack=0x7f080013;
         public static final int Orange=0x7f080007;
         public static final int Purple=0x7f08000b;
         public static final int Red=0x7f080006;
-        public static final int TransBlack=0x7f080014;
-        public static final int TransGray=0x7f080013;
-        public static final int Transparent=0x7f080015;
+        public static final int TransGray=0x7f080012;
         public static final int White=0x7f08000d;
         public static final int Yellow=0x7f080008;
         public static final int abs__background_holo_dark=0x7f080000;
@@ -715,10 +712,10 @@ containing a value of this type.
         public static final int abs__bright_foreground_disabled_holo_light=0x7f080005;
         public static final int abs__bright_foreground_holo_dark=0x7f080002;
         public static final int abs__bright_foreground_holo_light=0x7f080003;
-        public static final int abs__primary_text_disable_only_holo_dark=0x7f080017;
-        public static final int abs__primary_text_disable_only_holo_light=0x7f080018;
-        public static final int abs__primary_text_holo_dark=0x7f080019;
-        public static final int abs__primary_text_holo_light=0x7f08001a;
+        public static final int abs__primary_text_disable_only_holo_dark=0x7f080014;
+        public static final int abs__primary_text_disable_only_holo_light=0x7f080015;
+        public static final int abs__primary_text_holo_dark=0x7f080016;
+        public static final int abs__primary_text_holo_light=0x7f080017;
     }
     public static final class dimen {
         /**  Default height of an action bar. 
@@ -940,20 +937,21 @@ containing a value of this type.
         public static final int abs__textfield_searchview_right_holo_light=0x7f02006e;
         public static final int abs__toast_frame=0x7f02006f;
         public static final int action_bar_background=0x7f020070;
-        public static final int ic_back=0x7f020071;
-        public static final int ic_blank=0x7f020072;
-        public static final int ic_drawer=0x7f020073;
-        public static final int ic_launcher=0x7f020074;
-        public static final int ic_progress0=0x7f020075;
-        public static final int ic_progress1=0x7f020076;
-        public static final int ic_progress2=0x7f020077;
-        public static final int ic_progress3=0x7f020078;
-        public static final int ic_progress4=0x7f020079;
-        public static final int ic_search=0x7f02007a;
-        public static final int ic_settings=0x7f02007b;
-        public static final int ic_star_not_pressed=0x7f02007c;
-        public static final int ic_star_pressed=0x7f02007d;
-        public static final int list_selector=0x7f02007e;
+        public static final int ic_blank=0x7f020071;
+        public static final int ic_drawer=0x7f020072;
+        public static final int ic_launcher=0x7f020073;
+        public static final int ic_progress0=0x7f020074;
+        public static final int ic_progress1=0x7f020075;
+        public static final int ic_progress2=0x7f020076;
+        public static final int ic_progress3=0x7f020077;
+        public static final int ic_progress4=0x7f020078;
+        public static final int ic_search=0x7f020079;
+        public static final int ic_star_not_pressed=0x7f02007a;
+        public static final int ic_star_pressed=0x7f02007b;
+        public static final int list_selector=0x7f02007c;
+        public static final int unofficialrapgeniustheme_text_select_handle_left=0x7f02007d;
+        public static final int unofficialrapgeniustheme_text_select_handle_middle=0x7f02007e;
+        public static final int unofficialrapgeniustheme_text_select_handle_right=0x7f02007f;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f060020;
@@ -995,8 +993,8 @@ containing a value of this type.
         public static final int abs__textButton=0x7f060013;
         public static final int abs__title=0x7f06001b;
         public static final int abs__up=0x7f06000b;
-        public static final int action_favorite=0x7f060043;
-        public static final int action_search=0x7f060042;
+        public static final int action_favorite=0x7f060042;
+        public static final int action_search=0x7f060041;
         public static final int content_frame=0x7f060039;
         public static final int disableHome=0x7f060009;
         public static final int drawer_layout=0x7f060038;
@@ -1018,10 +1016,9 @@ containing a value of this type.
         public static final int showCustom=0x7f060008;
         public static final int showHome=0x7f060005;
         public static final int showTitle=0x7f060007;
-        public static final int songsList=0x7f060041;
+        public static final int songsList=0x7f060040;
         public static final int tabMode=0x7f060003;
         public static final int textView=0x7f06003c;
-        public static final int threadsList=0x7f060040;
         public static final int useLogo=0x7f060004;
         public static final int wrap_content=0x7f060000;
     }
@@ -1056,19 +1053,15 @@ containing a value of this type.
         public static final int drawer_list_item=0x7f030018;
         public static final int favs_list_item=0x7f030019;
         public static final int fragment_favorites_layout=0x7f03001a;
-        public static final int fragment_forums_layout=0x7f03001b;
-        public static final int fragment_home_page_layout=0x7f03001c;
-        public static final int fragment_lyrics_layout=0x7f03001d;
-        public static final int fragment_more_songs_layout=0x7f03001e;
-        public static final int more_songs_list_item=0x7f03001f;
-        public static final int posts_list_item=0x7f030020;
-        public static final int sherlock_spinner_dropdown_item=0x7f030021;
-        public static final int sherlock_spinner_item=0x7f030022;
+        public static final int fragment_home_page_layout=0x7f03001b;
+        public static final int fragment_lyrics_layout=0x7f03001c;
+        public static final int fragment_more_songs_layout=0x7f03001d;
+        public static final int more_songs_list_item=0x7f03001e;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001f;
+        public static final int sherlock_spinner_item=0x7f030020;
     }
     public static final class menu {
-        public static final int lyrics=0x7f0e0000;
-        public static final int main=0x7f0e0001;
-        public static final int search=0x7f0e0002;
+        public static final int main=0x7f0e0000;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1110,42 +1103,41 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f0b0007;
-        public static final int action_favorite=0x7f0b0011;
-        public static final int action_search=0x7f0b0010;
-        public static final int action_settings=0x7f0b000e;
+        public static final int action_favorite=0x7f0b0010;
+        public static final int action_search=0x7f0b000f;
         public static final int app_name=0x7f0b000d;
-        public static final int close_drawer=0x7f0b0021;
+        public static final int close_drawer=0x7f0b0023;
         /**  Default text 
          */
-        public static final int default_favorite=0x7f0b002b;
-        public static final int default_home=0x7f0b002c;
-        public static final int default_search=0x7f0b000f;
-        public static final int dialog_clear_cache=0x7f0b001f;
-        public static final int dialog_remove_favorites=0x7f0b001a;
+        public static final int default_favorite=0x7f0b002a;
+        public static final int default_home=0x7f0b002b;
+        public static final int default_search=0x7f0b000e;
+        public static final int dialog_clear_cache=0x7f0b001d;
+        public static final int dialog_remove_favorites=0x7f0b0018;
         public static final int drawer_image=0x7f0b0027;
-        public static final int error_network_check=0x7f0b0029;
-        public static final int error_no_internet=0x7f0b002a;
+        public static final int drawer_title_back_to_lyrics=0x7f0b0022;
+        public static final int drawer_title_lyrics=0x7f0b0021;
+        public static final int drawer_title_more_songs=0x7f0b0020;
         /**  Error messages 
          */
-        public static final int error_reload=0x7f0b0028;
-        public static final int favsSearch=0x7f0b0024;
-        public static final int open_drawer=0x7f0b0022;
-        public static final int summary_cache_lyrics=0x7f0b0017;
-        public static final int summary_clear_cache=0x7f0b001e;
-        public static final int summary_donate=0x7f0b001c;
-        public static final int summary_favs_search=0x7f0b0026;
-        public static final int summary_load_home=0x7f0b0015;
-        public static final int summary_remove_favorites=0x7f0b0019;
-        public static final int title_activity_explanation=0x7f0b0023;
-        public static final int title_activity_more_songs=0x7f0b0020;
-        public static final int title_activity_settings=0x7f0b0013;
-        public static final int title_cache_lyrics=0x7f0b0016;
-        public static final int title_clear_cache=0x7f0b001d;
-        public static final int title_donate=0x7f0b001b;
-        public static final int title_favorites=0x7f0b0012;
-        public static final int title_favs_search=0x7f0b0025;
-        public static final int title_load_home=0x7f0b0014;
-        public static final int title_remove_favorites=0x7f0b0018;
+        public static final int error_network_check=0x7f0b0028;
+        public static final int error_no_internet=0x7f0b0029;
+        public static final int favsSearch=0x7f0b0026;
+        public static final int open_drawer=0x7f0b0024;
+        public static final int summary_cache_lyrics=0x7f0b0015;
+        public static final int summary_clear_cache=0x7f0b001c;
+        public static final int summary_donate=0x7f0b001a;
+        public static final int summary_favs_search=0x7f0b001f;
+        public static final int summary_load_home=0x7f0b0013;
+        public static final int summary_remove_favorites=0x7f0b0017;
+        public static final int title_activity_explanation=0x7f0b0025;
+        public static final int title_activity_settings=0x7f0b0011;
+        public static final int title_cache_lyrics=0x7f0b0014;
+        public static final int title_clear_cache=0x7f0b001b;
+        public static final int title_donate=0x7f0b0019;
+        public static final int title_favs_search=0x7f0b001e;
+        public static final int title_load_home=0x7f0b0012;
+        public static final int title_remove_favorites=0x7f0b0016;
     }
     public static final class style {
         public static final int AppBaseTheme=0x7f0c0059;

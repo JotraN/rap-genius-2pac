@@ -4,6 +4,9 @@
         <item name="actionBarStyle">@style/MyActionBar</item>
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:windowBackground">@color/LightBlack</item>
+        <item name="android:textSelectHandleLeft">@drawable/unofficialrapgeniustheme_text_select_handle_left</item>
+        <item name="android:textSelectHandleRight">@drawable/unofficialrapgeniustheme_text_select_handle_right</item>
+        <item name="android:textSelectHandle">@drawable/unofficialrapgeniustheme_text_select_handle_middle</item>
     </style>
 
     <style name="MyActionBar" parent="Widget.Sherlock.ActionBar.Solid">

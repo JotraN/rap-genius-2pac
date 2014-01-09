@@ -7091,7 +7091,6 @@ com.trasselback.rapgenius.R$bool -> com.trasselback.rapgenius.R$bool:
 com.trasselback.rapgenius.R$color -> com.trasselback.rapgenius.R$color:
     int Black -> Black
     int Blue -> Blue
-    int DrawerIconGray -> DrawerIconGray
     int Gray -> Gray
     int Green -> Green
     int LightBlack -> LightBlack
@@ -7101,9 +7100,7 @@ com.trasselback.rapgenius.R$color -> com.trasselback.rapgenius.R$color:
     int Orange -> Orange
     int Purple -> Purple
     int Red -> Red
-    int TransBlack -> TransBlack
     int TransGray -> TransGray
-    int Transparent -> Transparent
     int White -> White
     int Yellow -> Yellow
     int abs__background_holo_dark -> abs__background_holo_dark
@@ -7248,7 +7245,6 @@ com.trasselback.rapgenius.R$drawable -> com.trasselback.rapgenius.R$drawable:
     int abs__textfield_searchview_right_holo_light -> abs__textfield_searchview_right_holo_light
     int abs__toast_frame -> abs__toast_frame
     int action_bar_background -> action_bar_background
-    int ic_back -> ic_back
     int ic_blank -> ic_blank
     int ic_drawer -> ic_drawer
     int ic_launcher -> ic_launcher
@@ -7258,10 +7254,12 @@ com.trasselback.rapgenius.R$drawable -> com.trasselback.rapgenius.R$drawable:
     int ic_progress3 -> ic_progress3
     int ic_progress4 -> ic_progress4
     int ic_search -> ic_search
-    int ic_settings -> ic_settings
     int ic_star_not_pressed -> ic_star_not_pressed
     int ic_star_pressed -> ic_star_pressed
     int list_selector -> list_selector
+    int unofficialrapgeniustheme_text_select_handle_left -> unofficialrapgeniustheme_text_select_handle_left
+    int unofficialrapgeniustheme_text_select_handle_middle -> unofficialrapgeniustheme_text_select_handle_middle
+    int unofficialrapgeniustheme_text_select_handle_right -> unofficialrapgeniustheme_text_select_handle_right
 com.trasselback.rapgenius.R$id -> com.trasselback.rapgenius.R$id:
     int abs__action_bar -> abs__action_bar
     int abs__action_bar_container -> abs__action_bar_container
@@ -7328,7 +7326,6 @@ com.trasselback.rapgenius.R$id -> com.trasselback.rapgenius.R$id:
     int songsList -> songsList
     int tabMode -> tabMode
     int textView -> textView
-    int threadsList -> threadsList
     int useLogo -> useLogo
     int wrap_content -> wrap_content
 com.trasselback.rapgenius.R$integer -> com.trasselback.rapgenius.R$integer:
@@ -7361,18 +7358,14 @@ com.trasselback.rapgenius.R$layout -> com.trasselback.rapgenius.R$layout:
     int drawer_list_item -> drawer_list_item
     int favs_list_item -> favs_list_item
     int fragment_favorites_layout -> fragment_favorites_layout
-    int fragment_forums_layout -> fragment_forums_layout
     int fragment_home_page_layout -> fragment_home_page_layout
     int fragment_lyrics_layout -> fragment_lyrics_layout
     int fragment_more_songs_layout -> fragment_more_songs_layout
     int more_songs_list_item -> more_songs_list_item
-    int posts_list_item -> posts_list_item
     int sherlock_spinner_dropdown_item -> sherlock_spinner_dropdown_item
     int sherlock_spinner_item -> sherlock_spinner_item
 com.trasselback.rapgenius.R$menu -> com.trasselback.rapgenius.R$menu:
-    int lyrics -> lyrics
     int main -> main
-    int search -> search
 com.trasselback.rapgenius.R$string -> com.trasselback.rapgenius.R$string:
     int abs__action_bar_home_description -> abs__action_bar_home_description
     int abs__action_bar_up_description -> abs__action_bar_up_description
@@ -7389,7 +7382,6 @@ com.trasselback.rapgenius.R$string -> com.trasselback.rapgenius.R$string:
     int abs__shareactionprovider_share_with_application -> abs__shareactionprovider_share_with_application
     int action_favorite -> action_favorite
     int action_search -> action_search
-    int action_settings -> action_settings
     int app_name -> app_name
     int close_drawer -> close_drawer
     int default_favorite -> default_favorite
@@ -7398,9 +7390,11 @@ com.trasselback.rapgenius.R$string -> com.trasselback.rapgenius.R$string:
     int dialog_clear_cache -> dialog_clear_cache
     int dialog_remove_favorites -> dialog_remove_favorites
     int drawer_image -> drawer_image
+    int drawer_title_back_to_lyrics -> drawer_title_back_to_lyrics
+    int drawer_title_lyrics -> drawer_title_lyrics
+    int drawer_title_more_songs -> drawer_title_more_songs
     int error_network_check -> error_network_check
     int error_no_internet -> error_no_internet
-    int error_reload -> error_reload
     int favsSearch -> favsSearch
     int open_drawer -> open_drawer
     int summary_cache_lyrics -> summary_cache_lyrics
@@ -7410,12 +7404,10 @@ com.trasselback.rapgenius.R$string -> com.trasselback.rapgenius.R$string:
     int summary_load_home -> summary_load_home
     int summary_remove_favorites -> summary_remove_favorites
     int title_activity_explanation -> title_activity_explanation
-    int title_activity_more_songs -> title_activity_more_songs
     int title_activity_settings -> title_activity_settings
     int title_cache_lyrics -> title_cache_lyrics
     int title_clear_cache -> title_clear_cache
     int title_donate -> title_donate
-    int title_favorites -> title_favorites
     int title_favs_search -> title_favs_search
     int title_load_home -> title_load_home
     int title_remove_favorites -> title_remove_favorites
@@ -7695,56 +7687,60 @@ com.trasselback.rapgenius.activities.ExplanationActivity$RetrieveExplanationsTas
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.trasselback.rapgenius.activities.MainActivity -> com.trasselback.rapgenius.activities.MainActivity:
     boolean lyricsLoaded -> a
-    boolean hideFavs -> b
-    com.actionbarsherlock.view.MenuItem favItem -> c
-    android.widget.EditText search_text -> d
-    java.lang.String[] mDrawerTitles -> e
-    android.support.v4.widget.DrawerLayout mDrawerLayout -> f
-    android.widget.ListView mDrawerList -> g
-    android.support.v4.app.ActionBarDrawerToggle mDrawerToggle -> h
-    java.lang.CharSequence mTitle -> i
-    com.trasselback.rapgenius.activities.MainActivity$ListAdapter adapter -> j
-    android.os.Handler mHandler -> k
+    boolean hideFavoritesIcon -> b
+    com.actionbarsherlock.view.MenuItem favoritesItem -> c
+    android.widget.EditText searchText -> d
+    java.lang.String[] drawerTitles -> e
+    android.support.v4.widget.DrawerLayout drawerLayout -> f
+    android.widget.ListView drawerList -> g
+    android.support.v4.app.ActionBarDrawerToggle drawerToggle -> h
+    com.trasselback.rapgenius.activities.MainActivity$ListAdapter adapter -> i
+    android.os.Handler delayHandler -> j
     void onCreate(android.os.Bundle) -> onCreate
-    void setupActionBar() -> b
-    void initialize() -> c
+    void initialize() -> b
+    void setupActionBar() -> c
+    void loadHomeSong() -> a
     void onPostCreate(android.os.Bundle) -> onPostCreate
     void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
     boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu) -> onCreateOptionsMenu
+    void manageFavoritesItem(com.actionbarsherlock.view.Menu) -> a
+    void changeToLyricsFragment(com.actionbarsherlock.view.MenuItem,com.actionbarsherlock.view.MenuItem) -> a
+    void addMoreSongsItem() -> d
     boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
     void selectItem(int) -> b
     void setTitle(java.lang.CharSequence) -> setTitle
+    void cleanUpDrawer() -> e
+    android.support.v4.app.Fragment setupFourthItem() -> f
     void onFavoriteSelected(int) -> a
     void onMoreSongsSelected(java.lang.String) -> a
-    void cleanUpDrawer() -> a
-    void access$0(com.trasselback.rapgenius.activities.MainActivity,int) -> a
-    android.widget.ListView access$1(com.trasselback.rapgenius.activities.MainActivity) -> a
-    com.trasselback.rapgenius.activities.MainActivity$ListAdapter access$2(com.trasselback.rapgenius.activities.MainActivity) -> b
-    android.os.Handler access$3(com.trasselback.rapgenius.activities.MainActivity) -> c
-    android.widget.EditText access$4(com.trasselback.rapgenius.activities.MainActivity) -> d
-    void access$5(com.trasselback.rapgenius.activities.MainActivity,boolean) -> a
+    android.os.Handler access$0(com.trasselback.rapgenius.activities.MainActivity) -> a
+    android.widget.EditText access$1(com.trasselback.rapgenius.activities.MainActivity) -> b
+    void access$2(com.trasselback.rapgenius.activities.MainActivity,int) -> a
+    android.widget.ListView access$3(com.trasselback.rapgenius.activities.MainActivity) -> c
+    com.trasselback.rapgenius.activities.MainActivity$ListAdapter access$4(com.trasselback.rapgenius.activities.MainActivity) -> d
+    void access$5(com.trasselback.rapgenius.activities.MainActivity,com.actionbarsherlock.view.MenuItem,com.actionbarsherlock.view.MenuItem) -> a
 com.trasselback.rapgenius.activities.MainActivity$1 -> com.trasselback.rapgenius.activities.b:
-    android.view.inputmethod.InputMethodManager keyboard -> a
-    com.trasselback.rapgenius.activities.MainActivity this$0 -> b
-    boolean onMenuItemActionExpand(com.actionbarsherlock.view.MenuItem) -> onMenuItemActionExpand
-    boolean onMenuItemActionCollapse(com.actionbarsherlock.view.MenuItem) -> onMenuItemActionCollapse
-    com.trasselback.rapgenius.activities.MainActivity access$0(com.trasselback.rapgenius.activities.MainActivity$1) -> a
-com.trasselback.rapgenius.activities.MainActivity$1$1 -> com.trasselback.rapgenius.activities.c:
-    com.trasselback.rapgenius.activities.MainActivity$1 this$1 -> a
-    void run() -> run
-com.trasselback.rapgenius.activities.MainActivity$2 -> com.trasselback.rapgenius.activities.d:
     com.trasselback.rapgenius.activities.MainActivity this$0 -> a
-    com.actionbarsherlock.view.MenuItem val$favsItem -> b
-    com.actionbarsherlock.view.MenuItem val$searchItem -> c
+    com.actionbarsherlock.view.MenuItem val$searchItem -> b
+    com.actionbarsherlock.view.MenuItem val$favsItem -> c
     boolean onEditorAction(android.widget.TextView,int,android.view.KeyEvent) -> onEditorAction
-com.trasselback.rapgenius.activities.MainActivity$DrawerItemClickListener -> com.trasselback.rapgenius.activities.e:
+com.trasselback.rapgenius.activities.MainActivity$DrawerItemClickListener -> com.trasselback.rapgenius.activities.c:
     com.trasselback.rapgenius.activities.MainActivity this$0 -> a
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.trasselback.rapgenius.activities.MainActivity$ListAdapter -> com.trasselback.rapgenius.activities.f:
+com.trasselback.rapgenius.activities.MainActivity$ListAdapter -> com.trasselback.rapgenius.activities.d:
     android.content.Context context -> b
     int resource -> c
     com.trasselback.rapgenius.activities.MainActivity this$0 -> a
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.trasselback.rapgenius.activities.MainActivity$expandedSearchBar -> com.trasselback.rapgenius.activities.e:
+    android.view.inputmethod.InputMethodManager keyboard -> a
+    com.trasselback.rapgenius.activities.MainActivity this$0 -> b
+    boolean onMenuItemActionExpand(com.actionbarsherlock.view.MenuItem) -> onMenuItemActionExpand
+    boolean onMenuItemActionCollapse(com.actionbarsherlock.view.MenuItem) -> onMenuItemActionCollapse
+    com.trasselback.rapgenius.activities.MainActivity access$1(com.trasselback.rapgenius.activities.MainActivity$expandedSearchBar) -> a
+com.trasselback.rapgenius.activities.MainActivity$expandedSearchBar$1 -> com.trasselback.rapgenius.activities.f:
+    com.trasselback.rapgenius.activities.MainActivity$expandedSearchBar this$1 -> a
+    void run() -> run
 com.trasselback.rapgenius.data.Explanations -> com.trasselback.rapgenius.a.a:
     java.lang.String dataLink -> d
     java.lang.String artistName -> e
@@ -7959,7 +7955,6 @@ com.trasselback.rapgenius.helpers.FavoritesManager -> com.trasselback.rapgenius.
     boolean checkFavorites(android.content.Context,java.lang.String) -> a
     void addFavorites(android.content.Context,java.lang.String) -> b
     void removeFavorites(android.content.Context,java.lang.String,java.lang.String) -> a
-    void updateFavorites(android.content.Context) -> b
 com.trasselback.rapgenius.helpers.LinkSelectableMovementMethod -> com.trasselback.rapgenius.helpers.e:
     boolean canSelectArbitrarily() -> canSelectArbitrarily
     void initialize(android.widget.TextView,android.text.Spannable) -> initialize

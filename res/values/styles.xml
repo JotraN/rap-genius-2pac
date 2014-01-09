@@ -12,6 +12,7 @@
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:textColorHighlight">#99cc6633</item>
         <item name="android:textColor">@color/Gray</item>
         <item name="android:textColorSecondary">@color/LightGray</item>
         <item name="android:windowAnimationStyle">@null</item>

@@ -95,20 +95,4 @@ public class FavoritesManager {
 		Toast toast = Toast.makeText(context, text, duration);
 		toast.show();
 	}
-
-	public static void updateFavorites(Context context) {
-		String currFavs = getFavorites(context);
-		try {
-			File file = new File(context.getFilesDir(), "favorites");
-			FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
-			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-			currFavs = currFavs.replaceAll("<a.+?; ", "").replace("</a>", "");
-			currFavs = currFavs.toUpperCase(Locale.ENGLISH);
-			bufferedWriter.write(currFavs);
-			bufferedWriter.close();
-			fileWriter.close();
-		} catch (FileNotFoundException e) {
-		} catch (IOException e) {
-		}
-	}
 }
