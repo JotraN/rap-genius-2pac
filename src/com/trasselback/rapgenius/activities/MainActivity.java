@@ -328,8 +328,9 @@ public class MainActivity extends SherlockFragmentActivity implements
 			fragment = setupFourthItem();
 			break;
 		}
-		fragmentManager.beginTransaction()
-				.replace(R.id.content_frame, fragment).commit();
+		if (fragment != null)
+			fragmentManager.beginTransaction()
+					.replace(R.id.content_frame, fragment).commit();
 		drawerLayout.closeDrawer(drawerList);
 	}
 
@@ -343,7 +344,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 				R.string.drawer_title_more_songs);
 		String backToLyrics = getResources().getString(
 				R.string.drawer_title_back_to_lyrics);
-		
+
 		if (adapter.getPosition(moreSongs) != -1)
 			adapter.remove(moreSongs);
 		if (adapter.getPosition(backToLyrics) != -1)

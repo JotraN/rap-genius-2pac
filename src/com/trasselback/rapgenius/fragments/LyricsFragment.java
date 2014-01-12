@@ -73,7 +73,7 @@ public class LyricsFragment extends Fragment {
 		loadingView = getView().findViewById(R.id.loadingView);
 		contentView = getView().findViewById(R.id.infoView);
 		contentView.setVisibility(View.GONE);
-		
+
 		// Needed for Android 2.3
 		lyricsField.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -97,65 +97,75 @@ public class LyricsFragment extends Fragment {
 	}
 
 	private void checkSettings() {
-		try{
-		SharedPreferences sharedPref = PreferenceManager
-				.getDefaultSharedPreferences(getActivity());
-		// Update text size
-		int size = Integer.parseInt(sharedPref.getString(
-				SettingsFragment.KEY_PREF_TEXT_SIZE, "20"));
-		lyricsField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
-		nameField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size + 10);
+		try {
+			SharedPreferences sharedPref = PreferenceManager
+					.getDefaultSharedPreferences(getActivity());
+			// Update text size
+			int size = Integer.parseInt(sharedPref.getString(
+					SettingsFragment.KEY_PREF_TEXT_SIZE, "20"));
+			lyricsField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+			nameField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size + 10);
 
-		// Update colors
-		int textColor = Integer.parseInt(sharedPref.getString(
-				SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR, "0"));
-		ColorManager.setColor(getActivity(), lyricsField, textColor);
-		int titleColor = Integer.parseInt(sharedPref.getString(
-				SettingsFragment.KEY_PREF_TITLE_COLOR, "0"));
-		ColorManager.setColor(getActivity(), nameField, titleColor);
-		int linkColor = Integer.parseInt(sharedPref.getString(
-				SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR, "0"));
-		ColorManager.setLinkColor(getActivity(), lyricsField, linkColor);
-		int backgroundColor = Integer.parseInt(sharedPref.getString(
-				SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "0"));
-		ColorManager.setBackgroundColor(getActivity(), backgroundColor);
-		} catch(NumberFormatException ex){
+			// Update colors
+			int textColor = Integer.parseInt(sharedPref.getString(
+					SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR, "0"));
+			ColorManager.setColor(getActivity(), lyricsField, textColor);
+			int titleColor = Integer.parseInt(sharedPref.getString(
+					SettingsFragment.KEY_PREF_TITLE_COLOR, "0"));
+			ColorManager.setColor(getActivity(), nameField, titleColor);
+			int linkColor = Integer.parseInt(sharedPref.getString(
+					SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR, "0"));
+			ColorManager.setLinkColor(getActivity(), lyricsField, linkColor);
+			int backgroundColor = Integer.parseInt(sharedPref.getString(
+					SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "0"));
+			ColorManager.setBackgroundColor(getActivity(), backgroundColor);
+		} catch (NumberFormatException ex) {
 			clearSettings();
 		}
 	}
 
-	// Needed to reset settings for those who updated and are still using old color settings
+	// Needed to reset settings for those who updated and are still using old
+	// color settings
 	private void clearSettings() {
-		Editor editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_TEXT_SIZE,
+		Editor editor = getActivity().getSharedPreferences(
+				SettingsFragment.KEY_PREF_TEXT_SIZE, Context.MODE_PRIVATE)
+				.edit();
+		editor.clear();
+		editor.commit();
+		editor = getActivity().getSharedPreferences(
+				SettingsFragment.KEY_PREF_BACKGROUND_COLOR,
 				Context.MODE_PRIVATE).edit();
 		editor.clear();
 		editor.commit();
-		editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_BACKGROUND_COLOR,
+		editor = getActivity().getSharedPreferences(
+				SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR,
 				Context.MODE_PRIVATE).edit();
 		editor.clear();
 		editor.commit();
-		editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR,
+		editor = getActivity().getSharedPreferences(
+				SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR,
 				Context.MODE_PRIVATE).edit();
 		editor.clear();
 		editor.commit();
-		editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR,
-				Context.MODE_PRIVATE).edit();
+		editor = getActivity()
+				.getSharedPreferences(
+						SettingsFragment.KEY_PREF_FAVORITES_COLOR,
+						Context.MODE_PRIVATE).edit();
 		editor.clear();
 		editor.commit();
-		editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_FAVORITES_COLOR,
-				Context.MODE_PRIVATE).edit();
+		editor = getActivity()
+				.getSharedPreferences(
+						SettingsFragment.KEY_PREF_HOME_PAGE_COLOR,
+						Context.MODE_PRIVATE).edit();
 		editor.clear();
 		editor.commit();
-		editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_HOME_PAGE_COLOR,
-				Context.MODE_PRIVATE).edit();
-		editor.clear();
-		editor.commit();
-		editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_TITLE_COLOR,
-				Context.MODE_PRIVATE).edit();
+		editor = getActivity().getSharedPreferences(
+				SettingsFragment.KEY_PREF_TITLE_COLOR, Context.MODE_PRIVATE)
+				.edit();
 		editor.clear();
 		editor.commit();
 	}
-	
+
 	// Find what started lyrics fragment and clean input
 	private void startLyrics() {
 		artistNameSongName = getArguments().getString(
@@ -170,7 +180,7 @@ public class LyricsFragment extends Fragment {
 		else if (artistNameSongName.contains("fav_clicked"))
 			artistNameSongName = artistNameSongName
 					.substring(artistNameSongName.indexOf(":") + 1);
-		
+
 		if (CacheManager.getCache(getActivity(), artistNameSongName).length() <= 0)
 			retrieveTask.execute(artistNameSongName);
 		else
@@ -189,7 +199,7 @@ public class LyricsFragment extends Fragment {
 			nameField.setText(nameData);
 			lyricsField.setText(Html.fromHtml(lyricsData));
 			RemoveUnderLine.removeUnderline(lyricsField);
-		// Problem loading cache, start retrieve task
+			// Problem loading cache, start retrieve task
 		} else {
 			retrieveTask.execute(artistNameSongName);
 		}
@@ -200,20 +210,15 @@ public class LyricsFragment extends Fragment {
 		@Override
 		protected String doInBackground(String... names) {
 			lyrics = new Lyrics(names[0]);
-			// Checking connection sometimes throws exception
-			try {
-				if(lyrics.isOnline(getActivity())){
-					if (lyrics.openedURL()) {
-						lyrics.retrieveName();
-						lyrics.retrievePage();
-					} else
-						lyrics.googleIt();
-					return lyrics.getPage();
+			if (lyrics.isOnline(getActivity())) {
+				if (lyrics.openedURL()) {
+					lyrics.retrieveName();
+					lyrics.retrievePage();
 				} else
-					return getString(R.string.error_no_internet);
-			} catch (Exception ex) {
-				return getString(R.string.error_network_check);
-			}
+					lyrics.googleIt();
+				return lyrics.getPage();
+			} else
+				return getString(R.string.error_no_internet);
 		}
 
 		@Override
@@ -226,6 +231,7 @@ public class LyricsFragment extends Fragment {
 
 		@Override
 		protected void onPostExecute(String result) {
+			// TODO Sometimes getName is too slow and causes name to load slower.
 			nameField.setText(lyrics.getName());
 			lyricsField.setText(Html.fromHtml(result));
 			RemoveUnderLine.removeUnderline(lyricsField);

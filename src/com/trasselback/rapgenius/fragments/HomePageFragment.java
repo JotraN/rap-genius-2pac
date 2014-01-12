@@ -143,34 +143,44 @@ public class HomePageFragment extends Fragment {
 	}
 
 	// TODO Delete after several updates 2.7.6
-	// Needed to reset settings for those who updated and are still using old color settings
+	// Needed to reset settings for those who updated and are still using old
+	// color settings
 	private void clearSettings() {
-		Editor editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_TEXT_SIZE,
+		Editor editor = getActivity().getSharedPreferences(
+				SettingsFragment.KEY_PREF_TEXT_SIZE, Context.MODE_PRIVATE)
+				.edit();
+		editor.clear();
+		editor.commit();
+		editor = getActivity().getSharedPreferences(
+				SettingsFragment.KEY_PREF_BACKGROUND_COLOR,
 				Context.MODE_PRIVATE).edit();
 		editor.clear();
 		editor.commit();
-		editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_BACKGROUND_COLOR,
+		editor = getActivity().getSharedPreferences(
+				SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR,
 				Context.MODE_PRIVATE).edit();
 		editor.clear();
 		editor.commit();
-		editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR,
+		editor = getActivity().getSharedPreferences(
+				SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR,
 				Context.MODE_PRIVATE).edit();
 		editor.clear();
 		editor.commit();
-		editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR,
-				Context.MODE_PRIVATE).edit();
+		editor = getActivity()
+				.getSharedPreferences(
+						SettingsFragment.KEY_PREF_FAVORITES_COLOR,
+						Context.MODE_PRIVATE).edit();
 		editor.clear();
 		editor.commit();
-		editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_FAVORITES_COLOR,
-				Context.MODE_PRIVATE).edit();
+		editor = getActivity()
+				.getSharedPreferences(
+						SettingsFragment.KEY_PREF_HOME_PAGE_COLOR,
+						Context.MODE_PRIVATE).edit();
 		editor.clear();
 		editor.commit();
-		editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_HOME_PAGE_COLOR,
-				Context.MODE_PRIVATE).edit();
-		editor.clear();
-		editor.commit();
-		editor = getActivity().getSharedPreferences(SettingsFragment.KEY_PREF_TITLE_COLOR,
-				Context.MODE_PRIVATE).edit();
+		editor = getActivity().getSharedPreferences(
+				SettingsFragment.KEY_PREF_TITLE_COLOR, Context.MODE_PRIVATE)
+				.edit();
 		editor.clear();
 		editor.commit();
 	}
@@ -180,16 +190,12 @@ public class HomePageFragment extends Fragment {
 		@Override
 		protected String doInBackground(Void... names) {
 			news = new NewsFeed();
-			try {
-				if (news.isOnline(getActivity())) {
-					if (news.openURL())
-						news.retrievePage();
-					return news.getPage();
-				} else
-					return getString(R.string.error_no_internet);
-			} catch (Exception ex) {
-				return getString(R.string.error_network_check);
-			}
+			if (news.isOnline(getActivity())) {
+				if (news.openURL())
+					news.retrievePage();
+				return news.getPage();
+			} else
+				return getString(R.string.error_no_internet);
 		}
 
 		@Override

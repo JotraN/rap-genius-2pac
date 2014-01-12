@@ -18,7 +18,7 @@ public class Lyrics extends URLObject {
 	public Lyrics(String searchInput) {
 		searchMessage = searchInput;
 		// Cleans up searches like A$AP or J. Cole
-		songName = searchMessage.trim().replace("$", "s").replace(".", "");
+		songName = searchMessage.trim().replace("$", "s").replace(".", "").replace("'", "");
 		url = "http://rapgenius.com/" + songName.replace(' ', '-') + "-lyrics";
 	}
 
@@ -117,25 +117,30 @@ public class Lyrics extends URLObject {
 					matcher.end(2));
 			String link = googlePage.substring(matcher.start(), matcher.end())
 					.replace(unformattedName, songName);
-			if(!rapGeniusLinks.contains(songName))
+			if (!rapGeniusLinks.contains(songName))
 				rapGeniusLinks += link;
 			if (!matcher.find(matcher.end()))
 				foundLink = false;
 		}
 		artistName = "Did you mean any of the following:";
-		htmlPage = rapGeniusLinks
-				.replace("href=\"", "href=\"song_clicked:")
-				.replace("</a>", "</a><br><br>")
-				.replace("http://rapgenius.com", "")
-				.replaceAll("lyrics/.+?\"", "lyrics\"")
-				// Replace rock.rapgenius.com poetry.rapgenius.com
-				// news.rapgenius.com
-				.replaceAll("http://\\w+.rapgenius.com", "")
-				// Format the search results
-				.replaceAll(" Lyrics.+?Rap Genius", "")
-				.replaceAll("-\\s+Rap Genius", "")
-				.replaceAll("\\s*?|\\s*?Poetry Genius", "")
-				.replaceAll("- Poetry.+?Rap Genius", "");
+		if (rapGeniusLinks.length() > 0)
+			htmlPage = rapGeniusLinks
+					.replace("href=\"", "href=\"song_clicked:")
+					.replace("</a>", "</a><br><br>")
+					.replace("http://rapgenius.com", "")
+					.replaceAll("lyrics/.+?\"", "lyrics\"")
+					// Replace rock.rapgenius.com poetry.rapgenius.com
+					// news.rapgenius.com
+					.replaceAll("http://\\w+.rapgenius.com", "")
+					// Format the search results
+					.replaceAll(" Lyrics.+?Rap Genius", "")
+					.replaceAll("-\\s+Rap Genius", "")
+					.replaceAll("\\s*?|\\s*?Poetry Genius", "")
+					.replaceAll("- Poetry.+?Rap Genius", "");
+		else{
+			artistName = "After searching...";
+			htmlPage = "No results found.";
+		}
 	}
 
 	public String getName() {

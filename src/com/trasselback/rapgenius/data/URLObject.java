@@ -17,10 +17,15 @@ public abstract class URLObject {
 	public abstract void retrievePage();
 
 	public boolean isOnline(Context context) {
-		ConnectivityManager connMgr = (ConnectivityManager) context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		return (networkInfo != null && networkInfo.isConnected());
+		// Checking connection sometimes throws exception
+		try {
+			ConnectivityManager connMgr = (ConnectivityManager) context
+					.getSystemService(Context.CONNECTIVITY_SERVICE);
+			NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+			return (networkInfo != null && networkInfo.isConnected());
+		} catch (Exception ex) {
+			return false;
+		}
 	}
 
 	public boolean openedURL() {

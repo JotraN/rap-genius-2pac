@@ -194,18 +194,14 @@ public class MoreSongsFragment extends Fragment {
 		@Override
 		protected String doInBackground(String... names) {
 			moreSongs = new MoreSongs(names[0]);
-			try {
-				if (moreSongs.isOnline(getActivity())) {
-					if (moreSongs.openURL()) {
-						moreSongs.retrievePage();
-						moreSongs.retrieveName();
-					}
-					return moreSongs.getPage();
-				} else
-					return getString(R.string.error_no_internet);
-			} catch (Exception ex) {
-				return getString(R.string.error_network_check);
-			}
+			if (moreSongs.isOnline(getActivity())) {
+				if (moreSongs.openURL()) {
+					moreSongs.retrievePage();
+					moreSongs.retrieveName();
+				}
+				return moreSongs.getPage();
+			} else
+				return getString(R.string.error_no_internet);
 		}
 
 		@Override

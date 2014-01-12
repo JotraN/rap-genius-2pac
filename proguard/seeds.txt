@@ -6404,7 +6404,6 @@ com.trasselback.rapgenius.R$string: int drawer_image
 com.trasselback.rapgenius.R$string: int drawer_title_back_to_lyrics
 com.trasselback.rapgenius.R$string: int drawer_title_lyrics
 com.trasselback.rapgenius.R$string: int drawer_title_more_songs
-com.trasselback.rapgenius.R$string: int error_network_check
 com.trasselback.rapgenius.R$string: int error_no_internet
 com.trasselback.rapgenius.R$string: int favsSearch
 com.trasselback.rapgenius.R$string: int open_drawer

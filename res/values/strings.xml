@@ -37,7 +37,6 @@
     <string name="drawer_image">Drawer Image</string>
 
     <!-- Error messages -->
-    <string name="error_network_check">A problem occurred while getting information about your network status.</string>
     <string name="error_no_internet">No internet connection found.</string>
 
     <!-- Default text -->

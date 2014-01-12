@@ -7393,7 +7393,6 @@ com.trasselback.rapgenius.R$string -> com.trasselback.rapgenius.R$string:
     int drawer_title_back_to_lyrics -> drawer_title_back_to_lyrics
     int drawer_title_lyrics -> drawer_title_lyrics
     int drawer_title_more_songs -> drawer_title_more_songs
-    int error_network_check -> error_network_check
     int error_no_internet -> error_no_internet
     int favsSearch -> favsSearch
     int open_drawer -> open_drawer

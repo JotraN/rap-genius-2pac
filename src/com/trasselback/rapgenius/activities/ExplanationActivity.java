@@ -158,19 +158,14 @@ public class ExplanationActivity extends SherlockActivity {
 		@Override
 		protected String doInBackground(Void... params) {
 			explanation = new Explanations(getIntent().getDataString());
-			// Checking connection sometimes throws exception
-			try {
-				if (explanation.isOnline(getApplicationContext())) {
-					explanation.retrieveUrl();
-					explanation.retrieveName();
-					if (explanation.openedURL())
-						explanation.retrievePage();
-					return explanation.getPage();
-				} else
-					return getString(R.string.error_no_internet);
-			} catch (Exception ex) {
-				return getString(R.string.error_network_check);
-			}
+			if (explanation.isOnline(getApplicationContext())) {
+				explanation.retrieveUrl();
+				explanation.retrieveName();
+				if (explanation.openedURL())
+					explanation.retrievePage();
+				return explanation.getPage();
+			} else
+				return getString(R.string.error_no_internet);
 		}
 
 		protected void onPostExecute(String result) {
