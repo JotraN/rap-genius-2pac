@@ -1,12 +1,14 @@
 package com.trasselback.rapgenius.data;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Lyrics extends URLObject {
@@ -18,7 +20,8 @@ public class Lyrics extends URLObject {
 	public Lyrics(String searchInput) {
 		searchMessage = searchInput;
 		// Cleans up searches like A$AP or J. Cole
-		songName = searchMessage.trim().replace("$", "s").replace(".", "").replace("'", "");
+		songName = searchMessage.trim().replace("$", "s").replace(".", "")
+				.replace("'", "");
 		url = "http://rapgenius.com/" + songName.replace(' ', '-') + "-lyrics";
 	}
 
@@ -33,10 +36,32 @@ public class Lyrics extends URLObject {
 	public void retrievePage() {
 		retrieveSongID();
 		Elements content = pageDocument.getElementsByClass("lyrics");
-		htmlPage = content.toString().replaceAll(
-				"href=\".+?\".+?\"",
-				"href=\"explanation_clicked:[" + artistName + "]" + songID
-						+ "http://rapgenius.com/");
+		Elements links = content.select("a[href]");
+		if (links.get(0).toString().startsWith("<a href"))
+			htmlPage = content.toString().replaceAll(
+					"href=\".+?\".+?\"",
+					"href=\"explanation_clicked:[" + artistName + "]" + songID
+							+ "http://rapgenius.com/");
+		else {
+			Pattern pattern = Pattern.compile("data-id=\"(\\d+?)\"");
+			Matcher matcher;
+			for (Element link : links) {
+				matcher = pattern.matcher(link.toString());
+				if (matcher.find()) {
+					htmlPage = content.toString().replaceAll(
+							"href=\".+?\"",
+							"href=\"explanation_clicked:["
+									+ artistName
+									+ "]"
+									+ songID
+									+ "http://rapgenius.com/"
+									+ link.toString().substring(
+											matcher.start(1), matcher.end(1))
+									+ "\"");
+				}
+			}
+		}
+
 		htmlPage = htmlPage.replaceAll("<a\\s+?class=\"no_annotation.+?>", "");
 		// Fixes bug where some rough explanations don't load.
 		htmlPage = htmlPage.replace("=\"rough", "=\"accepted");
@@ -56,24 +81,24 @@ public class Lyrics extends URLObject {
 	}
 
 	public void replaceArtistIdentifiedExplanations() {
-		// Identify needs_exegesis editorials i.e. artist explanations
-		htmlPage = htmlPage.replace(
-				"needs_exegesis\" href=\"explanation_clicked:",
-				"needs_exegesis\" href=\"explanation_clicked:*");
 		// Add a star to URLs associated with artist explanations to be
 		// identified to change its color
 		Pattern pattern = Pattern
-				.compile("href=\"(.+?)\" data-editorial-state=\"needs_exegesis\"");
+				.compile("<a href=\"(.+?)\" class=\"has_verified_annotation\" data-editorial-state=\"needs_exegesis\">");
 		Matcher matcher = pattern.matcher(htmlPage);
 		boolean found = false;
 		if (matcher.find())
 			found = true;
+		ArrayList<String> explanationsLinks = new ArrayList<String>();
 		while (found) {
 			String href = htmlPage.substring(matcher.start(1), matcher.end(1));
-			htmlPage = htmlPage.replace(href, href + "*");
+			explanationsLinks.add(href);
 			// look for next link
 			if (!matcher.find(matcher.end(1)))
 				found = false;
+		}
+		for (String link : explanationsLinks) {
+			htmlPage = htmlPage.replace(link, link + "*");
 		}
 	}
 
@@ -137,7 +162,7 @@ public class Lyrics extends URLObject {
 					.replaceAll("-\\s+Rap Genius", "")
 					.replaceAll("\\s*?|\\s*?Poetry Genius", "")
 					.replaceAll("- Poetry.+?Rap Genius", "");
-		else{
+		else {
 			artistName = "After searching...";
 			htmlPage = "No results found.";
 		}

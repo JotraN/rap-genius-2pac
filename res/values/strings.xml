@@ -38,6 +38,7 @@
 
     <!-- Error messages -->
     <string name="error_no_internet">No internet connection found.</string>
+    <string name="error_explanation">The program experience an error trying to find the explanation. Please send a message to the developer with the song name and line.</string>
 
     <!-- Default text -->
     <string name="default_favorite">Favorited Songs</string>

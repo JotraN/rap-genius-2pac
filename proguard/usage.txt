@@ -1347,7 +1347,6 @@ org.jsoup.select.Collector:
 org.jsoup.select.CombiningEvaluator$Or:
     66:71:CombiningEvaluator$Or(java.util.Collection)
 org.jsoup.select.Elements:
-    26:28:public Elements(java.util.Collection)
     35:36:public varargs Elements(org.jsoup.nodes.Element[])
     62:66:public java.lang.String attr(java.lang.String)
     75:79:public boolean hasAttr(java.lang.String)
@@ -1372,7 +1371,6 @@ org.jsoup.select.Elements:
     357:360:public org.jsoup.select.Elements unwrap()
     375:378:public org.jsoup.select.Elements empty()
     394:397:public org.jsoup.select.Elements remove()
-    408:408:public org.jsoup.select.Elements select(java.lang.String)
     422:423:public org.jsoup.select.Elements not(java.lang.String)
     434:434:public org.jsoup.select.Elements eq(int)
     443:444:public boolean is(java.lang.String)
@@ -1382,5 +1380,4 @@ org.jsoup.select.Elements:
 org.jsoup.select.Evaluator$CssNthEvaluator:
     406:407:public Evaluator$CssNthEvaluator(int)
 org.jsoup.select.Selector:
-    104:111:public static org.jsoup.select.Elements select(java.lang.String,java.lang.Iterable)
     120:132:static org.jsoup.select.Elements filterOut(java.util.Collection,java.util.Collection)

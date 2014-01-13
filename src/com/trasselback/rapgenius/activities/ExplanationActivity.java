@@ -159,7 +159,8 @@ public class ExplanationActivity extends SherlockActivity {
 		protected String doInBackground(Void... params) {
 			explanation = new Explanations(getIntent().getDataString());
 			if (explanation.isOnline(getApplicationContext())) {
-				explanation.retrieveUrl();
+				if(!explanation.retrievedUrl())
+					return getString(R.string.error_explanation);
 				explanation.retrieveName();
 				if (explanation.openedURL())
 					explanation.retrievePage();

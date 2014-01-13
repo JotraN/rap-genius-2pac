@@ -398,8 +398,8 @@ int string action_favorite 0x7f0b0010
 int string action_search 0x7f0b000f
 int string app_name 0x7f0b000d
 int string close_drawer 0x7f0b0023
-int string default_favorite 0x7f0b0029
-int string default_home 0x7f0b002a
+int string default_favorite 0x7f0b002a
+int string default_home 0x7f0b002b
 int string default_search 0x7f0b000e
 int string dialog_clear_cache 0x7f0b001d
 int string dialog_remove_favorites 0x7f0b0018
@@ -407,6 +407,7 @@ int string drawer_image 0x7f0b0027
 int string drawer_title_back_to_lyrics 0x7f0b0022
 int string drawer_title_lyrics 0x7f0b0021
 int string drawer_title_more_songs 0x7f0b0020
+int string error_explanation 0x7f0b0029
 int string error_no_internet 0x7f0b0028
 int string favsSearch 0x7f0b0026
 int string open_drawer 0x7f0b0024

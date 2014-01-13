@@ -27,22 +27,28 @@ public class Explanations extends URLObject {
 			artistName = "Not found.\nDid you lose internet connection?";
 	}
 
-	public void retrieveUrl() {
+	public boolean retrievedUrl() {
 		retrieveSongID();
 		dataLink += "/";
+		// Is the explanation explained by the artist
+		boolean artistExplanationLink = false;
+		if(dataLink.contains("*")){
+			dataLink = dataLink.replace("*", "");
+			artistExplanationLink = true;
+		}
 		Pattern pattern = Pattern.compile("/(\\d+?)/");
 		Matcher matcher = pattern.matcher(dataLink);
 		if (matcher.find()) {
 			explanationID = dataLink.substring(matcher.start(1), matcher.end(1));
-			// Explanation was verified by the artist
-			if (dataLink.contains("*"))
+			if (artistExplanationLink)
 				// Increment ID because Rap Genius increments explanations if it
 				// was verified by an artist
 				explanationID = (Integer.parseInt(explanationID) + 1) + "";
 			url = "http://rapgenius.com/annotations/for_song_page?song_id="
 					+ songID;
+			return true;
 		} else
-			url = "Not found.\nDid you lose internet connection?";
+			return false;
 	}
 
 	public void retrieveSongID() {
@@ -77,8 +83,11 @@ public class Explanations extends URLObject {
 		Elements content = pageDocument.getElementsByClass("annotation_body");
 		htmlPage = content.toString();
 		pageDocument = Jsoup.parse(htmlPage);
-		String text = pageDocument.getElementsByAttributeValue("data-id",
-				explanationID).toString();
+//		String text = pageDocument.getElementsByAttributeValue("data-id",
+//				explanationID).toString();
+		Elements dataIDs = pageDocument.getElementsByAttributeValue("data-id",
+				explanationID);
+		String text = dataIDs.get(0).toString();
 		// Remove images
 		htmlPage = text.toString().replaceAll("<img.+?src.+?/>", "");
 		htmlPage = htmlPage.replaceAll("<p class=\"video.+?/p>", "");

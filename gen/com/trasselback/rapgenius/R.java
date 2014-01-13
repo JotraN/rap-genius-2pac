@@ -1109,8 +1109,8 @@ containing a value of this type.
         public static final int close_drawer=0x7f0b0023;
         /**  Default text 
          */
-        public static final int default_favorite=0x7f0b0029;
-        public static final int default_home=0x7f0b002a;
+        public static final int default_favorite=0x7f0b002a;
+        public static final int default_home=0x7f0b002b;
         public static final int default_search=0x7f0b000e;
         public static final int dialog_clear_cache=0x7f0b001d;
         public static final int dialog_remove_favorites=0x7f0b0018;
@@ -1118,6 +1118,7 @@ containing a value of this type.
         public static final int drawer_title_back_to_lyrics=0x7f0b0022;
         public static final int drawer_title_lyrics=0x7f0b0021;
         public static final int drawer_title_more_songs=0x7f0b0020;
+        public static final int error_explanation=0x7f0b0029;
         /**  Error messages 
          */
         public static final int error_no_internet=0x7f0b0028;
