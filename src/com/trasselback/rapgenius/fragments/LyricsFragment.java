@@ -36,6 +36,7 @@ public class LyricsFragment extends Fragment {
 	private static boolean taskStarted = false;
 	// Static variable to pass to MainActivity easily
 	public static String artistNameSongName = "";
+	private String artistName;
 
 	public LyricsFragment() {
 	}
@@ -216,6 +217,9 @@ public class LyricsFragment extends Fragment {
 					lyrics.retrievePage();
 				} else
 					lyrics.googleIt();
+				// Store artist name in fragment since setText(results)
+				// sometimes loads faster than getName
+				artistName = lyrics.getName();
 				return lyrics.getPage();
 			} else
 				return getString(R.string.error_no_internet);
@@ -231,8 +235,8 @@ public class LyricsFragment extends Fragment {
 
 		@Override
 		protected void onPostExecute(String result) {
-			// TODO Sometimes getName is too slow and causes name to load slower.
-			nameField.setText(lyrics.getName());
+			nameField.setText(artistName);
+			artistName = null;
 			lyricsField.setText(Html.fromHtml(result));
 			RemoveUnderLine.removeUnderline(lyricsField);
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1)

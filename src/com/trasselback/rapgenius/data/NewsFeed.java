@@ -19,11 +19,11 @@ public class NewsFeed extends URLObject {
 		} catch (IOException e) {
 			try {
 				// Try looking for it again if any network pipes broke initially
-				pageDocument = Jsoup.connect("http://rapgenius.com").timeout(10000)
-						.get();
+				pageDocument = Jsoup.connect("http://rapgenius.com")
+						.timeout(10000).get();
 				return true;
 			} catch (IOException e1) {
-				htmlPage = "There was a problem with connecting to Rap Genius.<br>Rap Genius may be down.";
+				htmlPage = "There was a problem with connecting to Rap Genius.<br>Rap Genius may be down<br>or your internet connection may be too weak.";
 				return false;
 			}
 		}

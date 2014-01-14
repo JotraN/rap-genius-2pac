@@ -7748,7 +7748,7 @@ com.trasselback.rapgenius.data.Explanations -> com.trasselback.rapgenius.a.a:
     java.lang.String explanationID -> g
     void retrieveName() -> a
     boolean retrievedUrl() -> b
-    void retrieveSongID() -> c
+    boolean retrievedSongID() -> c
     boolean openedURL() -> d
     void retrievePage() -> e
     java.lang.String getName() -> f
@@ -7829,11 +7829,11 @@ com.trasselback.rapgenius.fragments.HomePageFragment -> com.trasselback.rapgeniu
     void access$0(com.trasselback.rapgenius.fragments.HomePageFragment,com.trasselback.rapgenius.data.NewsFeed) -> a
     com.trasselback.rapgenius.data.NewsFeed access$1(com.trasselback.rapgenius.fragments.HomePageFragment) -> a
     android.os.AsyncTask access$2(com.trasselback.rapgenius.fragments.HomePageFragment) -> b
-    void access$3(java.lang.String) -> a
-    android.widget.TextView access$4(com.trasselback.rapgenius.fragments.HomePageFragment) -> c
-    android.view.View access$5(com.trasselback.rapgenius.fragments.HomePageFragment) -> d
-    android.widget.ProgressBar access$6(com.trasselback.rapgenius.fragments.HomePageFragment) -> e
-    void access$7(boolean) -> a
+    void access$3(boolean) -> a
+    void access$4(java.lang.String) -> a
+    android.widget.TextView access$5(com.trasselback.rapgenius.fragments.HomePageFragment) -> c
+    android.view.View access$6(com.trasselback.rapgenius.fragments.HomePageFragment) -> d
+    android.widget.ProgressBar access$7(com.trasselback.rapgenius.fragments.HomePageFragment) -> e
 com.trasselback.rapgenius.fragments.HomePageFragment$RetrieveNewsFeed -> com.trasselback.rapgenius.b.g:
     com.trasselback.rapgenius.fragments.HomePageFragment this$0 -> a
     java.lang.String doInBackground(java.lang.Void[]) -> a
@@ -7851,6 +7851,7 @@ com.trasselback.rapgenius.fragments.LyricsFragment -> com.trasselback.rapgenius.
     boolean cacheLyricsEnabled -> h
     boolean taskStarted -> i
     java.lang.String artistNameSongName -> a
+    java.lang.String artistName -> j
     android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     void onActivityCreated(android.os.Bundle) -> onActivityCreated
     void onPause() -> onPause
@@ -7862,13 +7863,15 @@ com.trasselback.rapgenius.fragments.LyricsFragment -> com.trasselback.rapgenius.
     void setCache() -> e
     void access$0(com.trasselback.rapgenius.fragments.LyricsFragment,com.trasselback.rapgenius.data.Lyrics) -> a
     com.trasselback.rapgenius.data.Lyrics access$1(com.trasselback.rapgenius.fragments.LyricsFragment) -> a
-    android.os.AsyncTask access$2(com.trasselback.rapgenius.fragments.LyricsFragment) -> b
-    void access$3(boolean) -> a
-    android.widget.TextView access$4(com.trasselback.rapgenius.fragments.LyricsFragment) -> c
-    android.widget.TextView access$5(com.trasselback.rapgenius.fragments.LyricsFragment) -> d
-    android.view.View access$6(com.trasselback.rapgenius.fragments.LyricsFragment) -> e
-    android.view.View access$7(com.trasselback.rapgenius.fragments.LyricsFragment) -> f
-    boolean access$8(com.trasselback.rapgenius.fragments.LyricsFragment) -> g
+    void access$2(com.trasselback.rapgenius.fragments.LyricsFragment,java.lang.String) -> a
+    android.os.AsyncTask access$3(com.trasselback.rapgenius.fragments.LyricsFragment) -> b
+    void access$4(boolean) -> a
+    android.widget.TextView access$5(com.trasselback.rapgenius.fragments.LyricsFragment) -> c
+    java.lang.String access$6(com.trasselback.rapgenius.fragments.LyricsFragment) -> d
+    android.widget.TextView access$7(com.trasselback.rapgenius.fragments.LyricsFragment) -> e
+    android.view.View access$8(com.trasselback.rapgenius.fragments.LyricsFragment) -> f
+    android.view.View access$9(com.trasselback.rapgenius.fragments.LyricsFragment) -> g
+    boolean access$10(com.trasselback.rapgenius.fragments.LyricsFragment) -> h
 com.trasselback.rapgenius.fragments.LyricsFragment$RetrieveLyricsTask -> com.trasselback.rapgenius.b.i:
     com.trasselback.rapgenius.fragments.LyricsFragment this$0 -> a
     java.lang.String doInBackground(java.lang.String[]) -> a

@@ -8,8 +8,9 @@ import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import android.util.Log;
 
 public class Lyrics extends URLObject {
 	private String artistName = "";
@@ -34,45 +35,50 @@ public class Lyrics extends URLObject {
 	}
 
 	public void retrievePage() {
-		retrieveSongID();
-		Elements content = pageDocument.getElementsByClass("lyrics");
-		Elements links = content.select("a[href]");
-		if (links.get(0).toString().startsWith("<a href"))
-			htmlPage = content.toString().replaceAll(
-					"href=\".+?\".+?\"",
-					"href=\"explanation_clicked:[" + artistName + "]" + songID
-							+ "http://rapgenius.com/");
-		else {
-			Pattern pattern = Pattern.compile("data-id=\"(\\d+?)\"");
-			Matcher matcher;
-			for (Element link : links) {
-				matcher = pattern.matcher(link.toString());
-				if (matcher.find()) {
-					htmlPage = content.toString().replaceAll(
-							"href=\".+?\"",
-							"href=\"explanation_clicked:["
-									+ artistName
-									+ "]"
-									+ songID
-									+ "http://rapgenius.com/"
-									+ link.toString().substring(
-											matcher.start(1), matcher.end(1))
-									+ "\"");
+		if (pageDocument != null) {
+			retrieveSongID();
+			Elements content = pageDocument.getElementsByClass("lyrics");
+			Elements links = content.select("a[href]");
+			if (links.get(0).toString().startsWith("<a href"))
+				htmlPage = content.toString().replaceAll(
+						"href=\".+?\".+?\"",
+						"href=\"explanation_clicked:[" + artistName + "]"
+								+ songID + "http://rapgenius.com/");
+			// Move data id to part of link (currently before href)
+			else {
+				Pattern pattern = Pattern.compile("data-id=\"(\\d+?)\"");
+				Matcher matcher;
+				for (int i = 0; i < links.size(); i++) {
+					matcher = pattern.matcher(links.get(i).toString());
+					if (matcher.find()) {
+						htmlPage = content.toString().replaceAll(
+								"href=\".+?\"",
+								"href=\"explanation_clicked:["
+										+ artistName
+										+ "]"
+										+ songID
+										+ "http://rapgenius.com/"
+										+ links.get(i)
+												.toString()
+												.substring(matcher.start(1),
+														matcher.end(1)) + "\"");
+					}
 				}
 			}
-		}
-
-		htmlPage = htmlPage.replaceAll("<a\\s+?class=\"no_annotation.+?>", "");
-		// Fixes bug where some rough explanations don't load.
-		htmlPage = htmlPage.replace("=\"rough", "=\"accepted");
-		if (htmlPage.contains("needs_exegesis")) {
-			replaceArtistIdentifiedExplanations();
+			htmlPage = htmlPage.replaceAll("<a\\s+?class=\"no_annotation.+?>",
+					"");
+			// Fixes bug where some rough explanations don't load.
+			htmlPage = htmlPage.replace("=\"rough", "=\"accepted");
+			if (htmlPage.contains("needs_exegesis")) {
+				replaceArtistIdentifiedExplanations();
+			}
 		}
 	}
 
 	public void retrieveSongID() {
 		songID = pageDocument.getElementsByAttribute("data-pusher_channel")
 				.toString();
+		Log.v("SONGID", songID);
 		Pattern pattern = Pattern.compile("data-id=\"(\\d+?)\"");
 		Matcher matcher = pattern.matcher(songID);
 		if (matcher.find()) {
@@ -84,7 +90,7 @@ public class Lyrics extends URLObject {
 		// Add a star to URLs associated with artist explanations to be
 		// identified to change its color
 		Pattern pattern = Pattern
-				.compile("<a href=\"(.+?)\" class=\"has_verified_annotation\" data-editorial-state=\"needs_exegesis\">");
+				.compile("<a.+?href=\"(.+?)\"[^ch]+class=\"has_verified_annotation\"[^h^>]+>");
 		Matcher matcher = pattern.matcher(htmlPage);
 		boolean found = false;
 		if (matcher.find())
@@ -104,21 +110,23 @@ public class Lyrics extends URLObject {
 
 	// Google the song and name, looking for a rap genius link
 	public void googleIt() {
+		Log.v("GOOGLING", "GOOGLE");
 		String searchUrl = "http://google.com/search?q="
 				+ searchMessage.replace(" ", "+") + "+site:rapgenius.com"
 				+ "&as_qdr=all&num=20";
 		try {
 			// UserAgent necessary to connect to google
+			Log.v("SEARCHURL", searchUrl);
 			Document searchPage = Jsoup
 					.connect(searchUrl)
 					.userAgent(
 							"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.2 Safari/537.36")
-					.referrer("http://www.google.com").get();
+					.referrer("http://www.google.com").timeout(10000).get();
 			Elements content = searchPage.getElementsByClass("r");
 			String googleHTML = content.toString();
 			findRapGeniusLinks(googleHTML);
 		} catch (IOException e) {
-			artistName += songName + " not found.";
+			artistName = songName + " not found.";
 			htmlPage = "There was a problem with finding the lyrics.";
 		}
 	}

@@ -208,6 +208,10 @@ public class HomePageFragment extends Fragment {
 
 		@Override
 		protected void onPostExecute(String result) {
+			if(result.contains("There was a problem with connecting to Rap Genius.")){
+				homeLoaded = false;
+				return;
+			}
 			homeData = result;
 			lyricsField.setText(Html.fromHtml(result));
 			RemoveUnderLine.removeUnderline(lyricsField);
