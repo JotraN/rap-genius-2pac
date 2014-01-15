@@ -1,7 +1,6 @@
 package com.trasselback.rapgenius.data;
 
 import java.io.IOException;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -62,19 +61,19 @@ public class Lyrics extends URLObject {
 	public void replaceArtistIdentifiedExplanations() {
 		// Add a star to URLs associated with artist explanations to be
 		// identified to change its color
-        Pattern pattern = Pattern
-                        .compile("href=\"(.+?)\".+?class=\"has_verified_annotation\"");
-        Matcher matcher = pattern.matcher(htmlPage);
-        boolean found = false;
-        if (matcher.find())
-                found = true;
-        while (found) {
-                String href = htmlPage.substring(matcher.start(1), matcher.end(1));
-                htmlPage = htmlPage.replace(href, href + "*");
-                // look for next link
-                if (!matcher.find(matcher.end(1)))
-                        found = false;
-        }
+		Pattern pattern = Pattern
+				.compile("href=\"(.+?)\".+?class=\"has_verified_annotation\"");
+		Matcher matcher = pattern.matcher(htmlPage);
+		boolean found = false;
+		if (matcher.find())
+			found = true;
+		while (found) {
+			String href = htmlPage.substring(matcher.start(1), matcher.end(1));
+			htmlPage = htmlPage.replace(href, href + "*");
+			// look for next link
+			if (!matcher.find(matcher.end(1)))
+				found = false;
+		}
 	}
 
 	// Google the song and name, looking for a rap genius link
@@ -100,7 +99,7 @@ public class Lyrics extends URLObject {
 
 	public void findRapGeniusLinks(String googlePage) {
 		Pattern pattern = Pattern
-				.compile("<a href=\".+rapgenius\\.com(.+)lyrics/.+?\".+?>(.+)</a>");
+				.compile("<a href=\".*?rapgenius\\.com.+lyrics\".+>.+</a>");
 		Matcher matcher = pattern.matcher(googlePage);
 		boolean foundLink = false;
 		String rapGeniusLinks = "";
@@ -108,17 +107,11 @@ public class Lyrics extends URLObject {
 			foundLink = true;
 		}
 		while (foundLink) {
-			// Clean up link text
+			// Clean up text
 			String songName = googlePage
-					.substring(matcher.start(1), matcher.end(1))
-					.replace("-", " ").replace("/", "");
-			songName = songName.toUpperCase(Locale.ENGLISH);
-			String unformattedName = googlePage.substring(matcher.start(2),
-					matcher.end(2));
-			String link = googlePage.substring(matcher.start(), matcher.end())
-					.replace(unformattedName, songName);
-			if (!rapGeniusLinks.contains(songName))
-				rapGeniusLinks += link;
+					.substring(matcher.start(), matcher.end())
+					.replace("<em>", "").replace("</em>", "");
+			rapGeniusLinks += songName;
 			if (!matcher.find(matcher.end()))
 				foundLink = false;
 		}
