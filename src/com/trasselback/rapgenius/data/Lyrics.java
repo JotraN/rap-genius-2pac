@@ -1,7 +1,6 @@
 package com.trasselback.rapgenius.data;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,8 +8,6 @@ import java.util.regex.Pattern;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-
-import android.util.Log;
 
 public class Lyrics extends URLObject {
 	private String artistName = "";
@@ -38,33 +35,10 @@ public class Lyrics extends URLObject {
 		if (pageDocument != null) {
 			retrieveSongID();
 			Elements content = pageDocument.getElementsByClass("lyrics");
-			Elements links = content.select("a[href]");
-			if (links.get(0).toString().startsWith("<a href"))
-				htmlPage = content.toString().replaceAll(
-						"href=\".+?\".+?\"",
-						"href=\"explanation_clicked:[" + artistName + "]"
-								+ songID + "http://rapgenius.com/");
-			// Move data id to part of link (currently before href)
-			else {
-				Pattern pattern = Pattern.compile("data-id=\"(\\d+?)\"");
-				Matcher matcher;
-				for (int i = 0; i < links.size(); i++) {
-					matcher = pattern.matcher(links.get(i).toString());
-					if (matcher.find()) {
-						htmlPage = content.toString().replaceAll(
-								"href=\".+?\"",
-								"href=\"explanation_clicked:["
-										+ artistName
-										+ "]"
-										+ songID
-										+ "http://rapgenius.com/"
-										+ links.get(i)
-												.toString()
-												.substring(matcher.start(1),
-														matcher.end(1)) + "\"");
-					}
-				}
-			}
+			htmlPage = content.toString().replaceAll(
+					"href=\"",
+					"href=\"explanation_clicked:[" + artistName + "]" + songID
+							+ "http://rapgenius.com/");
 			htmlPage = htmlPage.replaceAll("<a\\s+?class=\"no_annotation.+?>",
 					"");
 			// Fixes bug where some rough explanations don't load.
@@ -78,7 +52,6 @@ public class Lyrics extends URLObject {
 	public void retrieveSongID() {
 		songID = pageDocument.getElementsByAttribute("data-pusher_channel")
 				.toString();
-		Log.v("SONGID", songID);
 		Pattern pattern = Pattern.compile("data-id=\"(\\d+?)\"");
 		Matcher matcher = pattern.matcher(songID);
 		if (matcher.find()) {
@@ -89,34 +62,28 @@ public class Lyrics extends URLObject {
 	public void replaceArtistIdentifiedExplanations() {
 		// Add a star to URLs associated with artist explanations to be
 		// identified to change its color
-		Pattern pattern = Pattern
-				.compile("<a.+?href=\"(.+?)\"[^ch]+class=\"has_verified_annotation\"[^h^>]+>");
-		Matcher matcher = pattern.matcher(htmlPage);
-		boolean found = false;
-		if (matcher.find())
-			found = true;
-		ArrayList<String> explanationsLinks = new ArrayList<String>();
-		while (found) {
-			String href = htmlPage.substring(matcher.start(1), matcher.end(1));
-			explanationsLinks.add(href);
-			// look for next link
-			if (!matcher.find(matcher.end(1)))
-				found = false;
-		}
-		for (String link : explanationsLinks) {
-			htmlPage = htmlPage.replace(link, link + "*");
-		}
+        Pattern pattern = Pattern
+                        .compile("href=\"(.+?)\".+?class=\"has_verified_annotation\"");
+        Matcher matcher = pattern.matcher(htmlPage);
+        boolean found = false;
+        if (matcher.find())
+                found = true;
+        while (found) {
+                String href = htmlPage.substring(matcher.start(1), matcher.end(1));
+                htmlPage = htmlPage.replace(href, href + "*");
+                // look for next link
+                if (!matcher.find(matcher.end(1)))
+                        found = false;
+        }
 	}
 
 	// Google the song and name, looking for a rap genius link
 	public void googleIt() {
-		Log.v("GOOGLING", "GOOGLE");
 		String searchUrl = "http://google.com/search?q="
 				+ searchMessage.replace(" ", "+") + "+site:rapgenius.com"
 				+ "&as_qdr=all&num=20";
 		try {
 			// UserAgent necessary to connect to google
-			Log.v("SEARCHURL", searchUrl);
 			Document searchPage = Jsoup
 					.connect(searchUrl)
 					.userAgent(

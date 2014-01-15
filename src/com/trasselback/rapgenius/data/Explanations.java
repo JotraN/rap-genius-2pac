@@ -4,14 +4,12 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.jsoup.Jsoup;
-import org.jsoup.select.Elements;
+import org.jsoup.nodes.Element;
 
 public class Explanations extends URLObject {
 	private String dataLink = ""; // Artist Name + SongID + URL
 	private String artistName = "";
-	private String songID = "";
 	private String explanationID = "";
 
 	public Explanations(String clickedLink) {
@@ -28,37 +26,23 @@ public class Explanations extends URLObject {
 	}
 
 	public boolean retrievedUrl() {
-		if (retrievedSongID()) {
-			dataLink += "/";
-			// Is the explanation explained by the artist
-			boolean artistExplanationLink = false;
-			if (dataLink.contains("*")) {
-				dataLink = dataLink.replace("*", "");
-				artistExplanationLink = true;
-			}
-			Pattern pattern = Pattern.compile("/(\\d+?)/");
-			Matcher matcher = pattern.matcher(dataLink);
-			if (matcher.find()) {
-				explanationID = dataLink.substring(matcher.start(1),
-						matcher.end(1));
-				if (artistExplanationLink)
-					// Increment ID because Rap Genius increments explanations
-					// if it was verified by an artist
-					explanationID = (Integer.parseInt(explanationID) + 1) + "";
-				url = "http://rapgenius.com/annotations/for_song_page?song_id="
-						+ songID;
-				return true;
-			} else
-				return false;
+		dataLink += "/";
+		// Is the explanation explained by the artist
+		boolean artistExplanationLink = false;
+		if (dataLink.contains("*")) {
+			dataLink = dataLink.replace("*", "");
+			artistExplanationLink = true;
 		}
-		return false;
-	}
-
-	public boolean retrievedSongID() {
-		Pattern pattern = Pattern.compile("](\\d+?)h");
+		Pattern pattern = Pattern.compile("/(\\d+?)/");
 		Matcher matcher = pattern.matcher(dataLink);
 		if (matcher.find()) {
-			songID = dataLink.substring(matcher.start(1), matcher.end(1));
+			explanationID = dataLink
+					.substring(matcher.start(1), matcher.end(1));
+			if (artistExplanationLink)
+				// Increment ID because Rap Genius increments explanations
+				// if it was verified by an artist
+				explanationID = (Integer.parseInt(explanationID) + 1) + "";
+			url = "http://rapgenius.com/" + explanationID;
 			return true;
 		} else
 			return false;
@@ -83,25 +67,13 @@ public class Explanations extends URLObject {
 	}
 
 	public void retrievePage() {
-		htmlPage = pageDocument.toString().replace("\\n", "")
-				.replace("\\&quot;", "").replace("&quot;", "\"");
-		pageDocument = Jsoup.parse(htmlPage);
-		Elements content = pageDocument.getElementsByClass("annotation_body");
-		htmlPage = content.toString();
-		content = null;
-		pageDocument = Jsoup.parse(htmlPage);
-		Elements dataIDs = pageDocument.getElementsByAttributeValue("data-id",
-				explanationID);
-		String text = dataIDs.get(0).toString();
-		dataIDs = null;
+		Element dataIDs = pageDocument.getElementById("main");
+		String text = dataIDs.toString();
 		// Remove images
 		htmlPage = text.toString().replaceAll("<img.+?src.+?/>", "");
 		htmlPage = htmlPage.replaceAll("<p class=\"video.+?/p>", "");
-		// Convert UNICODE
-		htmlPage = StringEscapeUtils.unescapeJava(htmlPage);
 		// Fix any local Rap Genius links
 		htmlPage = htmlPage.replace("href=\"/", "href=\"http://rapgenius.com/");
-
 	}
 
 	public String getName() {

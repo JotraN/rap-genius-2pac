@@ -1085,6 +1085,7 @@ org.jsoup.Jsoup:
     20:20:private Jsoup()
     31:31:public static org.jsoup.nodes.Document parse(java.lang.String,java.lang.String)
     45:45:public static org.jsoup.nodes.Document parse(java.lang.String,java.lang.String,org.jsoup.parser.Parser)
+    58:58:public static org.jsoup.nodes.Document parse(java.lang.String)
     88:88:public static org.jsoup.nodes.Document parse(java.io.File,java.lang.String,java.lang.String)
     103:103:public static org.jsoup.nodes.Document parse(java.io.File,java.lang.String)
     118:118:public static org.jsoup.nodes.Document parse(java.io.InputStream,java.lang.String,java.lang.String)
@@ -1217,8 +1218,8 @@ org.jsoup.nodes.Element:
     473:480:public org.jsoup.nodes.Element nextElementSibling()
     505:506:public org.jsoup.nodes.Element firstElementSibling()
     524:525:public org.jsoup.nodes.Element lastElementSibling()
-    564:570:public org.jsoup.nodes.Element getElementById(java.lang.String)
     610:613:public org.jsoup.select.Elements getElementsByAttributeStarting(java.lang.String)
+    624:624:public org.jsoup.select.Elements getElementsByAttributeValue(java.lang.String,java.lang.String)
     635:635:public org.jsoup.select.Elements getElementsByAttributeValueNot(java.lang.String,java.lang.String)
     646:646:public org.jsoup.select.Elements getElementsByAttributeValueStarting(java.lang.String,java.lang.String)
     657:657:public org.jsoup.select.Elements getElementsByAttributeValueEnding(java.lang.String,java.lang.String)
@@ -1294,6 +1295,7 @@ org.jsoup.parser.Parser:
     49:50:public org.jsoup.parser.Parser setTreeBuilder(org.jsoup.parser.TreeBuilder)
     67:68:public org.jsoup.parser.Parser setTrackErrors(int)
     76:76:public java.util.List getErrors()
+    89:90:public static org.jsoup.nodes.Document parse(java.lang.String,java.lang.String)
     104:105:public static java.util.List parseFragment(java.lang.String,org.jsoup.nodes.Element,java.lang.String)
     116:117:public static java.util.List parseXmlFragment(java.lang.String,java.lang.String)
     129:136:public static org.jsoup.nodes.Document parseBodyFragment(java.lang.String,java.lang.String)
@@ -1347,6 +1349,7 @@ org.jsoup.select.Collector:
 org.jsoup.select.CombiningEvaluator$Or:
     66:71:CombiningEvaluator$Or(java.util.Collection)
 org.jsoup.select.Elements:
+    26:28:public Elements(java.util.Collection)
     35:36:public varargs Elements(org.jsoup.nodes.Element[])
     62:66:public java.lang.String attr(java.lang.String)
     75:79:public boolean hasAttr(java.lang.String)
@@ -1371,6 +1374,7 @@ org.jsoup.select.Elements:
     357:360:public org.jsoup.select.Elements unwrap()
     375:378:public org.jsoup.select.Elements empty()
     394:397:public org.jsoup.select.Elements remove()
+    408:408:public org.jsoup.select.Elements select(java.lang.String)
     422:423:public org.jsoup.select.Elements not(java.lang.String)
     434:434:public org.jsoup.select.Elements eq(int)
     443:444:public boolean is(java.lang.String)
@@ -1380,4 +1384,5 @@ org.jsoup.select.Elements:
 org.jsoup.select.Evaluator$CssNthEvaluator:
     406:407:public Evaluator$CssNthEvaluator(int)
 org.jsoup.select.Selector:
+    104:111:public static org.jsoup.select.Elements select(java.lang.String,java.lang.Iterable)
     120:132:static org.jsoup.select.Elements filterOut(java.util.Collection,java.util.Collection)

@@ -7744,14 +7744,12 @@ com.trasselback.rapgenius.activities.MainActivity$expandedSearchBar$1 -> com.tra
 com.trasselback.rapgenius.data.Explanations -> com.trasselback.rapgenius.a.a:
     java.lang.String dataLink -> d
     java.lang.String artistName -> e
-    java.lang.String songID -> f
-    java.lang.String explanationID -> g
+    java.lang.String explanationID -> f
     void retrieveName() -> a
     boolean retrievedUrl() -> b
-    boolean retrievedSongID() -> c
-    boolean openedURL() -> d
-    void retrievePage() -> e
-    java.lang.String getName() -> f
+    boolean openedURL() -> c
+    void retrievePage() -> d
+    java.lang.String getName() -> e
 com.trasselback.rapgenius.data.Lyrics -> com.trasselback.rapgenius.a.b:
     java.lang.String artistName -> d
     java.lang.String songName -> e
@@ -7759,7 +7757,7 @@ com.trasselback.rapgenius.data.Lyrics -> com.trasselback.rapgenius.a.b:
     java.lang.String searchMessage -> g
     void retrieveName() -> a
     void retrievePage() -> b
-    void retrieveSongID() -> c
+    void retrieveSongID() -> d
     void replaceArtistIdentifiedExplanations() -> e
     void googleIt() -> f
     void findRapGeniusLinks(java.lang.String) -> a
@@ -7769,7 +7767,7 @@ com.trasselback.rapgenius.data.MoreSongs -> com.trasselback.rapgenius.a.c:
     java.lang.String songName -> e
     boolean openURL() -> a
     void retrieveName() -> b
-    void retrievePage() -> c
+    void retrievePage() -> d
     java.lang.String getName() -> e
 com.trasselback.rapgenius.data.NewsFeed -> com.trasselback.rapgenius.a.d:
     boolean openURL() -> a
@@ -7779,7 +7777,7 @@ com.trasselback.rapgenius.data.URLObject -> com.trasselback.rapgenius.a.e:
     java.lang.String url -> b
     org.jsoup.nodes.Document pageDocument -> c
     boolean isOnline(android.content.Context) -> a
-    boolean openedURL() -> d
+    boolean openedURL() -> c
     java.lang.String getPage() -> h
 com.trasselback.rapgenius.fragments.FavoritesFragment -> com.trasselback.rapgenius.b.a:
     android.widget.ListView listView -> a
@@ -10824,8 +10822,7 @@ org.jsoup.HttpStatusException -> org.jsoup.HttpStatusException:
     java.lang.String url -> b
     java.lang.String toString() -> toString
 org.jsoup.Jsoup -> org.jsoup.e:
-    org.jsoup.nodes.Document parse(java.lang.String) -> a
-    org.jsoup.Connection connect(java.lang.String) -> b
+    org.jsoup.Connection connect(java.lang.String) -> a
 org.jsoup.UnsupportedMimeTypeException -> org.jsoup.UnsupportedMimeTypeException:
     java.lang.String mimeType -> a
     java.lang.String url -> b
@@ -11057,9 +11054,9 @@ org.jsoup.nodes.Element -> org.jsoup.nodes.g:
     java.lang.Integer elementSiblingIndex() -> q
     java.lang.Integer indexInList(org.jsoup.nodes.Element,java.util.List) -> a
     org.jsoup.select.Elements getElementsByTag(java.lang.String) -> b
-    org.jsoup.select.Elements getElementsByClass(java.lang.String) -> c
-    org.jsoup.select.Elements getElementsByAttribute(java.lang.String) -> d
-    org.jsoup.select.Elements getElementsByAttributeValue(java.lang.String,java.lang.String) -> b
+    org.jsoup.nodes.Element getElementById(java.lang.String) -> c
+    org.jsoup.select.Elements getElementsByClass(java.lang.String) -> d
+    org.jsoup.select.Elements getElementsByAttribute(java.lang.String) -> e
     org.jsoup.select.Elements getAllElements() -> r
     java.lang.String text() -> s
     java.lang.String ownText() -> t
@@ -11069,7 +11066,7 @@ org.jsoup.nodes.Element -> org.jsoup.nodes.g:
     boolean preserveWhitespace(org.jsoup.nodes.Node) -> c
     java.lang.String className() -> u
     java.util.Set classNames() -> v
-    boolean hasClass(java.lang.String) -> e
+    boolean hasClass(java.lang.String) -> f
     void outerHtmlHead(java.lang.StringBuilder,int,org.jsoup.nodes.Document$OutputSettings) -> a
     void outerHtmlTail(java.lang.StringBuilder,int,org.jsoup.nodes.Document$OutputSettings) -> b
     java.lang.String html() -> w
@@ -11081,7 +11078,7 @@ org.jsoup.nodes.Element -> org.jsoup.nodes.g:
     org.jsoup.nodes.Node clone() -> h
     org.jsoup.nodes.Node before(org.jsoup.nodes.Node) -> d
     org.jsoup.nodes.Node parent() -> x
-    org.jsoup.nodes.Node attr(java.lang.String,java.lang.String) -> c
+    org.jsoup.nodes.Node attr(java.lang.String,java.lang.String) -> b
     java.lang.Object clone() -> clone
     void access$000(java.lang.StringBuilder,org.jsoup.nodes.TextNode) -> a
     org.jsoup.parser.Tag access$100(org.jsoup.nodes.Element) -> a
@@ -11125,12 +11122,12 @@ org.jsoup.nodes.Node -> org.jsoup.nodes.i:
     java.lang.String baseUri -> d
     int siblingIndex -> e
     java.lang.String nodeName() -> a
-    java.lang.String attr(java.lang.String) -> f
+    java.lang.String attr(java.lang.String) -> g
     org.jsoup.nodes.Attributes attributes() -> y
-    org.jsoup.nodes.Node attr(java.lang.String,java.lang.String) -> c
-    boolean hasAttr(java.lang.String) -> g
-    void setBaseUri(java.lang.String) -> h
-    java.lang.String absUrl(java.lang.String) -> i
+    org.jsoup.nodes.Node attr(java.lang.String,java.lang.String) -> b
+    boolean hasAttr(java.lang.String) -> h
+    void setBaseUri(java.lang.String) -> i
+    java.lang.String absUrl(java.lang.String) -> j
     org.jsoup.nodes.Node childNode(int) -> b
     java.util.List childNodes() -> z
     int childNodeSize() -> A
@@ -11183,11 +11180,11 @@ org.jsoup.nodes.TextNode -> org.jsoup.nodes.l:
     java.lang.String stripLeadingWhitespace(java.lang.String) -> b
     boolean lastCharIsWhitespace(java.lang.StringBuilder) -> b
     void ensureAttributes() -> e
-    java.lang.String attr(java.lang.String) -> f
+    java.lang.String attr(java.lang.String) -> g
     org.jsoup.nodes.Attributes attributes() -> y
-    org.jsoup.nodes.Node attr(java.lang.String,java.lang.String) -> c
-    boolean hasAttr(java.lang.String) -> g
-    java.lang.String absUrl(java.lang.String) -> i
+    org.jsoup.nodes.Node attr(java.lang.String,java.lang.String) -> b
+    boolean hasAttr(java.lang.String) -> h
+    java.lang.String absUrl(java.lang.String) -> j
 org.jsoup.nodes.XmlDeclaration -> org.jsoup.nodes.m:
     boolean isProcessingInstruction -> f
     java.lang.String nodeName() -> a
@@ -11425,7 +11422,6 @@ org.jsoup.parser.Parser -> org.jsoup.a.ad:
     org.jsoup.parser.ParseErrorList errors -> c
     org.jsoup.nodes.Document parseInput(java.lang.String,java.lang.String) -> a
     boolean isTrackErrors() -> a
-    org.jsoup.nodes.Document parse(java.lang.String,java.lang.String) -> b
     org.jsoup.parser.Parser htmlParser() -> b
 org.jsoup.parser.Tag -> org.jsoup.a.ae:
     java.util.Map tags -> a
@@ -11829,7 +11825,6 @@ org.jsoup.select.Elements -> org.jsoup.select.f:
     org.jsoup.select.Elements clone() -> a
     java.lang.String outerHtml() -> b
     java.lang.String toString() -> toString
-    org.jsoup.select.Elements select(java.lang.String) -> a
     org.jsoup.nodes.Element first() -> c
     int size() -> size
     boolean isEmpty() -> isEmpty
@@ -12014,7 +12009,6 @@ org.jsoup.select.Selector -> org.jsoup.select.Selector:
     org.jsoup.select.Evaluator evaluator -> a
     org.jsoup.nodes.Element root -> b
     org.jsoup.select.Elements select(java.lang.String,org.jsoup.nodes.Element) -> a
-    org.jsoup.select.Elements select(java.lang.String,java.lang.Iterable) -> a
     org.jsoup.select.Elements select() -> a
 org.jsoup.select.Selector$SelectorParseException -> org.jsoup.select.Selector$SelectorParseException:
 org.jsoup.select.StructuralEvaluator -> org.jsoup.select.as:
