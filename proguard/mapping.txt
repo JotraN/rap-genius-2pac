@@ -7671,8 +7671,7 @@ com.trasselback.rapgenius.activities.ExplanationActivity -> com.trasselback.rapg
     void initialize() -> b
     void onResume() -> onResume
     void checkSettings() -> c
-    void clearSettings() -> d
-    void grabExplanation() -> e
+    void grabExplanation() -> d
     void access$0(com.trasselback.rapgenius.activities.ExplanationActivity,com.trasselback.rapgenius.data.Explanations) -> a
     com.trasselback.rapgenius.data.Explanations access$1(com.trasselback.rapgenius.activities.ExplanationActivity) -> a
     android.widget.TextView access$2(com.trasselback.rapgenius.activities.ExplanationActivity) -> b
@@ -7732,6 +7731,7 @@ com.trasselback.rapgenius.activities.MainActivity$ListAdapter -> com.trasselback
     int resource -> c
     com.trasselback.rapgenius.activities.MainActivity this$0 -> a
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    void changeBackground(int,android.view.View) -> a
 com.trasselback.rapgenius.activities.MainActivity$expandedSearchBar -> com.trasselback.rapgenius.activities.e:
     android.view.inputmethod.InputMethodManager keyboard -> a
     com.trasselback.rapgenius.activities.MainActivity this$0 -> b

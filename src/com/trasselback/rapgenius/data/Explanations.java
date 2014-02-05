@@ -27,12 +27,13 @@ public class Explanations extends URLObject {
 
 	public boolean retrievedUrl() {
 		dataLink += "/";
-		// Is the explanation explained by the artist
+		// Explanation explained by the artist
 		boolean artistExplanationLink = false;
 		if (dataLink.contains("*")) {
 			dataLink = dataLink.replace("*", "");
 			artistExplanationLink = true;
 		}
+		// Look for explanation id
 		Pattern pattern = Pattern.compile("/(\\d+?)/");
 		Matcher matcher = pattern.matcher(dataLink);
 		if (matcher.find()) {

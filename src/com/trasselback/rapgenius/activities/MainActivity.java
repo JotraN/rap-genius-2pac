@@ -44,7 +44,8 @@ import com.trasselback.rapgenius.preferences.SettingsPreferenceActivity;
 public class MainActivity extends SherlockFragmentActivity implements
 		FavoritesFragment.OnFavoriteSelectedListener,
 		MoreSongsFragment.OnMoreSongsSelectedListener {
-	public final static String EXTRA_MESSAGE = "com.trasselback.rapgenius.MESSAGE";
+	// Holds artist name and song name to pass between fragments
+	public final static String SONGINFO = "";
 	private static boolean lyricsLoaded = false;
 	private boolean hideFavoritesIcon = true;
 	private MenuItem favoritesItem;
@@ -105,12 +106,14 @@ public class MainActivity extends SherlockFragmentActivity implements
 		getSupportActionBar().setLogo(R.drawable.ic_drawer);
 		getSupportActionBar().setDisplayUseLogoEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setIcon(R.drawable.ic_blank);
+
 	}
 
 	public void loadHomeSong() {
 		Fragment fragment = new LyricsFragment();
 		Bundle song = new Bundle();
-		song.putString(EXTRA_MESSAGE, getIntent().getDataString());
+		song.putString(SONGINFO, getIntent().getDataString());
 		fragment.setArguments(song);
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		fragmentManager.beginTransaction()
@@ -216,8 +219,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 		// Change to lyrics fragment
 		Fragment fragment = new LyricsFragment();
 		Bundle song = new Bundle();
-		song.putString(MainActivity.EXTRA_MESSAGE, searchText.getText()
-				.toString());
+		song.putString(MainActivity.SONGINFO, searchText.getText().toString());
 		fragment.setArguments(song);
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		fragmentManager.beginTransaction()
@@ -361,7 +363,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 		if (adapter.getItem(3).contains(moreSongs)) {
 			fragment = new MoreSongsFragment();
 			Bundle song = new Bundle();
-			song.putString(EXTRA_MESSAGE, LyricsFragment.artistNameSongName);
+			song.putString(SONGINFO, LyricsFragment.artistNameSongName);
 			fragment.setArguments(song);
 			drawerList.setItemChecked(3, true);
 			setTitle(getResources().getString(R.string.drawer_title_more_songs));
@@ -375,7 +377,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 		} else if (adapter.getItem(3).contains(backToLyrics)) {
 			fragment = new LyricsFragment();
 			Bundle song = new Bundle();
-			song.putString(EXTRA_MESSAGE, LyricsFragment.artistNameSongName);
+			song.putString(SONGINFO, LyricsFragment.artistNameSongName);
 			fragment.setArguments(song);
 			setTitle(getResources().getString(R.string.drawer_title_lyrics));
 			if (adapter.getPosition(moreSongs) == -1)
@@ -404,13 +406,20 @@ public class MainActivity extends SherlockFragmentActivity implements
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View v = inflater.inflate(resource, parent, false);
 
-			ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
 			TextView textView = (TextView) v.findViewById(R.id.textView);
-			// Have to manually set text because adapter isn't just text view
+			// Have to manually set text because adapter isn't just textview
 			textView.setText(adapter.getItem(position));
+			changeBackground(position, v);
+			// Set font
+			Typeface tf = Typeface.createFromAsset(getAssets(),
+					"fonts/roboto_condensed_light.ttf");
+			textView.setTypeface(tf);
+			return v;
+		}
 
+		private void changeBackground(int position, View v) {
+			ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
 			InputStream ims = null;
-
 			// Change background and icon depending on position
 			switch (position) {
 			case 0:
@@ -440,11 +449,11 @@ public class MainActivity extends SherlockFragmentActivity implements
 			case 3:
 				try {
 					if (adapter.getItem(position) == getResources().getString(
-							R.string.drawer_title_more_songs))
+							R.string.drawer_title_back_to_lyrics))
+						ims = context.getAssets().open("ic_menu_revert.png");
+					else
 						ims = context.getAssets().open(
 								"ic_menu_info_details.png");
-					else
-						ims = context.getAssets().open("ic_menu_revert.png");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -456,12 +465,6 @@ public class MainActivity extends SherlockFragmentActivity implements
 			}
 			Drawable d = Drawable.createFromStream(ims, null);
 			imageView.setImageDrawable(d);
-
-			// Set font
-			Typeface tf = Typeface.createFromAsset(getAssets(),
-					"fonts/roboto_condensed_light.ttf");
-			textView.setTypeface(tf);
-			return v;
 		}
 	}
 
@@ -471,7 +474,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 		String[] favsArray = favsString.split("<BR>");
 		Fragment fragment = new LyricsFragment();
 		Bundle song = new Bundle();
-		song.putString(EXTRA_MESSAGE, favsArray[position]);
+		song.putString(SONGINFO, favsArray[position]);
 		fragment.setArguments(song);
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		fragmentManager.beginTransaction()
@@ -494,7 +497,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 	public void onMoreSongsSelected(String songName) {
 		Fragment fragment = new LyricsFragment();
 		Bundle song = new Bundle();
-		song.putString(EXTRA_MESSAGE, songName);
+		song.putString(SONGINFO, songName);
 		fragment.setArguments(song);
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		fragmentManager.beginTransaction()
@@ -513,5 +516,4 @@ public class MainActivity extends SherlockFragmentActivity implements
 		hideFavoritesIcon = false;
 		adapter.remove("BACK TO LYRICS");
 	}
-
 }

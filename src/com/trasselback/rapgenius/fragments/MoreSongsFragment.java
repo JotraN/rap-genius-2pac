@@ -62,7 +62,7 @@ public class MoreSongsFragment extends Fragment {
 		contentView.setVisibility(View.GONE);
 		retrieveTask = new RetrieveMoreSongs();
 		artistNameSongName = getArguments().getString(
-				MainActivity.EXTRA_MESSAGE);
+				MainActivity.SONGINFO);
 		if (!artistNameSongName
 				.contains("There was a problem with finding the lyrics."))
 			retrieveTask.execute(artistNameSongName);

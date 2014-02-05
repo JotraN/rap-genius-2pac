@@ -10,6 +10,7 @@ public class ColorManager {
 	public enum Color {
 		DEFAULT(0), RED(1), ORANGE(2), YELLOW(3), GREEN(4), BLUE(5), PURPLE(6), GRAY(
 				7), WHITE(8), BLACK(9);
+
 		Color(int colorValue) {
 			this.colorValue = colorValue;
 		}

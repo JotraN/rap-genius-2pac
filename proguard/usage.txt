@@ -968,7 +968,7 @@ android.support.v4.widget.ViewDragHelper:
     1331:1337:public boolean isEdgeTouched(int)
     1351:1351:public boolean isEdgeTouched(int,int)
 com.trasselback.rapgenius.activities.MainActivity:
-    public static final java.lang.String EXTRA_MESSAGE
+    public static final java.lang.String SONGINFO
 com.trasselback.rapgenius.data.URLObject:
     public abstract void retrievePage()
 com.trasselback.rapgenius.fragments.HomePageFragment:

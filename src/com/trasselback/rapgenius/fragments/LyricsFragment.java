@@ -170,7 +170,7 @@ public class LyricsFragment extends Fragment {
 	// Find what started lyrics fragment and clean input
 	private void startLyrics() {
 		artistNameSongName = getArguments().getString(
-				MainActivity.EXTRA_MESSAGE);
+				MainActivity.SONGINFO);
 		// Home song clicked
 		if (artistNameSongName.contains("song_clicked"))
 			// remove the -lyrics at the end of the URL

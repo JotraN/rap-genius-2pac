@@ -79,70 +79,27 @@ public class ExplanationActivity extends SherlockActivity {
 	}
 
 	private void checkSettings() {
-		try {
-			SharedPreferences sharedPref = PreferenceManager
-					.getDefaultSharedPreferences(this);
-			// Update text size
-			int size = Integer.parseInt(sharedPref.getString(
-					SettingsFragment.KEY_PREF_TEXT_SIZE, "20"));
-			explanationsField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
-			nameField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size + 10);
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		// Update text size
+		int size = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_TEXT_SIZE, "20"));
+		explanationsField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+		nameField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size + 10);
 
-			// Update colors
-			int textColor = Integer.parseInt(sharedPref.getString(
-					SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR, "0"));
-			ColorManager.setColor(this, explanationsField, textColor);
-			int titleColor = Integer.parseInt(sharedPref.getString(
-					SettingsFragment.KEY_PREF_TITLE_COLOR, "0"));
-			ColorManager.setColor(this, nameField, titleColor);
-			int linkColor = Integer.parseInt(sharedPref.getString(
-					SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR, "0"));
-			ColorManager.setLinkColor(this, explanationsField, linkColor);
-			int backgroundColor = Integer.parseInt(sharedPref.getString(
-					SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "0"));
-			ColorManager.setBackgroundColor(this, backgroundColor);
-		} catch (NumberFormatException ex) {
-			clearSettings();
-		}
-	}
-
-	// Needed to reset settings for those who updated and are still using old
-	// color settings
-	private void clearSettings() {
-		Editor editor = getSharedPreferences(
-				SettingsFragment.KEY_PREF_TEXT_SIZE, Context.MODE_PRIVATE)
-				.edit();
-		editor.clear();
-		editor.commit();
-		editor = getSharedPreferences(
-				SettingsFragment.KEY_PREF_BACKGROUND_COLOR,
-				Context.MODE_PRIVATE).edit();
-		editor.clear();
-		editor.commit();
-		editor = getSharedPreferences(
-				SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR,
-				Context.MODE_PRIVATE).edit();
-		editor.clear();
-		editor.commit();
-		editor = getSharedPreferences(
-				SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR,
-				Context.MODE_PRIVATE).edit();
-		editor.clear();
-		editor.commit();
-		editor = getSharedPreferences(
-				SettingsFragment.KEY_PREF_FAVORITES_COLOR, Context.MODE_PRIVATE)
-				.edit();
-		editor.clear();
-		editor.commit();
-		editor = getSharedPreferences(
-				SettingsFragment.KEY_PREF_HOME_PAGE_COLOR, Context.MODE_PRIVATE)
-				.edit();
-		editor.clear();
-		editor.commit();
-		editor = getSharedPreferences(SettingsFragment.KEY_PREF_TITLE_COLOR,
-				Context.MODE_PRIVATE).edit();
-		editor.clear();
-		editor.commit();
+		// Update colors
+		int textColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR, "0"));
+		ColorManager.setColor(this, explanationsField, textColor);
+		int titleColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_TITLE_COLOR, "0"));
+		ColorManager.setColor(this, nameField, titleColor);
+		int linkColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR, "0"));
+		ColorManager.setLinkColor(this, explanationsField, linkColor);
+		int backgroundColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "0"));
+		ColorManager.setBackgroundColor(this, backgroundColor);
 	}
 
 	private void grabExplanation() {
