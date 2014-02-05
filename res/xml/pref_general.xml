@@ -95,6 +95,13 @@
             android:entryValues="@array/app_colors_values"
             android:key="pref_key_background_color"
             android:title="Background Color" />
+        <ListPreference
+            android:defaultValue="0"
+            android:dialogTitle="Action Bar Color"
+            android:entries="@array/app_colors_entries"
+            android:entryValues="@array/app_colors_values"
+            android:key="pref_key_action_bar_color"
+            android:title="Action Bar Color" />
     </PreferenceCategory>
     <PreferenceCategory android:title="About" >
         <Preference

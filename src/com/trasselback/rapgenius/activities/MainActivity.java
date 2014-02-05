@@ -5,12 +5,14 @@ import java.io.InputStream;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -37,8 +39,10 @@ import com.trasselback.rapgenius.fragments.FavoritesFragment;
 import com.trasselback.rapgenius.fragments.HomePageFragment;
 import com.trasselback.rapgenius.fragments.LyricsFragment;
 import com.trasselback.rapgenius.fragments.MoreSongsFragment;
+import com.trasselback.rapgenius.helpers.ColorManager;
 import com.trasselback.rapgenius.helpers.FavoritesManager;
 import com.trasselback.rapgenius.preferences.SettingsActivity;
+import com.trasselback.rapgenius.preferences.SettingsFragment;
 import com.trasselback.rapgenius.preferences.SettingsPreferenceActivity;
 
 public class MainActivity extends SherlockFragmentActivity implements
@@ -107,7 +111,6 @@ public class MainActivity extends SherlockFragmentActivity implements
 		getSupportActionBar().setDisplayUseLogoEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setIcon(R.drawable.ic_blank);
-
 	}
 
 	public void loadHomeSong() {
@@ -126,6 +129,16 @@ public class MainActivity extends SherlockFragmentActivity implements
 		hideFavoritesIcon = false;
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		int actionBarColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_ACTION_BAR_COLOR, "0"));
+		ColorManager.setActionBarColor(this, actionBarColor);
+	}
+	
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);

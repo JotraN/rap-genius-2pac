@@ -1,8 +1,6 @@
 package com.trasselback.rapgenius.activities;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
