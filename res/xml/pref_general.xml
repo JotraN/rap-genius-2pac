@@ -103,14 +103,5 @@
             android:key="pref_key_action_bar_color"
             android:title="Action Bar Color" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="About" >
-        <Preference
-            android:summary="@string/summary_donate"
-            android:title="@string/title_donate" >
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="http://www.redcross.org/charitable-donations" />
-        </Preference>
-    </PreferenceCategory>
 
 </PreferenceScreen>

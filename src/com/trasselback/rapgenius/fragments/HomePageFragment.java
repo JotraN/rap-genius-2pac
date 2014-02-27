@@ -137,6 +137,9 @@ public class HomePageFragment extends Fragment {
 			int backgroundColor = Integer.parseInt(sharedPref.getString(
 					SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "0"));
 			ColorManager.setBackgroundColor(getActivity(), backgroundColor);
+			int actionBarColor = Integer.parseInt(sharedPref.getString(
+					SettingsFragment.KEY_PREF_ACTION_BAR_COLOR, "0"));
+			ColorManager.setActionBarColor(getActivity(), actionBarColor);
 		} catch (NumberFormatException ex) {
 			clearSettings();
 		}
@@ -180,6 +183,11 @@ public class HomePageFragment extends Fragment {
 		editor.commit();
 		editor = getActivity().getSharedPreferences(
 				SettingsFragment.KEY_PREF_TITLE_COLOR, Context.MODE_PRIVATE)
+				.edit();
+		editor.clear();
+		editor.commit();
+		editor = getActivity().getSharedPreferences(
+				SettingsFragment.KEY_PREF_ACTION_BAR_COLOR, Context.MODE_PRIVATE)
 				.edit();
 		editor.clear();
 		editor.commit();

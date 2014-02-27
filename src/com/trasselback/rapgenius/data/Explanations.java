@@ -71,13 +71,15 @@ public class Explanations extends URLObject {
 		Element dataIDs = pageDocument.getElementById("main");
 		String text = dataIDs.toString();
 		// Remove images
-		htmlPage = text.toString().replaceAll("<img.+?src.+?/>", "");
-		htmlPage = htmlPage.replaceAll("<p class=\"video.+?/p>", "");
+//		htmlPage = text.toString().replaceAll("<img.+?src.+?/>", "");
+//		htmlPage = htmlPage.replaceAll("<p class=\"video.+?/p>", "");
 		// Fix any local Rap Genius links
+		htmlPage = text;
 		htmlPage = htmlPage.replace("href=\"/", "href=\"http://rapgenius.com/");
 	}
 
 	public String getName() {
 		return artistName;
 	}
+
 }

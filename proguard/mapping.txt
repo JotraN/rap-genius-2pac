@@ -7671,7 +7671,8 @@ com.trasselback.rapgenius.activities.ExplanationActivity -> com.trasselback.rapg
     void initialize() -> b
     void onResume() -> onResume
     void checkSettings() -> c
-    void grabExplanation() -> d
+    void clearSettings() -> d
+    void grabExplanation() -> e
     void access$0(com.trasselback.rapgenius.activities.ExplanationActivity,com.trasselback.rapgenius.data.Explanations) -> a
     com.trasselback.rapgenius.data.Explanations access$1(com.trasselback.rapgenius.activities.ExplanationActivity) -> a
     android.widget.TextView access$2(com.trasselback.rapgenius.activities.ExplanationActivity) -> b
@@ -7699,6 +7700,7 @@ com.trasselback.rapgenius.activities.MainActivity -> com.trasselback.rapgenius.a
     void initialize() -> b
     void setupActionBar() -> c
     void loadHomeSong() -> a
+    void onResume() -> onResume
     void onPostCreate(android.os.Bundle) -> onPostCreate
     void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
     boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu) -> onCreateOptionsMenu
@@ -7930,6 +7932,8 @@ com.trasselback.rapgenius.helpers.ColorManager -> com.trasselback.rapgenius.help
     void setColor(android.content.Context,android.widget.TextView,int) -> a
     void setLinkColor(android.content.Context,android.widget.TextView,int) -> b
     void setBackgroundColor(android.app.Activity,int) -> a
+    void setActionBarColor(android.app.Activity,int) -> b
+    void setActionBarColorExplanation(android.app.Activity,int) -> c
 com.trasselback.rapgenius.helpers.ColorManager$Color -> com.trasselback.rapgenius.helpers.ColorManager$Color:
     com.trasselback.rapgenius.helpers.ColorManager$Color DEFAULT -> a
     com.trasselback.rapgenius.helpers.ColorManager$Color RED -> b

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.trasselback.rapgenius.R;
 
@@ -125,6 +126,27 @@ public class ColorManager {
 			((SherlockFragmentActivity)activity).getSupportActionBar().setBackgroundDrawable(activity.getResources().getDrawable(R.color.Black));
 		else if (color == Color.WHITE.getValue())
 			((SherlockFragmentActivity)activity).getSupportActionBar().setBackgroundDrawable(activity.getResources().getDrawable(R.color.White));
+	}
+	
+	public static void setActionBarColorExplanation(Activity activity, int color) {
+		if (color == Color.RED.getValue())
+			((SherlockActivity)activity).getSupportActionBar().setBackgroundDrawable(activity.getResources().getDrawable(R.color.Red));
+		else if (color == Color.ORANGE.getValue())
+			((SherlockActivity)activity).getSupportActionBar().setBackgroundDrawable(activity.getResources().getDrawable(R.color.Orange));
+		else if (color == Color.YELLOW.getValue())
+			((SherlockActivity)activity).getSupportActionBar().setBackgroundDrawable(activity.getResources().getDrawable(R.color.Yellow));
+		else if (color == Color.GREEN.getValue())
+			((SherlockActivity)activity).getSupportActionBar().setBackgroundDrawable(activity.getResources().getDrawable(R.color.Green));
+		else if (color == Color.BLUE.getValue())
+			((SherlockActivity)activity).getSupportActionBar().setBackgroundDrawable(activity.getResources().getDrawable(R.color.Blue));
+		else if (color == Color.PURPLE.getValue())
+			((SherlockActivity)activity).getSupportActionBar().setBackgroundDrawable(activity.getResources().getDrawable(R.color.Purple));
+		else if (color == Color.GRAY.getValue())
+			((SherlockActivity)activity).getSupportActionBar().setBackgroundDrawable(activity.getResources().getDrawable(R.color.Gray));
+		else if (color == Color.BLACK.getValue())
+			((SherlockActivity)activity).getSupportActionBar().setBackgroundDrawable(activity.getResources().getDrawable(R.color.Black));
+		else if (color == Color.WHITE.getValue())
+			((SherlockActivity)activity).getSupportActionBar().setBackgroundDrawable(activity.getResources().getDrawable(R.color.White));
 	}
 	
 }

@@ -132,6 +132,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
+		// Change action bar color
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		int actionBarColor = Integer.parseInt(sharedPref.getString(

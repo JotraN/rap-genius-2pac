@@ -976,7 +976,7 @@ com.trasselback.rapgenius.fragments.HomePageFragment:
 com.trasselback.rapgenius.helpers.CacheManager:
     14:14:public CacheManager()
 com.trasselback.rapgenius.helpers.ColorManager:
-    9:9:public ColorManager()
+    11:11:public ColorManager()
 com.trasselback.rapgenius.helpers.CrossfadeAnimation:
     10:10:public CrossfadeAnimation()
 com.trasselback.rapgenius.helpers.FavoritesManager:
@@ -995,6 +995,7 @@ com.trasselback.rapgenius.preferences.SettingsFragment:
     public static final java.lang.String KEY_PREF_EXPLAINED_LYRICS_COLOR
     public static final java.lang.String KEY_PREF_FAVORITES_COLOR
     public static final java.lang.String KEY_PREF_BACKGROUND_COLOR
+    public static final java.lang.String KEY_PREF_ACTION_BAR_COLOR
     public static final java.lang.String KEY_PREF_FAVS_SEARCH
 org.apache.commons.lang3.AnnotationUtils$1:
     private static final long serialVersionUID

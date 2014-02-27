@@ -120,6 +120,9 @@ public class LyricsFragment extends Fragment {
 			int backgroundColor = Integer.parseInt(sharedPref.getString(
 					SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "0"));
 			ColorManager.setBackgroundColor(getActivity(), backgroundColor);
+			int actionBarColor = Integer.parseInt(sharedPref.getString(
+					SettingsFragment.KEY_PREF_ACTION_BAR_COLOR, "0"));
+			ColorManager.setActionBarColor(getActivity(), actionBarColor);
 		} catch (NumberFormatException ex) {
 			clearSettings();
 		}
@@ -165,12 +168,16 @@ public class LyricsFragment extends Fragment {
 				.edit();
 		editor.clear();
 		editor.commit();
+		editor = getActivity().getSharedPreferences(
+				SettingsFragment.KEY_PREF_ACTION_BAR_COLOR,
+				Context.MODE_PRIVATE).edit();
+		editor.clear();
+		editor.commit();
 	}
 
 	// Find what started lyrics fragment and clean input
 	private void startLyrics() {
-		artistNameSongName = getArguments().getString(
-				MainActivity.SONGINFO);
+		artistNameSongName = getArguments().getString(MainActivity.SONGINFO);
 		// Home song clicked
 		if (artistNameSongName.contains("song_clicked"))
 			// remove the -lyrics at the end of the URL
@@ -235,21 +242,23 @@ public class LyricsFragment extends Fragment {
 
 		@Override
 		protected void onPostExecute(String result) {
-			nameField.setText(artistName);
-			artistName = null;
-			lyricsField.setText(Html.fromHtml(result));
-			RemoveUnderLine.removeUnderline(lyricsField);
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1)
-				CrossfadeAnimation.crossfade(getActivity(), contentView,
-						loadingView);
-			else {
-				contentView.setVisibility(View.VISIBLE);
-				loadingView.setVisibility(View.GONE);
+			if (isAdded()) {
+				nameField.setText(artistName);
+				artistName = null;
+				lyricsField.setText(Html.fromHtml(result));
+				RemoveUnderLine.removeUnderline(lyricsField);
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1)
+					CrossfadeAnimation.crossfade(getActivity(), contentView,
+							loadingView);
+				else {
+					contentView.setVisibility(View.VISIBLE);
+					loadingView.setVisibility(View.GONE);
+				}
+				if (cacheLyricsEnabled)
+					CacheManager.saveData(getActivity(), artistNameSongName,
+							nameField.getText().toString() + result);
+				taskStarted = true;
 			}
-			if (cacheLyricsEnabled)
-				CacheManager.saveData(getActivity(), artistNameSongName,
-						nameField.getText().toString() + result);
-			taskStarted = true;
 		}
 	}
 }
