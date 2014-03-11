@@ -40,15 +40,17 @@ public class FavoritesManager {
 		return currFavs.contains(song.toUpperCase(Locale.ENGLISH));
 	}
 
-	public static void addFavorites(Context context, String favoritedSong) {
+	public static void manageFavorite(Context context, String favoritedSong) {
 		// Get current favorites if available.
 		String currFavs = getFavorites(context);
 		// Cleans up name
 		String song = favoritedSong.replace("-", " ").toUpperCase(
 				Locale.ENGLISH);
 
+		// Remove if the song was already added
 		if (currFavs.contains(song)) {
 			removeFavorites(context, song, currFavs);
+		// Add the song to favorites file
 		} else if (currFavs.length() <= 1650) {
 			String favorites = currFavs + song + "<BR>";
 			try {

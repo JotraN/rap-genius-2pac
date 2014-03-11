@@ -2,15 +2,9 @@ package com.trasselback.rapgenius.fragments;
 
 import java.util.Locale;
 
-import com.trasselback.rapgenius.R;
-import com.trasselback.rapgenius.helpers.ColorManager;
-import com.trasselback.rapgenius.helpers.FavoritesManager;
-import com.trasselback.rapgenius.preferences.SettingsFragment;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -27,6 +21,11 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.trasselback.rapgenius.R;
+import com.trasselback.rapgenius.helpers.ColorManager;
+import com.trasselback.rapgenius.helpers.FavoritesManager;
+import com.trasselback.rapgenius.preferences.SettingsFragment;
 
 public class FavoritesFragment extends Fragment {
 	private ListView listView;
@@ -146,74 +145,23 @@ public class FavoritesFragment extends Fragment {
 	}
 
 	private void checkSettings() {
-		try {
-			SharedPreferences sharedPref = PreferenceManager
-					.getDefaultSharedPreferences(getActivity());
-			// Update text size
-			int size = Integer.parseInt(sharedPref.getString(
-					SettingsFragment.KEY_PREF_TEXT_SIZE, "20"));
-			nameField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size + 10);
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(getActivity());
+		// Update text size
+		int size = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_TEXT_SIZE, "20"));
+		nameField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size + 10);
 
-			// Update colors
-			int titleColor = Integer.parseInt(sharedPref.getString(
-					SettingsFragment.KEY_PREF_TITLE_COLOR, "0"));
-			ColorManager.setColor(getActivity(), nameField, titleColor);
-			int backgroundColor = Integer.parseInt(sharedPref.getString(
-					SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "0"));
-			ColorManager.setBackgroundColor(getActivity(), backgroundColor);
-			int actionBarColor = Integer.parseInt(sharedPref.getString(
-					SettingsFragment.KEY_PREF_ACTION_BAR_COLOR, "0"));
-			ColorManager.setActionBarColor(getActivity(), actionBarColor);
-		} catch (NumberFormatException ex) {
-			clearSettings();
-		}
-	}
-
-	// Needed to reset settings for those who updated and are still using old
-	// color settings
-	private void clearSettings() {
-		Editor editor = getActivity().getSharedPreferences(
-				SettingsFragment.KEY_PREF_TEXT_SIZE, Context.MODE_PRIVATE)
-				.edit();
-		editor.clear();
-		editor.commit();
-		editor = getActivity().getSharedPreferences(
-				SettingsFragment.KEY_PREF_BACKGROUND_COLOR,
-				Context.MODE_PRIVATE).edit();
-		editor.clear();
-		editor.commit();
-		editor = getActivity().getSharedPreferences(
-				SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR,
-				Context.MODE_PRIVATE).edit();
-		editor.clear();
-		editor.commit();
-		editor = getActivity().getSharedPreferences(
-				SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR,
-				Context.MODE_PRIVATE).edit();
-		editor.clear();
-		editor.commit();
-		editor = getActivity()
-				.getSharedPreferences(
-						SettingsFragment.KEY_PREF_FAVORITES_COLOR,
-						Context.MODE_PRIVATE).edit();
-		editor.clear();
-		editor.commit();
-		editor = getActivity()
-				.getSharedPreferences(
-						SettingsFragment.KEY_PREF_HOME_PAGE_COLOR,
-						Context.MODE_PRIVATE).edit();
-		editor.clear();
-		editor.commit();
-		editor = getActivity().getSharedPreferences(
-				SettingsFragment.KEY_PREF_TITLE_COLOR, Context.MODE_PRIVATE)
-				.edit();
-		editor.clear();
-		editor.commit();
-		editor = getActivity().getSharedPreferences(
-				SettingsFragment.KEY_PREF_ACTION_BAR_COLOR, Context.MODE_PRIVATE)
-				.edit();
-		editor.clear();
-		editor.commit();
+		// Update colors
+		int titleColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_TITLE_COLOR, "0"));
+		ColorManager.setColor(getActivity(), nameField, titleColor);
+		int backgroundColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "0"));
+		ColorManager.setBackgroundColor(getActivity(), backgroundColor);
+		int actionBarColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_ACTION_BAR_COLOR, "0"));
+		ColorManager.setActionBarColor(getActivity(), actionBarColor);
 	}
 
 	private class FavoritesListAdapter extends ArrayAdapter<String> {
@@ -225,18 +173,14 @@ public class FavoritesFragment extends Fragment {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View v = super.getView(position, convertView, parent);
 			TextView x = (TextView) v;
-			try {
-				SharedPreferences sharedPref = PreferenceManager
-						.getDefaultSharedPreferences(getActivity());
-				int favsColor = Integer.parseInt(sharedPref.getString(
-						SettingsFragment.KEY_PREF_FAVORITES_COLOR, "0"));
-				ColorManager.setColor(getActivity(), x, favsColor);
-				int size = Integer.parseInt(sharedPref.getString(
-						SettingsFragment.KEY_PREF_TEXT_SIZE, "22"));
-				x.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
-			} catch (NumberFormatException ex) {
-				clearSettings();
-			}
+			SharedPreferences sharedPref = PreferenceManager
+					.getDefaultSharedPreferences(getActivity());
+			int favsColor = Integer.parseInt(sharedPref.getString(
+					SettingsFragment.KEY_PREF_FAVORITES_COLOR, "0"));
+			ColorManager.setColor(getActivity(), x, favsColor);
+			int size = Integer.parseInt(sharedPref.getString(
+					SettingsFragment.KEY_PREF_TEXT_SIZE, "22"));
+			x.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
 			return x;
 		}
 	}

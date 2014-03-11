@@ -1,8 +1,6 @@
 package com.trasselback.rapgenius.fragments;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -119,78 +117,26 @@ public class HomePageFragment extends Fragment {
 	}
 
 	private void checkSettings() {
-		try {
-			SharedPreferences sharedPref = PreferenceManager
-					.getDefaultSharedPreferences(getActivity());
-			// Update text size
-			int size = Integer.parseInt(sharedPref.getString(
-					SettingsFragment.KEY_PREF_TEXT_SIZE, "20"));
-			lyricsField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(getActivity());
+		// Update text size
+		int size = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_TEXT_SIZE, "20"));
+		lyricsField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
 
-			// Update colors
-			int textColor = Integer.parseInt(sharedPref.getString(
-					SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR, "0"));
-			ColorManager.setColor(getActivity(), lyricsField, textColor);
-			int linkColor = Integer.parseInt(sharedPref.getString(
-					SettingsFragment.KEY_PREF_HOME_PAGE_COLOR, "0"));
-			ColorManager.setLinkColor(getActivity(), lyricsField, linkColor);
-			int backgroundColor = Integer.parseInt(sharedPref.getString(
-					SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "0"));
-			ColorManager.setBackgroundColor(getActivity(), backgroundColor);
-			int actionBarColor = Integer.parseInt(sharedPref.getString(
-					SettingsFragment.KEY_PREF_ACTION_BAR_COLOR, "0"));
-			ColorManager.setActionBarColor(getActivity(), actionBarColor);
-		} catch (NumberFormatException ex) {
-			clearSettings();
-		}
-	}
-
-	// TODO Delete after several updates 2.7.6
-	// Needed to reset settings for those who updated and are still using old
-	// color settings
-	private void clearSettings() {
-		Editor editor = getActivity().getSharedPreferences(
-				SettingsFragment.KEY_PREF_TEXT_SIZE, Context.MODE_PRIVATE)
-				.edit();
-		editor.clear();
-		editor.commit();
-		editor = getActivity().getSharedPreferences(
-				SettingsFragment.KEY_PREF_BACKGROUND_COLOR,
-				Context.MODE_PRIVATE).edit();
-		editor.clear();
-		editor.commit();
-		editor = getActivity().getSharedPreferences(
-				SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR,
-				Context.MODE_PRIVATE).edit();
-		editor.clear();
-		editor.commit();
-		editor = getActivity().getSharedPreferences(
-				SettingsFragment.KEY_PREF_EXPLAINED_LYRICS_COLOR,
-				Context.MODE_PRIVATE).edit();
-		editor.clear();
-		editor.commit();
-		editor = getActivity()
-				.getSharedPreferences(
-						SettingsFragment.KEY_PREF_FAVORITES_COLOR,
-						Context.MODE_PRIVATE).edit();
-		editor.clear();
-		editor.commit();
-		editor = getActivity()
-				.getSharedPreferences(
-						SettingsFragment.KEY_PREF_HOME_PAGE_COLOR,
-						Context.MODE_PRIVATE).edit();
-		editor.clear();
-		editor.commit();
-		editor = getActivity().getSharedPreferences(
-				SettingsFragment.KEY_PREF_TITLE_COLOR, Context.MODE_PRIVATE)
-				.edit();
-		editor.clear();
-		editor.commit();
-		editor = getActivity().getSharedPreferences(
-				SettingsFragment.KEY_PREF_ACTION_BAR_COLOR, Context.MODE_PRIVATE)
-				.edit();
-		editor.clear();
-		editor.commit();
+		// Update colors
+		int textColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_DEFAULT_TEXT_COLOR, "0"));
+		ColorManager.setColor(getActivity(), lyricsField, textColor);
+		int linkColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_HOME_PAGE_COLOR, "0"));
+		ColorManager.setLinkColor(getActivity(), lyricsField, linkColor);
+		int backgroundColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_BACKGROUND_COLOR, "0"));
+		ColorManager.setBackgroundColor(getActivity(), backgroundColor);
+		int actionBarColor = Integer.parseInt(sharedPref.getString(
+				SettingsFragment.KEY_PREF_ACTION_BAR_COLOR, "0"));
+		ColorManager.setActionBarColor(getActivity(), actionBarColor);
 	}
 
 	private class RetrieveNewsFeed extends AsyncTask<Void, Void, String> {
@@ -216,7 +162,8 @@ public class HomePageFragment extends Fragment {
 
 		@Override
 		protected void onPostExecute(String result) {
-			if(result.contains("There was a problem with connecting to Rap Genius.")){
+			if (result
+					.contains("There was a problem with connecting to Rap Genius.")) {
 				homeLoaded = false;
 				return;
 			}

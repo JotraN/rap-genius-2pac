@@ -7665,6 +7665,7 @@ com.trasselback.rapgenius.activities.ExplanationActivity -> com.trasselback.rapg
     android.view.View loadingView -> c
     android.view.View contentView -> d
     com.trasselback.rapgenius.data.Explanations explanation -> e
+    com.trasselback.rapgenius.activities.ExplanationActivity$URLImageParser imageParser -> f
     void onCreate(android.os.Bundle) -> onCreate
     void setupActionBar() -> a
     boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
@@ -7676,13 +7677,33 @@ com.trasselback.rapgenius.activities.ExplanationActivity -> com.trasselback.rapg
     void access$0(com.trasselback.rapgenius.activities.ExplanationActivity,com.trasselback.rapgenius.data.Explanations) -> a
     com.trasselback.rapgenius.data.Explanations access$1(com.trasselback.rapgenius.activities.ExplanationActivity) -> a
     android.widget.TextView access$2(com.trasselback.rapgenius.activities.ExplanationActivity) -> b
-    android.widget.TextView access$3(com.trasselback.rapgenius.activities.ExplanationActivity) -> c
-    android.view.View access$4(com.trasselback.rapgenius.activities.ExplanationActivity) -> d
+    com.trasselback.rapgenius.activities.ExplanationActivity$URLImageParser access$3(com.trasselback.rapgenius.activities.ExplanationActivity) -> c
+    android.widget.TextView access$4(com.trasselback.rapgenius.activities.ExplanationActivity) -> d
     android.view.View access$5(com.trasselback.rapgenius.activities.ExplanationActivity) -> e
+    android.view.View access$6(com.trasselback.rapgenius.activities.ExplanationActivity) -> f
 com.trasselback.rapgenius.activities.ExplanationActivity$RetrieveExplanationsTask -> com.trasselback.rapgenius.activities.a:
     com.trasselback.rapgenius.activities.ExplanationActivity this$0 -> a
     java.lang.String doInBackground(java.lang.Void[]) -> a
     void onPostExecute(java.lang.String) -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+com.trasselback.rapgenius.activities.ExplanationActivity$URLDrawable -> com.trasselback.rapgenius.activities.b:
+    android.graphics.drawable.Drawable drawable -> a
+    com.trasselback.rapgenius.activities.ExplanationActivity this$0 -> b
+    void draw(android.graphics.Canvas) -> draw
+com.trasselback.rapgenius.activities.ExplanationActivity$URLImageParser -> com.trasselback.rapgenius.activities.c:
+    android.content.Context context -> a
+    android.widget.TextView container -> b
+    com.trasselback.rapgenius.activities.ExplanationActivity this$0 -> c
+    android.graphics.drawable.Drawable getDrawable(java.lang.String) -> getDrawable
+    com.trasselback.rapgenius.activities.ExplanationActivity access$0(com.trasselback.rapgenius.activities.ExplanationActivity$URLImageParser) -> a
+com.trasselback.rapgenius.activities.ExplanationActivity$URLImageParser$ImageGetterAsyncTask -> com.trasselback.rapgenius.activities.d:
+    com.trasselback.rapgenius.activities.ExplanationActivity$URLDrawable urlDrawable -> a
+    com.trasselback.rapgenius.activities.ExplanationActivity$URLImageParser this$1 -> b
+    android.graphics.drawable.Drawable doInBackground(java.lang.String[]) -> a
+    void onPostExecute(android.graphics.drawable.Drawable) -> a
+    android.graphics.drawable.Drawable fetchDrawable(java.lang.String) -> a
+    java.io.InputStream fetch(java.lang.String) -> b
     void onPostExecute(java.lang.Object) -> onPostExecute
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.trasselback.rapgenius.activities.MainActivity -> com.trasselback.rapgenius.activities.MainActivity:
@@ -7720,27 +7741,27 @@ com.trasselback.rapgenius.activities.MainActivity -> com.trasselback.rapgenius.a
     android.widget.ListView access$3(com.trasselback.rapgenius.activities.MainActivity) -> c
     com.trasselback.rapgenius.activities.MainActivity$ListAdapter access$4(com.trasselback.rapgenius.activities.MainActivity) -> d
     void access$5(com.trasselback.rapgenius.activities.MainActivity,com.actionbarsherlock.view.MenuItem,com.actionbarsherlock.view.MenuItem) -> a
-com.trasselback.rapgenius.activities.MainActivity$1 -> com.trasselback.rapgenius.activities.b:
+com.trasselback.rapgenius.activities.MainActivity$1 -> com.trasselback.rapgenius.activities.e:
     com.trasselback.rapgenius.activities.MainActivity this$0 -> a
     com.actionbarsherlock.view.MenuItem val$searchItem -> b
     com.actionbarsherlock.view.MenuItem val$favsItem -> c
     boolean onEditorAction(android.widget.TextView,int,android.view.KeyEvent) -> onEditorAction
-com.trasselback.rapgenius.activities.MainActivity$DrawerItemClickListener -> com.trasselback.rapgenius.activities.c:
+com.trasselback.rapgenius.activities.MainActivity$DrawerItemClickListener -> com.trasselback.rapgenius.activities.f:
     com.trasselback.rapgenius.activities.MainActivity this$0 -> a
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.trasselback.rapgenius.activities.MainActivity$ListAdapter -> com.trasselback.rapgenius.activities.d:
+com.trasselback.rapgenius.activities.MainActivity$ListAdapter -> com.trasselback.rapgenius.activities.g:
     android.content.Context context -> b
     int resource -> c
     com.trasselback.rapgenius.activities.MainActivity this$0 -> a
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
     void changeBackground(int,android.view.View) -> a
-com.trasselback.rapgenius.activities.MainActivity$expandedSearchBar -> com.trasselback.rapgenius.activities.e:
+com.trasselback.rapgenius.activities.MainActivity$expandedSearchBar -> com.trasselback.rapgenius.activities.h:
     android.view.inputmethod.InputMethodManager keyboard -> a
     com.trasselback.rapgenius.activities.MainActivity this$0 -> b
     boolean onMenuItemActionExpand(com.actionbarsherlock.view.MenuItem) -> onMenuItemActionExpand
     boolean onMenuItemActionCollapse(com.actionbarsherlock.view.MenuItem) -> onMenuItemActionCollapse
     com.trasselback.rapgenius.activities.MainActivity access$1(com.trasselback.rapgenius.activities.MainActivity$expandedSearchBar) -> a
-com.trasselback.rapgenius.activities.MainActivity$expandedSearchBar$1 -> com.trasselback.rapgenius.activities.f:
+com.trasselback.rapgenius.activities.MainActivity$expandedSearchBar$1 -> com.trasselback.rapgenius.activities.i:
     com.trasselback.rapgenius.activities.MainActivity$expandedSearchBar this$1 -> a
     void run() -> run
 com.trasselback.rapgenius.data.Explanations -> com.trasselback.rapgenius.a.a:
