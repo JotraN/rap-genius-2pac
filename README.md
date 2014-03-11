@@ -1,4 +1,4 @@
-<img src="screenshots/logo.png" alt="Logo" style="width: 200px;"/>
+<img src="screenshots/logo.png" alt="Logo" style="width: 100px;"/>
 <h1>Description</h1>
 This is the unofficial Rap Genius android app.<br>
 It parses explanations and lyrics from RapGenius.com.<br>
