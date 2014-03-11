@@ -6,13 +6,12 @@ Officially supports English, other languages may work.<br>
 Supports 2.3+.
 
 Some Screenshots:<br>
-<img src="screenshots/drawer.png" alt="Drawer" width="250px"/>
-<img src="screenshots/home.png" alt="Home" width="250px"/><br>
-<img src="screenshots/favorites.png" alt="Favorites" width="250px"/>
-<img src="screenshots/search.png" alt="Search" width="250px"/><br>
-<img src="screenshots/lyrics.png" alt="Lyrics" width="250px"/>
-<img src="screenshots/explanation.png" alt="Explanation" width="250px"/>
-<img src="screenshots/moresongs.png" alt="More Songs" width="250px"/><br>
+<img src="screenshots/drawer.png" alt="Drawer" width="200px"/>
+<img src="screenshots/home.png" alt="Home" width="200px"/>
+<img src="screenshots/favorites.png" alt="Favorites" width="200px"/><br>
+<img src="screenshots/search.png" alt="Search" width="200px"/><
+<img src="screenshots/lyrics.png" alt="Lyrics" width="200px"/>
+<img src="screenshots/explanation.png" alt="Explanation" width="200px"/><br>
 
 <h2>DISCLAIMER:</h2> 
 This app's creation is in no way associated with Rap Genius.<br>
