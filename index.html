@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Unofficial Rap Genius App</title>
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300' rel='stylesheet' type='text/css'>
 	<style>
 		html, body{
 			background-color: #2d2d2d;
@@ -11,6 +12,7 @@
 		}
 		#banner {
 			background-image: url('images/bannerbg.png');
+			box-shadow: 0px 5px 10px black;
 		}
 		img.center {
 			display: block;
@@ -18,18 +20,24 @@
 		}
 		#content {
 			background-color: #353535;
-			margin: auto;
-			width: 70%%;
-			height: 100%;
-			border: 7px solid #282828;
-			border-radius: 20px;
+			width: 50%%;
 			color: white;
+			margin: auto;
 			margin-bottom: 2%;
 			padding: 2%;
+			padding-top: 1%;
+			font-family: 'Roboto', arial;
+			font-weight: 400;
+			box-shadow: 0px 5px 10px black inset;
 		}
 		h1 {
 			color: #cc6633;
-			font-size: 3em;
+			font-size: 3.7em;
+			font-weight: 300;
+			display:inline;
+		}
+		h6{
+			display:inline;
 		}
 	</style>
 </head>
@@ -38,7 +46,52 @@
 		<img class="center" src="images/logo.png"/>
 	</div>
 	<div id="content">
-		<h1>Unofficial Rap Genius App</h1>
+		<h1>Unofficial Rap Genius App </h1><h6> for android</h6><br>
+		<p>
+		This is the unofficial Rap Genius android app.<br>
+		It parses explanations and lyrics from RapGenius.com.<br>
+		Officially supports English, other languages may work.<br>
+		Supports 2.3+.
+
+		Some Screenshots:</p>
+		<img src="images/screenshots/drawer.png" alt="Drawer" width="225px"/>
+		<img src="images/screenshots/home.png" alt="Home" width="225px"/>
+		<img src="images/screenshots/favorites.png" alt="Favorites" width="225px"/><br>
+		<img src="images/screenshots/search.png" alt="Search" width="225px"/>
+		<img src="images/screenshots/lyrics.png" alt="Lyrics" width="225px"/>
+		<img src="images/screenshots/explanation.png" alt="Explanation" width="225px"/><br>
+
+		<h2>DISCLAIMER:</h2> 
+		<p>
+		This app's creation is in no way associated with Rap Genius.<br>
+		Rap Genius, from an email conversation with someone from their team, <br>
+		appears to be fine with this application as long as it remains free.
+
+		Unfortunately, this app was removed from the market place due to a DMCA complaint by the NMPA, 
+		citing copyrighted lyrics from another lyrics site (not Rap Genius). 
+		</p>
+		<img src="images/screenshots/suspension.png" alt="Suspension" width="700px"/><br>
+
+		<h1>Installation Instructions</h1>
+		Two choices for installation:<br>
+		1) Easiest way to install the app is to just grab the <i>.apk</i> and install it onto your device.<br>
+		2) Download/pull the entire source and import it into Eclipse*. Compile and run it on your device,
+		        or export it to an <i>.apk</i> yourself (<b>File</b> -> </b>Export..). 
+			        The latter requires generating a key store.
+
+					If you had installed this app from the market, you should remove that version before installing this,
+					to avoid any problems.
+
+					You could try importing the project to Android Studio, but you'll have to modify the build.gradle.
+
+					*Be sure to remove the exclude screenshots from Eclipse after downloading.
+
+					<h1>Notes</h1>
+					Feel free to contribute any new features or better implementations.
+
+					Tried to keep most of the code pretty straightforward, 
+					but I'm sure some of it could use some cleaning up.
+
 	</div>
 </body>
 </html>
