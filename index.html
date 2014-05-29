@@ -3,43 +3,7 @@
 <head>
 	<title>Unofficial Rap Genius App</title>
 	<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300' rel='stylesheet' type='text/css'>
-	<style>
-		html, body{
-			background-color: #2d2d2d;
-			height: 100%;
-			margin: 0px;
-			padding: 0px;
-		}
-		#banner {
-			background-image: url('images/bannerbg.png');
-			box-shadow: 0px 5px 10px black;
-		}
-		img.center {
-			display: block;
-			margin: auto;
-		}
-		#content {
-			background-color: #353535;
-			width: 50%%;
-			color: white;
-			margin: auto;
-			margin-bottom: 2%;
-			padding: 2%;
-			padding-top: 1%;
-			font-family: 'Roboto', arial;
-			font-weight: 400;
-			box-shadow: 0px 5px 10px black inset;
-		}
-		h1 {
-			color: #cc6633;
-			font-size: 3.7em;
-			font-weight: 300;
-			display:inline;
-		}
-		h6{
-			display:inline;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
 <body>
 	<div id="banner">
@@ -51,15 +15,24 @@
 		This is the unofficial Rap Genius android app.<br>
 		It parses explanations and lyrics from RapGenius.com.<br>
 		Officially supports English, other languages may work.<br>
-		Supports 2.3+.
+		Supports 2.3+.<br>
+		Download the apk <a href="https://github.com/JotraN/rap-genius-2pac/blob/master/bin/RapGenius.apk?raw=true">here</a>.<br>
+		VIew the source code <a href="https://github.com/JotraN/rap-genius-2pac/">here</a>.
+		</p>
 
-		Some Screenshots:</p>
-		<img src="images/screenshots/drawer.png" alt="Drawer" width="225px"/>
-		<img src="images/screenshots/home.png" alt="Home" width="225px"/>
-		<img src="images/screenshots/favorites.png" alt="Favorites" width="225px"/><br>
-		<img src="images/screenshots/search.png" alt="Search" width="225px"/>
-		<img src="images/screenshots/lyrics.png" alt="Lyrics" width="225px"/>
-		<img src="images/screenshots/explanation.png" alt="Explanation" width="225px"/><br>
+		<p>
+		Some Screenshots:<br><br>
+		<span class="center">
+			<img src="images/screenshots/drawer.png" alt="Drawer" width="225px"/>
+			<img src="images/screenshots/home.png" alt="Home" width="225px"/>
+			<img src="images/screenshots/favorites.png" alt="Favorites" width="225px"/>
+		</span>
+		<span class="center">	
+			<img src="images/screenshots/search.png" alt="Search" width="225px"/>
+			<img src="images/screenshots/lyrics.png" alt="Lyrics" width="225px"/>
+			<img src="images/screenshots/explanation.png" alt="Explanation" width="225px"/>
+		</span>
+		</p>
 
 		<h2>DISCLAIMER:</h2> 
 		<p>
@@ -70,28 +43,29 @@
 		Unfortunately, this app was removed from the market place due to a DMCA complaint by the NMPA, 
 		citing copyrighted lyrics from another lyrics site (not Rap Genius). 
 		</p>
-		<img src="images/screenshots/suspension.png" alt="Suspension" width="700px"/><br>
+		<a href="images/screenshots/suspension.png"><img class="center" src="images/screenshots/suspension.png" alt="Suspension" width="700px"/></a><br>
 
-		<h1>Installation Instructions</h1>
+		<h2>Installation Instructions</h2><br>
 		Two choices for installation:<br>
-		1) Easiest way to install the app is to just grab the <i>.apk</i> and install it onto your device.<br>
-		2) Download/pull the entire source and import it into Eclipse*. Compile and run it on your device,
-		        or export it to an <i>.apk</i> yourself (<b>File</b> -> </b>Export..). 
-			        The latter requires generating a key store.
+		<ol>
+			<li>Easiest way to install the app is to just grab the <i>.apk</i> and install it onto your device (uncheck the option that blocks installing apks in the <i>settings</i>).</li>
+			<li>Download the entire source and import it into Eclipse*, then:
+			<ul>
+				<li>Build/Compile/Run it on your device,</li>
+				<li>Export it to an <i>.apk</i> yourself (<b>File</b> -> </b>Export..). </li>
+				Exporting would require generating a key store.
+			</ul>
+			<li>Try and import the project to Android Studio, and build it that way. You'll have to modify the build.gradle however.
+		</ol>
+		*Be sure to remove the exclude screenshots from Eclipse after downloading.<br><br>
 
-					If you had installed this app from the market, you should remove that version before installing this,
-					to avoid any problems.
+		If you had installed this app from the market, you should probably remove that version before installing this
+		to avoid any problems.<br>
 
-					You could try importing the project to Android Studio, but you'll have to modify the build.gradle.
-
-					*Be sure to remove the exclude screenshots from Eclipse after downloading.
-
-					<h1>Notes</h1>
-					Feel free to contribute any new features or better implementations.
-
-					Tried to keep most of the code pretty straightforward, 
-					but I'm sure some of it could use some cleaning up.
-
+		<h2>Notes</h2><br>
+		Feel free to contribute any new features or better implementations.<br>
+		Probably won't keep it monitored too closely so let me know if you find any bugs.<br>
+		Check out my other stuff <a href="http://jotran.github.com">here</a>.
 	</div>
 </body>
 </html>
